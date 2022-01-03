@@ -1,0 +1,35 @@
+.THIS .head{
+background-color: #425563;
+height:30px;
+color:white;
+padding-left:10px;    
+}
+.THIS .right{
+float:right;
+    }
+.THIS .customizebutton{
+font-size:12px;
+
+
+}
+.THIS .left{
+float:left;
+padding-top:5px;
+font-weight:bold;
+    }
+
+.THIS .header{
+    padding-top:2rem;
+    padding-bottom:2rem;
+    background-color:white;
+}
+.THIS .Opp{
+ background-color: #064E39;
+    color:white;
+    font-size:10px;
+}
+
+.THIS h1{
+    font-size:18px;
+    margin-left:10px;
+}

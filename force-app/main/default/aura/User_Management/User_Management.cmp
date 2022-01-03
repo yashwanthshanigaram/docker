@@ -1,0 +1,19 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes"  access="global">
+        <div>
+            <div class="fullpage"> 
+        <div class="c-container-1">
+            <p class="styles">Step 1: Please visit Existing Tab to verify if user already granted Digitel Seller Access</p>
+            <p class="styles">Step 2: If Existing tab doesn't show then use the NEW tab to add user</p>
+            <br></br>
+    <lightning:tabset>
+        <lightning:tab label="Existing">
+            <c:Management/>
+        </lightning:tab>
+        <lightning:tab label="Add New" title="2nd tab extended title">
+            <c:NewAddUser/>
+        </lightning:tab>
+    </lightning:tabset>
+            </div>
+    </div>
+    </div>
+</aura:component>

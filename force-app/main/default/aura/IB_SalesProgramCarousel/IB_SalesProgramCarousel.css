@@ -1,0 +1,154 @@
+.THIS .ds_custom_template_btn_orange{
+	text-align: center;
+    background: #d9775c;
+    border-radius: 20px;
+    color: white;
+    min-width: 80px;
+    max-width: 80px;
+    padding: 5px;
+    font-family: metrichpe-semibold;
+    display: block;
+    margin-left: 15px;
+}
+.THIS .arrow_button{
+    background: #01a982;
+    font-weight: 400;
+    color: #fff;
+    border: 2px solid #01a982;
+}
+
+
+.THIS .space{
+    width:10px;
+}
+
+.THIS {
+    background: #ffffff !important;
+    padding-bottom:10px;
+    padding-top:10px;
+}
+.THIS .column2{
+    text-align: right;
+}
+.THIS .row2{
+    padding-top: .5em;
+    padding-bottom: .5em;
+    
+   padding-left:0.5rem;
+    align-content:center;
+}
+
+.THIS .row2_column2{
+    padding-top: .5em;
+    padding-bottom: .5em; 
+    text-align: right;
+}
+.THIS h1{
+    font-size: 1.2em;
+    padding-top: 40px;
+    padding-bottom: 10px;
+    margin-left:50px;
+}
+.THIS .nav_button{
+   /* width:30px;*/
+    margin-top:40px;
+}
+.THIS.c-container {
+    border: 1px solid #d8dde6;
+    margin: 20px 0px 20px 0px;
+}
+
+.THIS .custom-box {
+    text-align: left;
+    background-color: white;
+    padding-left:1rem;
+    padding-Top:0.3rem;
+    padding-bottom:0.3rem;
+    padding-right:0.5rem;
+    border: 1px solid #d8dde6;
+    height: 120px;
+    width: 220px;
+    cursor: pointer;
+    border-radius:25px;
+    border-color:#00b388;
+}
+.THIS .headingheading{
+    letter-spacing: 1.6px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #555555;
+    
+    margin-left:10px;
+    width:50%;
+    text-align:left;
+}
+.THIS .slds-modal__close{
+    float:right;
+    position:relative;
+}
+.THIS .slds-modal__header{
+    border-bottom:none;
+    border-top:1px solid grey;
+}
+.THIS .custom-box:hover{
+    background-color:rgb(230,241,246);
+}
+
+
+
+.THIS .grey{
+ width: 20px;
+      height: 20px;
+      background:#d3d3d3;
+      border-radius: 50%;
+      margin-bottom: -1.3rem;
+      margin-left:-1.3rem;
+}
+.THIS .purplebg{
+ width: 20px;
+      height: 20px;
+      background: #40bea1;
+      border-radius: 50%;
+      margin-bottom: -1.3rem;
+      margin-left:-1.3rem;
+}
+.THIS .greenbg{
+ width: 20px;
+      height: 20px;
+      background:#00906f;
+      border-radius: 50%;
+      margin-bottom: -1.3rem;
+      margin-left:-1.3rem;
+}
+.THIS .programName{
+    font-weight:bold;
+    font-size:16px;
+}
+.THIS .redColor {
+     
+      width: 20px;
+      height: 20px;
+      background: #CA2B4E;
+      border-radius: 50%;
+      margin-bottom: -1.3rem;
+      margin-left:-1.3rem;
+    
+    
+}
+.THIS .desc{
+ 
+ text-align:left;
+}
+.THIS .box_footer{
+   margin-right:-3px;
+   margin-left:-3px;
+}
+.THIS .header{
+    display:inline-block;
+}
+.THIS .heading{
+    text-align:left;
+}
+.THIS .headers{
+    padding-right:25rem;
+}

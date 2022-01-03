@@ -1,0 +1,216 @@
+.THIS .popup{
+    padding:10px 10px 10px 10px;
+    height:100px;
+    color:black;
+    background-color:white;
+
+}
+.THIS .header{
+    margin-bottom: 40px;
+   
+    letter-spacing: 1.6px;
+    font-weight:bold;
+    font-size:18px;
+    color:#555555;
+}
+.THIS .rulename{
+    font-size:22px;
+    color:#333333;
+    padding-left:1rem;
+    font-weight:bold;
+}
+
+.THIS .salesplayname{
+    font-size:15px;
+}
+.THIS .programtype{
+    text-align: center;
+    background: #D9775C;
+    border-radius: 20px;
+    color: white;
+    min-width: 90px;
+    max-width: 90px;
+    padding: 5px;
+    font-family: metrichpe-semibold;
+    
+    
+}
+
+.THIS .row {
+    
+    height:60px;
+    
+    
+    width:100%;
+    padding:5px;
+}
+.THIS .c1 {
+    
+    display:inline-block;
+    width:55%;
+    padding-bottom:5px;
+    
+}
+.THIS .c2 {
+    
+    display:inline-block;
+    padding-bottom:10px;
+    align-content:right;
+}
+.THIS .c3{
+   display:inline-block;
+    padding-bottom:5px;
+    }
+
+
+
+.THIS .green{
+      width: 15px;
+      height: 15px;
+      background: #40bea1;
+      border-radius: 50%;
+      margin-bottom: -1.53rem;
+    
+   
+}
+.THIS .darkgreen{
+      width: 15px;
+      height: 15px;
+      background: #00906f ;
+      border-radius: 50%;
+      margin-bottom: -1.53rem;
+    
+   
+}
+.THIS .grey{
+      width: 15px;
+      height: 15px;
+      background:#d3d3d3 ;
+      border-radius: 50%;
+      margin-bottom: -1.53rem;
+    
+   
+}
+.THIS .x{
+    
+
+    font-family:MetricHPE-semibold;
+
+    
+}
+.THIS .child{
+    vertical-align:middle;
+    width:100%;
+    align-content:right;
+   
+    
+    padding:8px;
+}
+
+.THIS .redColor {
+     
+      width: 15px;
+      height: 15px;
+      background: #CA2B4E;
+      border-radius: 50%;
+      margin-bottom: -1.53rem;
+    
+}
+.THIS .headingheading{
+    letter-spacing: 1.6px;
+    font-weight: bold;
+    font-size: 22px;
+    color: #555555;
+    padding-bottom:1rem;
+    margin-left:10px;
+    width:50%;
+    text-align:left;
+}
+.THIS .header2{
+    padding-left:10px;
+    padding-bottom:10px;
+    font-size:16px;
+    display:inline-block;
+}
+.THIS .salesplayc1 {
+    display:inline-block;
+    padding-bottom:5px;
+    
+}
+
+.THIS .salesplayc2{
+    display:inline-block;
+    padding-bottom:10px;
+    align-content:left;
+    
+}
+.THIS .salesplayrow2 {
+    
+    width:100%;
+    
+}
+.THIS .salesplayrow1{
+    
+    width:100%;
+    
+}
+.THIS a{
+ color:green;
+ padding-bottom:10px;    
+}
+.THIS .left{
+    float:left;
+    padding-bottom: 10px;
+    font-size:16px;
+     display:inline-block;
+    width:40%;
+}
+.THIS .right{
+    padding-bottom: 10px;
+    display:inline-block;
+    width:60%;
+    font-size:16px;
+}
+.THIS .links{
+    
+    padding-top: 1rem;
+}
+.THIS .heading{
+    padding-right:2rem;
+    margin-left:10px;
+}
+.THIS .column1-row1{
+    display: inline-block;
+}
+.THIS .column1{
+    display: inline-block;
+}
+.THIS .custom-box {
+    text-align: left;
+    background-color: white;
+    padding: 0rem;
+    display:inline-block;
+    margin-left: 1px;
+  
+    
+}
+.THIS.c-container {
+    border: 1px solid #d8dde6;
+    padding-left:1rem;
+    padding-bottom:1rem; 
+    display:inline-block;
+    
+}
+.THIS .header3{
+    padding-left:4rem;
+    display:inline-block;
+    font-size:16px;
+}
+.THIS .table{
+    width:90%;
+    margin-left:1rem;
+}
+.THIS .column12{
+    padding:1rem;
+    
+}

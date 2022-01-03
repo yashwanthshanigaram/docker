@@ -1,0 +1,205 @@
+<aura:component controller="Renewal_Central" implements="Flexipage:availableForAllPageTypes,force:hasRecordId,flexipage:availableForAllPageTypes" >
+    <aura:attribute name="partnerList" type="object"/>
+    <aura:attribute name="data" type="object"/>
+    <aura:attribute name="columns" type="object"/>
+    <aura:attribute name="columnsorder" type="object"/>
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="20"/>
+    <aura:attribute name="totalPages" type="Integer" default="0"/>
+    <aura:attribute name="pageList" type="List"/>
+    <aura:attribute name="allData" type="List"/>
+     <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String"/>
+    <aura:attribute name="defaultSortDirection" type="String"/>
+    <aura:attribute name="iscustomizetableopen" type="boolean" default="false"/>
+    <aura:attribute name="requiredOptions" type="List" default="[]"/>
+    <aura:attribute name="options" type="List" default="[]"/>
+    <aura:attribute name="values" type="List" default="[]"/>
+    <aura:attribute name="globalvar" type="Integer[]" />
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="isLoading" type="Boolean" default="false"/>
+    <aura:attribute name="isupdating" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+     <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    
+     <aura:attribute name="Businessgroup" type="String"/>
+    <aura:attribute name="RTM" type="String"/>
+    <aura:attribute name="STSearch" type="String" default=''/>
+    
+    
+    
+    <div class="c-container-1">
+       
+            <div class="c-container">
+        <lightning:layout >
+           <lightning:layoutItem padding="around-none">
+                <div class="header-column">
+                    <p class="field-title" title="Search fields AccountName and CustomerId" >
+     <!--<lightning:select name="select1" label="" required="false">
+         <option value="">Table Search</option>
+     </lightning:select>-->
+                        <lightning:input class = "Search_Button" type="search" label="Search" placeholder="Table Search" aura:id="SearchBox" name="STSearch"
+                         onchange="{!c.searchTable}" />
+        </p>
+   </div>
+ </lightning:layoutItem>
+           
+             <lightning:layoutItem padding="around-none">
+                <div class="header-column">
+                       <p class="field-title" title="Business"> 
+                            <lightning:select name="Business Group" label="Business"  aura:id ="Business Group" required="false" value ="{!v.Businessgroup}">
+                                <option value="">None</option>
+                                <option value="Aruba">Aruba</option>
+                                <option value="Nimble">Nimble</option>
+                                <option value="Pointnext">Pointnext</option>
+                                <option value="BlueData">BlueData</option>
+                                <option value="CMS">CMS</option>
+                                <option value="Cray">Cray</option>   
+                                <option value="Ecualyptus">Ecualyptus</option>   
+                                <option value="Greenlake">Greenlake</option>   
+                                <option value="MapR">MapR</option>   
+                                <option value="Photonics">Photonics</option>   
+                                <option value="Pointnext-Other">Pointnext-Other</option>
+                                <option value="Unknown">Unknown</option>
+                            </lightning:select> </p>
+                    </div>
+            </lightning:layoutItem>
+             <lightning:layoutItem padding="around-none">
+                    <div class="header-column">
+                        <p class="field-title" title="Route To Market" >
+                            <lightning:select name="Route To Market" label="Route To Market" aura:id = "Route To Market" required="false" value="{!v.RTM}">
+                                <option value="all">All</option>
+                                 <option value="direct">Direct</option>
+                                 <option value="indirect">Indirect</option>
+                            </lightning:select>
+                        </p>
+                    </div>
+                    
+                </lightning:layoutItem>
+            
+            <lightning:layoutItem padding="around-none">
+                <div class="header-column">
+                    <div class="buttons">
+                        <lightning:buttonGroup>
+                <lightning:button class= "submit" onclick="{!c.Reset}">Reset</lightning:button>
+                   <lightning:button class = "submit" onclick="{!c.handleSelected}">Submit</lightning:button>
+                              </lightning:buttonGroup></div>
+                    <div class="download">
+                         <lightning:buttonGroup>
+                         <lightning:button class = "submit" onclick="{!c.downloadLevel2}">Download All</lightning:button>
+                        <lightning:button class = "submit" label="Customize table" onclick="{! c.opencustomizetable }"/>
+                             </lightning:buttonGroup></div>
+                        <!--<lightning:button class = "submit" onclick="{!c.applyFilter}">apply</lightning:button>-->
+                        
+                        
+                </div>
+            </lightning:layoutItem>
+            
+          
+       
+            
+        </lightning:layout>
+        
+    </div>
+   
+
+    </div>
+           <!--loading spinner start-->
+    <aura:if isTrue="{!v.spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <!-- Loading spinner end-->
+            
+    <lightning:datatable  aura:id="customerTable"
+                             keyField="id"
+                             data="{!v.data}"
+                             columns="{!v.columns}"
+                             onrowselection = "{!c.updateselectedtext}" 
+                             sortedBy="{! v.sortedBy }"
+                             sortedDirection="{! v.sortedDirection }"
+                             defaultSortDirection="{! v.defaultSortDirection }"
+                             hideCheckboxColumn="true"
+                             onsort="{! c.updateColumnSorting }"           />
+   
+         <lightning:layout horizontalAlign="center" >
+     <lightning:layoutItem padding="around-small" flexibility="auto">
+                <lightning:button label="First" iconName="utility:left" iconPosition="left" variant="bare"
+                                  onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/>
+              <!--  <lightning:button iconName="utility:chevronleft" iconPosition="left"
+                                  onclick="{!c.onPrev}" disabled="{! v.currentPageNumber == 1}"/>
+                <span class="slds-p-horizontal_x-small">
+                    <a onclick="{!c.processMe}" name="1" 
+                       class="{! (v.currentPageNumber == 1) ? 'selected' : ''}">1</a>
+                </span>
+                <span class="slds-p-horizontal_xxx-small">
+                    <a>&nbsp;</a>
+                </span>-->
+                 
+                <aura:iteration items="{!v.pageList}" var="item">
+                    <span class="slds-p-horizontal_x-small">
+                        <a onclick="{!c.processMe}" name="{!item}"
+                           class="{! (v.currentPageNumber == item) ? 'selected' : ''}">{!item}</a>
+                    </span>
+                </aura:iteration>
+                  
+                
+                <span class="slds-p-horizontal_xxx-small">
+                    <a>&nbsp;</a>
+                </span>
+                <span class="slds-p-horizontal_x-small">
+                    <a onclick="{!c.processMe}" name="{!v.totalPages}"
+                       class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}">{!v.totalPages}</a>
+                </span>
+         <!-- <lightning:button iconName="utility:chevronright" iconPosition="right" 
+                                  disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onNext}"/> -->
+                <lightning:button label="Last" iconName="utility:right" iconPosition="right" variant="bare"
+                                  disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+    <aura:if isTrue="{!v.iscustomizetableopen}">        
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="height:500px;">    
+            <div class="slds-modal__container" style="width:50%;">
+                
+                <!-- ###### MODAL BOX HEADER Start ######-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closecustomizetable }"
+                                          alternativeText="closecustomizetable"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>            
+                    
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:dualListbox name="multipleOptions"  
+                                           label= "Customize Table
+                                                   (* fields cannot be Deselected)" 
+                                           sourceLabel="Deselected" 
+                                           selectedLabel="Selected" 
+                                           options="{!v.options}" 
+                                           value="{!v.values}" 
+                                           onchange="{! c.handleChange }"
+                                           fieldLevelHelp="Re-order and Hide/Show Columns"
+                                            
+                                           requiredOptions="{!v.requiredOptions}"/>
+                    
+                </div>
+                <footer class="slds-modal__footer">                                           
+                    <button class="slds-button slds-button_neutral slds-float_center" onclick="{! c.closecustomizetable }">Cancel</button>
+                    <button class="slds-button slds-button_brand slds-float_center" onclick="{! c.applySelectedColumns }">Apply</button> 
+                    
+                    <!-- button class="slds-button slds-button_brand">Save</button -->
+                </footer>
+            </div>
+        </section>
+    </aura:if>                                                           
+</aura:component>

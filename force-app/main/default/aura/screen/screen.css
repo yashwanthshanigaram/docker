@@ -1,0 +1,46 @@
+.THIS {
+}
+
+.THIS .salesprogramsheader{
+    font-size: 20px;
+    font-family: MetricHPE-Light;
+    margin-bottom:20px;
+    color: #334350;
+}
+
+.THIS .align-content{
+    
+}
+
+.THIS .tablebluehead{
+    background-color: #425563;
+height:30px;
+color:white;
+}
+
+.THIS .headingheading{
+    letter-spacing: 1.6px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #555555;
+    
+    margin-left:10px;
+    width:50%;
+    text-align:left;
+}
+.THIS .slds-modal__close{
+    float:right;
+    position:relative;
+}
+.THIS .slds-modal__header{
+    border-bottom:none;
+    border-top:1px solid grey;
+}
+.THIS .show{
+   
+}
+.THIS .pagination{
+    width:50px;
+    display:inline-block;
+    margin-right:10px;
+}

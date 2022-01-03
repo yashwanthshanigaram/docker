@@ -1,0 +1,39 @@
+.THIS .z{
+    float:right;
+    background-color:#01A982;
+    font-family:-MetricHPE-semibold;
+     padding-right:20px; 
+    color:white;
+}
+.THIS .y{
+    float:right;
+    background-color:#01A982;
+    font-family:-MetricHPE-semibold;
+    margin-left:10px; 
+    color:white;
+}
+.THIS .x{
+    float:right;
+    background-color:#01A982;
+    font-family:-MetricHPE-semibold;
+    margin-left:10px;
+    margin-right:5px;
+    color:white;
+}
+.THIS .xx{
+    
+    background-color:#01A982;
+    font-family:-MetricHPE-semibold;
+    color:white;
+    margin-right:20px;
+}
+.THIS.body{
+     background: LightGray;
+}
+.THIS.id{
+    float:right;
+    font-weight: bold;
+}
+.THIS.class{
+    text-align:center;
+}

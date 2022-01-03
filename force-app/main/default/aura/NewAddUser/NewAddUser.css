@@ -1,0 +1,13 @@
+.THIS .box{
+    padding-left:1rem;
+    font-size:17pt;
+    
+}
+.THIS .cusbox{
+    display:flex;
+    flex-direction:row;
+    background-color:white;
+}
+.THIS .fullpage{
+     background-color: white;
+}

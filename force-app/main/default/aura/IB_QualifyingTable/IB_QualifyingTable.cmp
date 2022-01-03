@@ -1,0 +1,123 @@
+<aura:component controller="IB_QualifyingTable" implements="force:appHostable,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId,force:hasSObjectName" access = "global">
+    <aura:attribute name="partnerList" type="Object"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="Object"/>
+    <aura:attribute name="columnsorder" type="Object"/>
+    <aura:attribute name="pageSizeOptions" type="Integer[]" default="5,10,25,50" />
+    <aura:attribute name="filteredData" type="List" />    
+    <aura:attribute name="picklistOptions" type="list" /> 
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="20"/>
+    <aura:attribute name="totalPages" type="Integer" default="0"/>
+    <aura:attribute name="pageList" type="List"/>
+    <aura:attribute name="updateColumn" type="boolean" default="false"/>
+    <aura:attribute name="showduallistbox" type="boolean" default="true"/>
+    <aura:attribute name="defaultColumns" type="List" default="[]"/>
+    <aura:attribute name="requiredOptions" type="List" default="[]"/>
+    <aura:attribute name="options" type="List" default="[]"/>
+    <aura:attribute name="values" type="List" default="[]"/>
+    <aura:attribute name="globalvar" type="Integer[]" />
+    <aura:attribute name = "search" type= "string"/>
+    <aura:attribute name="recordId" type="String"/>
+    
+    
+    
+    <aura:handler name="init" value="{!this }" action="{! c.init }"/>
+   
+    <div>
+       
+            
+            <h1>Qualifying Installed Base <lightning:icon iconName="utility:info" alternativeText="Approved" title="Approved" /><div class = "right"><lightning:button class = "customizebutton" label="Customize table" onclick="{! c.openPopUp }"/></div></h1>
+            
+        </div>
+    
+        <!--<div class = "head"> <span class="left"></span></div>-->
+        
+            <lightning:datatable aura:id="customerTable"
+                                 keyField="id"
+                                 data="{!v.data}"
+                                 columns="{!v.columns}"
+                                 onchange = "{!c.handleValueChange}"
+                                 onrowaction="{! c.handleRowAction}"
+                                 hideCheckboxColumn="true"
+                                 
+                                 defaultSortDirection="{!v.defaultSortDirection}"
+                                 sortedDirection="{!v.sortDirection}"
+                                 sortedBy="{!v.sortedBy}"
+                                 onsort="{!c.handleSort}"/>
+            
+            
+            
+        
+        
+    
+    
+    
+    <lightning:layout horizontalAlign="center" >
+        <lightning:layoutItem padding="around-small" flexibility="auto">
+            <lightning:button label="First" iconName="utility:left" iconPosition="left" variant="bare"
+                              onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/>
+            
+            
+            <aura:iteration items="{!v.pageList}" var="item">
+                <span class="slds-p-horizontal_x-small">
+                    <a onclick="{!c.processMe}" name="{!item}"
+                       class="{! (v.currentPageNumber == item) ? 'selected' : ''}">{!item}</a>
+                </span>
+            </aura:iteration>
+            
+            <span class="slds-p-horizontal_xxx-small">
+                <a>&nbsp;</a>
+            </span>
+            <span class="slds-p-horizontal_x-small">
+                <a onclick="{!c.processMe}" name="{!v.totalPages}"
+                   class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}">{!v.totalPages}</a>
+            </span>
+            
+            <lightning:button label="Last" iconName="utility:right" iconPosition="right" variant="bare"
+                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/>
+        </lightning:layoutItem>
+    </lightning:layout>
+
+    <div class= "wen">
+        <!--<lightning:button class ="y">Download</lightning:button>-->
+        <!--<lightning:button class ="z">Load More</lightning:button>-->
+    </div>
+    
+    <aura:if isTrue="{!v.updateColumn}">        
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="height:500px;">    
+            <div class="slds-modal__container" style="width:50%;">
+                
+                <!-- ###### MODAL BOX HEADER Start ######-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closePopUp }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>            
+                    
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:dualListbox name="multipleOptions"  
+                                           label= "Customize Table
+                                                   (* fields cannot be Deselected)" 
+                                           sourceLabel="Deselected" 
+                                           selectedLabel="Selected" 
+                                           options="{!v.options}" 
+                                           value="{!v.values}" 
+                                           onchange="{! c.handleChange }"
+                                           fieldLevelHelp="Re-order and Hide/Show Columns"
+                                           requiredOptions="{!v.requiredOptions}"/>
+                    
+                </div>
+                <footer class="slds-modal__footer">                                           
+                    <button class="slds-button slds-button_neutral slds-float_center" onclick="{! c.closePopUp }">Cancel</button>
+                    <button class="slds-button slds-button_brand slds-float_center" onclick="{! c.applySelectedColumns }">Apply</button> 
+                    
+                    
+                </footer>
+            </div>
+        </section>
+    </aura:if>
+    
+</aura:component>

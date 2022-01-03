@@ -1,0 +1,15 @@
+<aura:component implements="force:appHostable,lightning:hasPageReference,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId,force:hasSObjectName,lightning:isUrlAddressable" access="global">
+    <aura:attribute name = "searchedObject" type = "string"/>
+    <aura:attribute name="recordId" type="String"/>
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   
+	<div>
+        <c:IB_SalesProgram search = "{!v.searchedObject}" recordId = "{!v.recordId}"/>
+         
+
+
+    <c:IB_SalesProgramDetailsPageRFI search = "{!v.searchedObject}" recordId = "{!v.recordId}"/>
+    <c:IB_QualifyingTable search = "{!v.searchedObject}" recordId = "{!v.recordId}"/>
+       <!--c:IB_Opportunity/-->
+    </div>
+</aura:component>

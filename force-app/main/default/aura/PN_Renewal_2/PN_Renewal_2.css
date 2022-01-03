@@ -1,0 +1,44 @@
+.THIS.c-container-1{
+    background-color: #ffffff;
+    
+    
+}
+
+.THIS.c-container {
+    border: 1px solid #d8dde6;
+    padding-left:1rem;
+    padding-bottom:1rem;
+    
+    
+}
+.THIS .header-column {
+    padding-top:20px;
+    padding-bottom:2px;
+   
+    
+    
+    
+}
+.THIS .field-title {
+    font-size: .75rem;
+    line-height: 1.25; 
+    margin-bottom: .20rem;
+    padding-left:10px;
+    
+}
+.THIS .selected{
+    color:rgb(1, 118, 211);
+    font-size:14px;
+    font-weight:bold;
+}
+
+.THIS .buttons{
+    padding-top:16px;
+    padding-left:1rem;
+    
+}
+.THIS .download{
+     margin-left:7rem;
+    margin-bottom:2rem;
+        
+}

@@ -1,0 +1,397 @@
+<aura:component controller="ProgramID" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable,lightning:isUrlAddressable" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:attribute name="programFields" type="object[]" />
+    <aura:attribute name="campaignNames" type="object[]" />
+    <aura:attribute name="offerings" type="object[]" />
+    <aura:attribute name="selectionRules" type="object[]" />
+    <aura:attribute name="SelectionConditions" type="object[]" />
+    <aura:attribute name="evaluationRules" type="object[]" />
+    <aura:attribute name="evaluationCondition" type="object[]" />
+    <aura:attribute name="recommEvaluation" type="object[]" />
+    <aura:attribute name="salesPlayName" type="object[]" />
+    <aura:attribute name="ReccLogic" type="object[]" />
+    <aura:attribute name="EvRuleDtlsObj" type="object[]" />
+    <aura:attribute name="ruleId" type="String"/>
+    <aura:attribute name="ruleIdp" type="String"/>
+    <!--<aura:handler name="DeleteProgram" value="{!v.pageReference}" action="{!c.DeleteAction}" />-->
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.reInit}" />
+        
+    <div>
+   	<div class="slds">
+       
+        <div class="slds-box cusbox slds-box_x-small">
+            <lightning:icon iconName="custom:custom64"></lightning:icon>
+            <h1 class="box" >Program Management</h1>
+              
+		</div>
+        <br></br>
+         <div class="bgcolor" style="background: white;">
+        <div class="fullpage">
+        <div class="tile_body">
+            <aura:iteration items="{!v.programFields}" var="program">
+                       <p class="column1" style="padding-left:1rem;font-size:18px;">{!program.programType__c}</p>
+                <h2 class="column1" style="padding-left:1rem;font-size:18px;">{!program.ExternalId}</h2><br></br>
+                
+            </aura:iteration>
+            <div class="slds-text-align--center slds-m-top--medium">
+                <br></br>
+                <lightning:button onclick="{!c.program}">New</lightning:button>
+                <lightning:button onclick="{!c.EditProgram}">Edit</lightning:button>
+                <lightning:button onclick="{!c.Clone}">Clone</lightning:button>
+                <lightning:button onclick="{!c.Review}">Submit to Review</lightning:button>
+                <aura:iteration items="{!v.programFields}" var="program">
+                <aura:if isTrue="{!program.isActive__c== 'false'}">
+                   <lightning:button onclick="{!c.Activate}">Submit to Activate</lightning:button>
+                <aura:set attribute="else">    
+                	<lightning:button onclick="{!c.Inactivate}">Inactivate Program</lightning:button>
+                </aura:set>    
+                </aura:if>
+                </aura:iteration>
+             	<lightning:button onclick="{!c.Expire}">Submit to Expire</lightning:button>
+                 <lightning:notificationsLibrary aura:id="notifLib"/>
+                <lightning:button onclick="{!c.DeleteProgram}">Delete Program</lightning:button>
+             </div>  
+            <br></br>
+            <div class="c-container" style="padding-left:1rem">
+					<table width="100%">				
+                    <tr><td width="20%"><p class="column1">PROGRAM NAME</p>
+                        <aura:iteration items="{!v.programFields}" var="program">
+					<aura:if isTrue="{!program.ruleName__c}">
+                    <br></br>
+                    <tr class="column1-row1">{!program.ruleName__c}</tr>
+                        <aura:set attribute="else">
+                    <tr class="column1-row1"></tr>
+                        </aura:set>
+                    </aura:if>    
+                        </aura:iteration>   
+                        <br></br>
+                        <br></br>
+                        <tr><p class ="column1"> END DATE </p></tr>
+                        <aura:iteration items="{!v.programFields}" var="program">
+                    <aura:if isTrue="{!program.effectiveEndDate__c}">
+                        <br></br>
+                    <tr class="column1-row1">{!program.effectiveEndDate__c}</tr>
+                        <aura:set attribute="else">
+                    <tr class="column1-row1"></tr>
+                        </aura:set>
+                    </aura:if>    
+                        </aura:iteration>
+                	</td>     
+               		<td width="20%"><p class="column1">PROGRAM TYPE</p>
+                        <aura:iteration items="{!v.programFields}" var="program">
+                    <aura:if isTrue="{!program.ruleType__c}">
+                        <br></br>
+                          <tr class="column1-row1">{!program.ruleType__c}</tr>
+                    <aura:set attribute="else">
+                          <tr class="column1-row1"></tr>
+                    </aura:set>
+                    </aura:if>
+                        </aura:iteration>
+                        <br></br>
+                        <br></br>
+                        <tr><p class="column1">GEO</p></tr>
+                        <aura:iteration items="{!v.programFields}" var="program">
+                    <aura:if isTrue="{!program.region__c}">
+                        <br></br>
+                          <tr class="column1-row1">{!program.region__c}</tr>
+                          <aura:set attribute="else">
+                          <tr class="column1-row1"></tr>
+                          </aura:set>
+                        
+                   </aura:if>    
+                        </aura:iteration>
+                   </td>     
+                    <tr><td width="40%"><p class="column1">PROGRAM DESCRIPTION</p>
+                        <aura:iteration items="{!v.programFields}" var="program" indexVar="key">
+					<aura:if isTrue="{!program.description__c}">
+                        <br></br>
+                    <tr class="column1-row1"><p class="ellipsis1">{!program.description__c}</p></tr>
+                        <aura:set attribute="else">
+                    <tr class="column1-row1"></tr>
+                        </aura:set>
+                    </aura:if>    
+                        </aura:iteration>   
+                        <br></br>
+                        <br></br>
+                        <tr><p class ="column1"> ESTIMATED PROGRAM VALUE BY ACCOUNT </p></tr>
+                        <aura:iteration items="{!v.programFields}" var="program">
+                    <aura:if isTrue="{!program.recommendationValue__c}">
+                        <br></br>
+                    <tr class="column1-row1"><span >{!program.recommendationValue__c}</span></tr>
+                        <aura:set attribute="else">
+                    <tr class="column1-row1"><span ></span></tr>
+                        </aura:set>
+                    </aura:if>    
+                        </aura:iteration>
+                	</td>     
+               		<td width="20%"><p class="column1">START DATE</p>
+                        <aura:iteration items="{!v.programFields}" var="program">
+                    <aura:if isTrue="{!program.effectiveStartDate__c}">
+                        <br></br>
+                          <tr class="column1-row1"><span >{!program.effectiveStartDate__c}</span></tr>
+                    <aura:set attribute="else">
+                          <tr class="column1-row1"><span ></span></tr>
+                    </aura:set>
+                    </aura:if>
+                        </aura:iteration>
+                        <br></br>
+                        <br></br>
+                        <tr><p class="column1">PROGRAM GOVERNANCE</p></tr>
+                        <aura:iteration items="{!v.programFields}" var="program">
+                    <aura:if isTrue="{!program.programGovernance__c}">
+                        <br></br>
+                          <tr class="column1-row1" style="text-transform:uppercase">{!program.programGovernance__c}</tr>
+                          <aura:set attribute="else">
+                          <tr class="column1-row1"><br/></tr>
+                          </aura:set>
+                        
+                   </aura:if>    
+                        </aura:iteration>
+                   </td>     
+                    </tr>
+                </tr>
+                </table>
+                <br></br>
+                <br></br>
+                <table width="60%">
+               <tr><td width="20%"><p class ="column1"> LINK TO RESOURCE </p>
+                        <aura:iteration items="{!v.programFields}" var="program">
+                    <aura:if isTrue="{!program.ResourceLink_First__c}">
+                        <br></br>
+                    <tr class="ellipsis1"><a href="{!program.ResourceLink_First__c}" target="_blank">{!program.ResourceLink_First_desc__c}</a></tr>    
+                    <!--<tr class="column1-row1"><p class="ellipsis1">{!program.ResourceLink_First__c}</p></tr>-->
+                        <aura:set attribute="else">
+                    <tr class="column1-row1"></tr>
+                        </aura:set>
+                    </aura:if>    
+                    <aura:if isTrue="{!program.ResourceLink_Second__c}">
+                        <tr class="ellipsis1"><a href="{!program.ResourceLink_Second__c}" target="_blank">{!program.ResourceLink_Second_desc__c}</a></tr>    
+                        <!--<tr class="column1-row1"><p class="ellipsis1">{!program.ResourceLink_Second__c}</p></tr>-->
+                        <aura:set attribute="else">
+                    <tr class="column1-row1"></tr>
+                        </aura:set>
+                    </aura:if>  
+                    <aura:if isTrue="{!program.ResourceLink_Third__c}">
+                        <tr class="ellipsis1"><a href="{!program.ResourceLink_Third__c}" target="_blank">{!program.ResourceLink_Third_desc__c}</a></tr>    
+                        <!--<tr class="column1-row1"><p class="ellipsis1">{!program.ResourceLink_Third__c}</p></tr>-->
+                        <aura:set attribute="else">
+                    <tr class="column1-row1"></tr>
+                        </aura:set>
+                    </aura:if>          
+                        </aura:iteration>
+                   </td>
+                   
+                   <td width="20%"><p class ="column1"> LINK TO SEISMIC </p>
+                        <aura:iteration items="{!v.programFields}" var="program">
+                    <aura:if isTrue="{!program.SeismicLink_First__c}">
+                        <br></br>
+                        <!--<tr class="column1-row1"><p class="ellipsis1">{!program.SeismicLink_First__c}</p></tr>-->
+                        <tr class="ellipsis1"><a href="{!program.SeismicLink_First__c}" target="_blank">{!program.SeismicLink_First_desc__c}</a></tr>
+                        <aura:set attribute="else">
+                    <tr class="column1-row1"></tr>
+                        </aura:set>
+                    </aura:if>    
+                    <aura:if isTrue="{!program.SeismicLink_Second__c}">
+                        <tr class="ellipsis1"><a href="{!program.SeismicLink_Second__c}" target="_blank">{!program.SeismicLink_Second_desc__c}</a></tr>
+                        <!--<tr class="column1-row1"><p class="ellipsis1">{!program.SeismicLink_Second__c}</p></tr>-->
+                        <aura:set attribute="else">
+                    <tr class="column1-row1"></tr>
+                        </aura:set>
+                    </aura:if>  
+                    <aura:if isTrue="{!program.SeismicLink_Third__c}">
+                        
+                        <tr class="ellipsis1"><a href="{!program.SeismicLink_Third__c}" target="_blank">{!program.SeismicLink_Third_desc__c}</a></tr>
+                        <!--<tr class="column1-row1"><p class="ellipsis1">{!program.SeismicLink_Third__c}</p></tr>-->
+                        <aura:set attribute="else">
+                    <tr class="column1-row1"></tr>
+                        </aura:set>
+                    </aura:if>          
+                        </aura:iteration>
+                   </td>
+                   <td width="20%"><p class ="column1"> STATUS </p>
+                        <aura:iteration items="{!v.programFields}" var="program">
+                    	<aura:if isTrue="{!program.status__c}">
+                        <br></br>
+                    		<tr class="column1-row1">{!program.status__c}</tr>
+                        <aura:set attribute="else">
+                    		<tr class="column1-row1"></tr>
+                        </aura:set>
+                    	</aura:if>    
+                        </aura:iteration>
+                   </td>
+                </tr>
+                </table>
+            </div>
+         <br></br>
+         <div class="c-container" style="padding-left:1rem">
+                
+            <tr><td class ="column1">ASSOCIATED SALESFORCE CAMPAIGN CODES</td>
+            </tr>
+            <aura:iteration items="{!v.campaignNames}" var="camp">
+            <aura:if isTrue="{!v.campaignNames}">
+            	<tr><td class="column1-row1">{!camp}</td></tr>
+            <aura:set attribute="else">
+            	<tr><td class="column1-row1"><br/></td></tr>
+            </aura:set>
+            </aura:if>
+            </aura:iteration>
+         </div>
+            <br></br>
+            <br></br>
+         <div class="c-container" style="padding-left:1rem">   
+             <table width="50%">
+             <tr><td width="10%" class ="column1"> PROGRAM OFFERING </td></tr>
+             <br></br>
+             </table>   
+             <lightning:accordion aura:id="accordion" activeSectionName="B" allowMultipleSectionsOpen="true">   
+             <lightning:accordionSection name="A" label="Data Set Filter ">
+                 <p class="column1-row1"> {!v.offerings[0]} </p>
+             <!--<aura:if isTrue="{!v.offerings}">
+             	 <tr><td width="40%" class="column1">Data Set Filter :</td><td class="column1-row1"> {!v.offerings[0]}</td></tr>   
+             </aura:if>-->
+                     <br></br>    
+                  
+                 <tr class="column1">OBJECT</tr>
+                 <tr class="column1-row1">{!v.offerings[1]}</tr>
+                 <br></br>
+                 <table width="80%">
+                     <tr ><td width="20%"><p class="column1">FIELD</p><tr class="column1-row1">{!v.offerings[2]}</tr></td>
+                         <td width="20%"><p class="column1">OPERATOR</p><tr class="column1-row1">{!v.offerings[3]}</tr></td>
+                         <td width="20%"><p class="column1">VALUE</p><tr class="column1-row1">{!v.offerings[4]}</tr></td>
+                         <td width="20%"><p class="column1">NOTES</p><tr class="column1-row1">{!v.offerings[5]}</tr></td>
+                     </tr>    
+                 </table>  
+                 </lightning:accordionSection>    
+                 <lightning:accordionSection name="B" label="" class="slds-hide"></lightning:accordionSection>
+                 </lightning:accordion>
+         </div>
+            <br></br>
+            <br></br>
+            
+            <aura:iteration items="{!v.programFields}" var="program">
+            <aura:if isTrue="{!program.uploadedSTIdList__c== false}">
+                
+            <div class="c-container" style="padding-left:1rem">
+                <tr><td class ="column1">DATA SET FILTER CRITERIA</td></tr>
+                <br></br>    
+                <lightning:accordion aura:id="accordion" activeSectionName="B" allowMultipleSectionsOpen="true">   
+                 <aura:iteration items="{!v.selectionRules}" var="camp" indexVar="key">
+                    <lightning:accordionSection name="A" label="{!key+1}">
+                        <br></br>
+                    <table width="39%">    
+                    <tr><!--<td width="1%" class ="column1"> {!key+1}</td>-->
+                        <td width="9%" class ="column1">Data Set Filter :</td>
+                        <td width="30%" class="column1-row1">{!camp}</td>
+                    </tr>
+                        </table>
+                        <br></br>
+                <tr class="column1">OBJECT</tr>
+                <tr class="column1-row1">{!v.selectionRules[1]}</tr>
+                 <br></br>
+                 <table width="80%">
+                     <tr ><td width="20%"><p class="column1">FIELD</p><tr class="column1-row1">{!v.selectionRules[2]}</tr></td>
+                         <td width="20%"><p class="column1">OPERATOR</p><tr class="column1-row1">{!v.selectionRules[3]}</tr></td>
+                         <td width="20%"><p class="column1">VALUE</p><tr class="column1-row1">{!v.selectionRules[4]}</tr></td>
+                         <td width="20%"><p class="column1">NOTES</p><tr class="column1-row1">{!v.selectionRules[5]}</tr></td>
+                     </tr>       
+                        </table>
+                    </lightning:accordionSection>
+                    </aura:iteration>
+                    <lightning:accordionSection name="B" label="" class="slds-hide"></lightning:accordionSection>
+                    </lightning:accordion> 
+                                                      
+                      
+            </div>
+            <br></br>
+            <br></br>
+            <div class="c-container" style="padding-left:1rem">
+                <tr><td class ="column1">DATA SET FILTER LOGIC</td></tr>
+                <table width="50%">
+                <br></br>    
+                <aura:iteration items="{!v.SelectionConditions}" var="camp">
+                
+                    <tr><td class="column1" style="font-size:12px;">RECOMMENDATION LOGIC</td></tr>
+                    <br></br>
+                  	<tr><td class="column1-row1">{!camp}</td></tr>
+                
+               </aura:iteration>	                                        
+               </table>                 
+           </div>
+           <br></br>
+           <br></br>
+           </aura:if>     
+           </aura:iteration>
+           <div class="c-container" style="padding-left:1rem">
+           		<tr><td class ="column1">QUALIFYING INSTALLED BASE</td></tr>
+                <br></br>
+                
+                <lightning:accordion aura:id="accordion" activeSectionName="B" allowMultipleSectionsOpen="true">   
+                <aura:if isTrue="{!v.evaluationRules}">
+                    <aura:iteration items="{!v.evaluationRules}" var="camp" indexVar="key">
+                    	<lightning:accordionSection name="A" label="{!key+1}">
+                		<table width="39%">
+                <aura:iteration items="{!v.EvRuleDtlsObj}" var="camp1">              
+                    <tr><!--<td width="1%" class ="column1">{!key+1}</td>-->
+                        <td width="9%" class ="column1">Evaluation Criteria :</td>
+                        <td width="30%" class="column1-row1" >{!camp1}</td>
+                    </tr>
+                            </aura:iteration>
+                		</table>  
+                        <br></br>
+				 
+                 <tr class="column1">OBJECT</tr>
+                 <tr class="column1-row1">{!v.EvRuleDtlsObj}</tr>
+                          
+                <!-- <br></br>
+                 <table width="80%">
+                     <tr ><td width="20%"><p class="column1">FIELD</p><tr class="column1-row1">{!camp}</tr></td>
+                         <td width="20%"><p class="column1">OPERATOR</p><tr class="column1-row1">{!v.evaluationRules[3]}</tr></td>
+                         <td width="20%"><p class="column1">VALUE</p><tr class="column1-row1">{!v.evaluationRules[4]}</tr></td>
+                         <td width="20%"><p class="column1">EVALUATION DESCRIPTION</p><tr class="column1-row1"></tr></td>
+                     </tr>      
+                 </table> 
+				-->   
+                        
+                    </lightning:accordionSection>
+                        <!--</aura:iteration>-->
+                </aura:iteration>
+                    </aura:if>
+                        <lightning:accordionSection name="B" label="" class="slds-hide"></lightning:accordionSection>
+                <!--<aura:set attribute="else">
+                	<tr><td class="column1-row1"><span ></span><br/></td></tr>
+                </aura:set>
+                </aura:if>-->
+                    </lightning:accordion>
+                              
+			</div>
+           <br></br>
+           <br></br>
+           <div class="c-container" style="padding-left:1rem"> 
+                <tr><td class ="column1">EVALUATION CONDITION</td></tr>
+                <br></br>
+               <table width="70%"> 
+                   <tr><td width="30%"><p class="column1" style="font-size:12px;">RECOMMENDATION LOGIC</p>
+                       
+                		<aura:iteration items="{!v.ReccLogic}" var="Logic">    
+                        	<tr class="column1-row1"><p class="ellipsis1">{!Logic}</p></tr>
+                    	</aura:iteration>    
+                 		</td>
+                    	<td width="20%"><p class="column1" style="font-size:12px;">SALES PLAY NAME</p>
+                    		<tr class="column1-row1">{!v.salesPlayName[0]}</tr>
+                    	</td>
+                    	<td width="20%"><p class="column1" style="font-size:12px;">RECOMMENDATION RANKING</p>
+                    		<tr class="column1-row1">{!v.salesPlayName[1]}</tr>
+                    	</td>
+                   </tr>
+               </table>
+              <br></br>
+    		<br></br> 
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <br></br>
+    <br></br>
+</aura:component>

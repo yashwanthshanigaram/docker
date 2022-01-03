@@ -1,0 +1,17 @@
+.THIS .head{
+    padding-left:10px;
+    padding-bottom:10px;
+}
+.THIS p{
+    color:green;
+    padding-bottom:10px;
+    padding-left:10px;
+}
+.THIS {
+    background-color:white;
+    padding-bottom:1.5rem;
+    margin-left:10px;
+}
+.THIS h1{
+    font-size:18px;
+}

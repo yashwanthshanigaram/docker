@@ -1,0 +1,53 @@
+.THIS .right{
+float:right;
+    font-size:12px;
+    }
+.THIS .z{
+   float:right;
+    background-color:#064E39;
+    font-family:-MetricHPE-semibold;
+     padding-right:20px; 
+    color:white;
+    margin-top:-2.5rem;
+     margin-right: 6rem;
+}
+.THIS .y{
+    float:right;
+    background-color:#064E39;
+    font-family:-MetricHPE-semibold;
+    margin-left:10px; 
+    color:white;
+    margin-top:-2.5rem;
+}
+.THIS .wen{
+     padding-left:5px;
+    padding-right:5px;
+    padding-top:5px;
+    padding-bottom:5px;
+    background-color:LightGray;
+}
+.THIS .head{
+background-color: #425563;
+height:30px;
+color:white;
+padding-left:10px;    
+}
+.THIS .left{
+float:left;
+padding-top:5px;
+font-weight:bold;
+    
+}
+.THIS h1{
+    font-size:18px;
+    margin-left:10px;
+}
+
+.THIS .pagination{
+    width:50px;
+    display: inline-block;
+    margin-right: 10px;
+}
+.THIS {
+    background-color:none;
+}

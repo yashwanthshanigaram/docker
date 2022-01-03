@@ -1,0 +1,223 @@
+.THIS.c-container-1{
+    background-color: #ffffff;   
+}
+
+
+.THIS .curved-box{
+    height:40px;
+    font-family: metrichpe-semibold;
+    float:left;
+    text-align:center; 
+    align-content:center;
+    padding-left:8rem;
+    
+}
+.THIS .boxhead{
+    color:#333333;
+    font-size:14px;
+    display:inline;
+   font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');
+    font-weight: var(--lwc-fontWeightBold,700);
+            color:    var(--lwc-tableColorTextHeader,rgb(81, 79, 77));        
+}
+
+.THIS .boxvalue1{
+    font-family: MetricHPE-Medium;
+    font-size:16px;
+    font-weight:bold;
+    color:#FFA500;
+}
+.THIS .boxvalue2{
+    font-family: MetricHPE-Medium;
+    font-size:16px;
+    font-weight:bold;
+    color:#008000;
+}
+.THIS.c-container {
+    border: 1px solid #d8dde6;
+    padding-left:1rem;
+    padding-bottom:1rem;   
+}
+.THIS .header-column {
+    padding-top:15px;
+    padding-bottom:2px;    
+}
+.THIS .field-title {
+    font-size: .75rem;
+    line-height: 1.25; 
+    margin-bottom: .20rem;
+    padding-left:10px;
+    
+}
+.THIS .slds-select_container::before{
+             margin-right:5px;
+                }
+.THIS .slds-select_container::after{
+             margin-right:5px;
+                }
+.THIS .submit{ 
+      
+}
+
+.THIS .buttons{
+    padding-top:16px;
+    padding-left:1rem; 
+    margin-top:4px;
+}
+.THIS .download{
+    margin-left:67px;
+}
+.THIS .pagination{
+    width:50px;
+    display: inline-block;
+    margin-right: 10px;
+}
+.THIS .selected{
+    color:rgb(1, 118, 211);
+    font-size:14px;
+    font-weight:bold;
+}
+.THIS {
+    background-color:white;
+}
+.THIS .percent{
+         color:red;   
+        }
+ .THIS .ds_custom_template_btn_orange{
+	text-align: center;
+    background: #d9775c;
+    border-radius: 20px;
+    color: white;
+    min-width: 80px;
+    max-width: 80px;
+    padding: 5px;
+    font-family: metrichpe-semibold;
+    display: block;
+    margin-left: 15px;
+}
+.THIS .arrow_button{
+    background: #01a982;
+    font-weight: 400;
+    color: #fff;
+    border: 2px solid #01a982;
+}
+.THIS .tile{
+    border: 1px solid black;
+    padding-left: 5px;
+    width:300px;
+   
+ }
+
+.THIS .space{
+    width:10px;
+}
+
+.THIS {
+    background: #ffffff !important;
+   
+}
+.THIS .column1{
+    text-align: center;
+    font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');
+    font-weight: var(--lwc-fontWeightBold,700);
+            color:var(--lwc-tableColorTextHeader,rgb(81, 79, 77));
+                    font-size:14px;
+}
+.THIS .row2{
+    padding-top: .5em;
+    padding-bottom: .5em; 
+}
+
+.THIS .row2_column2{
+    padding-top: .5em;
+    padding-bottom: .5em; 
+    text-align: right;
+}
+.THIS h1{
+    font-size: 1.2em;
+    padding-top: 40px;
+    padding-bottom: 10px;
+    margin-left:50px;
+}
+.THIS .nav_button{
+   /* width:30px;*/
+    margin-top:40px;
+}
+.THIS.c-container {
+    border: 1px solid #d8dde6;
+    margin: 10px 0 20px 0;
+}
+
+.THIS .custom-box {
+    text-align: center;
+    background-color: white;
+    padding: 1rem;
+    
+}
+.THIS .headingheading{
+    letter-spacing: 1.6px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #555555;
+    
+    margin-left:10px;
+    width:50%;
+    text-align:left;
+}
+.THIS .slds-modal__close{
+    float:right;
+    position:relative;
+}
+.THIS .slds-modal__header{
+    border-bottom:none;
+    border-top:1px solid grey;
+}
+
+
+.THIS .column1-row1{
+    color:black;
+    text-align:center;
+}
+
+.THIS .selected{
+    color:rgb(1, 118, 211);
+    font-size:14px;
+    font-weight:bold;
+}
+.THIS .column2-row1{
+    color:black;
+    text-align:center;
+}
+.THIS .column3-row1{
+    color:black;
+    text-align:center;
+}
+.THIS .column4-row1{
+    color:black;
+    text-align:center;
+}
+.THIS .column5-row1{
+    color:black;
+    text-align:center;
+}
+.THIS .slds-select{
+        width:8rem; 
+  }
+  /*.THIS .slds-truncate{
+   position:relative;
+left:20%;
+right:20%;
+bottom:5%;
+top:60%;
+font-size:10px; 
+                                
+  }         */
+.THIS .slds-spinner_container {
+  z-index: 10000;
+  position: flexible;
+  padding:35rem;                                    
+   
+}
+.THIS .slds-table_header-fixed_container.slds-scrollable_x{
+             margin-top:1rem;                               
+}

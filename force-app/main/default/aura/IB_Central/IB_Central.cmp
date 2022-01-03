@@ -1,0 +1,473 @@
+<aura:component controller="IB_Central_Ltng" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+    <aura:attribute name="partnerList" type="object[]"/>
+    <aura:attribute name="searchlist" type="List" default="[]"/>
+    <aura:attribute name="data" type="object"/>
+    <aura:attribute name="columns" type="object"/>
+    <aura:attribute name="columnsorder" type="object"/>
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    
+    <aura:attribute name="oldPageNumber" type="Integer" default="0"/>
+    <aura:attribute name="pageSize" type="Integer" default="20"/>
+    <aura:attribute name="totalPages" type="Integer" default="0"/>
+    <aura:attribute name="pageList" type="List"/>
+    <aura:attribute name="allData" type="List"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="isLoading" type="Boolean" default="false"/>
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String"/>
+    <aura:attribute name="defaultSortDirection" type="String"/>
+    <aura:attribute name="iscustomizetableopen" type="boolean" default="false"/>
+    <aura:attribute name="requiredOptions" type="List" default="[]"/>
+    <aura:attribute name="options" type="List" default="[]"/>
+    <aura:attribute name="values" type="List" default="[]"/>
+    <aura:attribute name="globalvar" type="Integer[]" />
+    <aura:attribute name="selectedRecord" type="List" default= "[]"/>
+    <aura:attribute name="searchedRecord" type="String" />
+    <aura:attribute name="isupdating" type="boolean" default="false"/>
+    <aura:attribute name="search" type="String"/>
+    <aura:attribute name="currentSelection" type="Integer[]"/>
+    
+    
+    <aura:attribute name="currentSelectedRows" type="List" />
+    <aura:attribute name="overallSelectedRows" type="List" />
+   
+    
+    <aura:attribute name = "optional" type="list"/>
+    <aura:handler name="init" value="{!this}" action="{!c.salesnamelist}"/>
+    
+    
+    <aura:attribute name="programList" type="object[]" />
+    <aura:attribute name="tableSearch" type="String"/>
+    
+    <aura:attribute name="spinner" type="boolean" default="false"/>
+     <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:attribute name="SalesProgramStatus" type = "String"/>
+    <aura:attribute name="Accountname" type = "String"/>
+    <aura:attribute name="AccountInsights" type = "String"/>
+    <aura:attribute name="ProgramName" type = "String"/>
+     <aura:attribute name="programSalesName" type="String"/>
+    <aura:attribute name="SelectedValue" type="List"/>
+    
+    
+     <!-- attribute to hold selected all rows -->
+    <aura:attribute name="selection" type="List" />
+    <!-- attribute to check if the page has changed or not -->
+    <aura:attribute name="hasPageChanged" type="Boolean" />
+    <!-- attribute to check if it is initialLoad -->
+    <aura:attribute name="initialLoad" type="Boolean" default="true"/>
+    
+    <!-- This attribute will hold the update records from data table-->
+    <aura:attribute name="updatedRecord" type="Object[]" />
+    
+   <!-- <aura:attribute name="salesList" type="object"/>
+    <aura:attribute name="selectedObject" type="object[]"/>
+    <aura:attribute name="salesdata" type="object"/>
+    <aura:attribute name="salescolumns" type="object"/>
+     <aura:handler name="init" value="{!this}" action = "{!c.level2}"/>
+    <aura:handler event="force:refreshView" action="{!c.isRefreshed}" /> -->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+   
+   
+   
+    <div>
+    <div class="c-container-1">
+      
+        <div class="c-container">
+            <!--<c:Account_Index_page/>-->
+           
+    <div class="tile_body">
+        
+         <div class="c-container">
+        <lightning:layout horizontalAlign="space">
+            
+        <aura:if isTrue="{!v.programList.length>0}"> 
+<aura:iteration items="{!v.programList}" var="program">
+            <lightning:layoutItem>
+                <div class="custom-box">
+                    <table>
+                        <!--<tr><td>IB Potential: </td><td class="column2">${!program.Recommendation__c}</td>
+                        </tr>-->
+                        <tr><td class="column1">% Sales Programs Covered</td>
+                        </tr>
+                        <!--<tr><td class="column1-row1"><span >{!program.salesProgramPercantage__c}%</span><br/></td></tr>-->
+                         
+                       <aura:if isTrue="{!program.salesProgramPercantage__c}">
+                            <tr><td class="column1-row1"><span >{!program.salesProgramPercantage__c}</span><br/></td></tr>
+                          <aura:set attribute="else">
+                              <tr><td class="column1-row1"><span >0</span><br/></td></tr>
+                             </aura:set>
+                        </aura:if>
+                    </table>
+                     
+                </div>
+            </lightning:layoutItem>
+             <lightning:layoutItem >
+                <div class="custom-box">
+                    <table>
+                        <!--<tr><td>IB Potential: </td><td class="column2">${!program.Recommendation__c}</td>
+                        </tr>-->
+                        <tr><td class ="column1"> Call to Action </td>
+                        </tr>
+                         <!--<tr><td class="column2-row1"><span >{!program.Red__c}</span><br/></td></tr>-->
+                        <aura:if isTrue="{!program.Red__c}">
+                            <tr><td class="column2-row1"><span >{!program.Red__c}</span><br/></td></tr>
+                          <aura:set attribute="else">
+                              <tr><td class="column2-row1"><span >0</span><br/></td></tr>
+                             </aura:set>
+                        </aura:if>
+                  </table>
+                   
+                     
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem >
+                <div class="custom-box" >
+                    <table>
+                        <!--<tr><td>IB Potential: </td><td class="column2">${!program.Recommendation__c}</td>
+                        </tr>-->
+                        <tr><td class = "column1">SFDC Opportunity </td>
+                        </tr>
+                        <!--<tr><td class="column3-row1"><span >{!program.Green__c}</span><br/></td></tr>-->
+                        <aura:if isTrue="{!program.Green__c}">
+                            <tr><td class="column3-row1"><span >{!program.Green__c}</span><br/></td></tr>
+                          <aura:set attribute="else">
+                              <tr><td class="column3-row1"><span >0</span><br/></td></tr>
+                             </aura:set>
+                        </aura:if>
+                  </table>                
+                     
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem >
+                <div class="custom-box">
+                    <table>
+                        <!--<tr><td>IB Potential: </td><td class="column2">${!program.Recommendation__c}</td>
+                        </tr>-->
+                        <tr><td class = "column1">Advanced Opportunity</td>
+                        </tr>
+                        <!--<tr><td class="column4-row1"><span >{!program.darkGreen__c}</span><br/></td></tr>-->
+                        <aura:if isTrue="{!program.darkGreen__c}">
+                            <tr><td class="column4-row1"><span >{!program.darkGreen__c}</span><br/></td></tr>
+                          <aura:set attribute="else">
+                              <tr><td class="column4-row1"><span >0</span><br/></td></tr>
+                             </aura:set>
+                        </aura:if>
+                  </table>
+                   
+                     
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem >
+                <div class="custom-box">
+                    <table>
+                        <!--<tr><td>IB Potential: </td><td class="column2">${!program.Recommendation__c}</td>
+                        </tr>-->
+                        <tr><td class = "column1">No Action Needed</td>
+                        </tr>
+                        <!--<tr><td class="column5-row1"><span >{!program.Grey__c}</span><br/></td></tr>-->
+                       <aura:if isTrue="{!program.Grey__c}">
+                            <tr><td class="column5-row1"><span >{!program.Grey__c}</span><br/></td></tr>
+                          <aura:set attribute="else">
+                              <tr><td class="column5-row1"><span >0</span><br/></td></tr>
+                             </aura:set>
+                        </aura:if>
+                  </table>
+                   
+                     
+                </div>
+            </lightning:layoutItem>
+            
+         </aura:iteration>
+ <aura:set attribute="else">
+ <lightning:layoutItem>
+                <div class="custom-box">
+                    <table>
+                        <!--<tr><td>IB Potential: </td><td class="column2">${!program.Recommendation__c}</td>
+                        </tr>-->
+                        <tr><td class="column1">% Sales Programs Covered</td>
+                        </tr>
+                        <!--<tr><td class="column1-row1"><span >{!program.salesProgramPercantage__c}</span><br/></td></tr>-->
+                         <tr><td class="column1-row1"><span >0</span><br/></td></tr>
+                       </table>
+                     
+                </div>
+            </lightning:layoutItem>
+ <lightning:layoutItem>
+                <div class="custom-box">
+                    <table>
+                        <!--<tr><td>IB Potential: </td><td class="column2">${!program.Recommendation__c}</td>
+                        </tr>-->
+                        <tr><td class="column1">Call to Action</td>
+                        </tr>
+                        <!--<tr><td class="column1-row1"><span >{!program.salesProgramPercantage__c}%</span><br/></td></tr>-->
+                         <tr><td class="column2-row1"><span >0</span><br/></td></tr>
+                       </table>
+                     
+                </div>
+            </lightning:layoutItem>
+ <lightning:layoutItem>
+                <div class="custom-box">
+                    <table>
+                        <!--<tr><td>IB Potential: </td><td class="column2">${!program.Recommendation__c}</td>
+                        </tr>-->
+                        <tr><td class="column1">SFDC Opportunity</td>
+                        </tr>
+                        <!--<tr><td class="column1-row1"><span >{!program.salesProgramPercantage__c}%</span><br/></td></tr>-->
+                         <tr><td class="column3-row1"><span >0</span><br/></td></tr>
+                       </table>
+                     
+                </div>
+            </lightning:layoutItem>
+ <lightning:layoutItem>
+                <div class="custom-box">
+                    <table>
+                        <!--<tr><td>IB Potential: </td><td class="column2">${!program.Recommendation__c}</td>
+                        </tr>-->
+                        <tr><td class="column1">Advanced Opportunity</td>
+                        </tr>
+                        <!--<tr><td class="column1-row1"><span >{!program.salesProgramPercantage__c}%</span><br/></td></tr>-->
+                         <tr><td class="column4-row1"><span >0</span><br/></td></tr>
+                       </table>
+                     
+                </div>
+            </lightning:layoutItem>
+ <lightning:layoutItem>
+                <div class="custom-box">
+                    <table>
+                        <!--<tr><td>IB Potential: </td><td class="column2">${!program.Recommendation__c}</td>
+                        </tr>-->
+                        <tr><td class="column1">No Action Needed</td>
+                        </tr>
+                        <!--<tr><td class="column1-row1"><span >{!program.salesProgramPercantage__c}%</span><br/></td></tr>-->
+                         <tr><td class="column5-row1"><span >0</span><br/></td></tr>
+                       </table>
+                     
+                </div>
+            </lightning:layoutItem>
+
+ </aura:set>
+  </aura:if> 
+
+           
+        </lightning:layout>
+    </div>
+        
+       </div>  
+            
+            <lightning:layout >
+                <lightning:layoutItem padding="around-none">
+                    <div class="header-column">
+                         <p class="field-title" title="Search Fields ST Short Name, Program description and Reason for inclusion" >
+                            
+                            <lightning:input class = "Search_Button" type="search" label="Search" placeholder="Table Search" aura:id="SearchBox" name="searchStatus"
+                                             onchange="{!c.searchTable}" />
+                           
+                        </p>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-none">
+                    <div class="header-column">
+                        <p class="field-title" title="Accounts with Programs">
+                           <lightning:select name="select1" aura:id = "Accounts with Programs" label="Accounts with Programs" required="false" value ="{!v.Accountname}">
+                                <option value="all">All</option>
+                                <option value="hasSalesProgram">Accounts with Sales Programs</option>
+                                <option value="hasIbData">Accounts without Sales Programs</option>
+                                
+                                
+                            </lightning:select>
+                        </p>
+                    </div>
+                </lightning:layoutItem>
+               
+                <lightning:layoutItem padding="around-none">
+                    <div class="header-column">
+                        <p class="field-title" title="Sales Program Name" >
+                           <lightning:select name="sales Program Name" label="Sales Program Name" aura:id="Sales Program Name" value ="{!v.ProgramName}">
+                               <option value="">None</option>
+                                <aura:iteration items="{!v.optional}" var="opt">
+                                    <aura:if isTrue="{!opt.ruleName__c}">  
+                                    <option>{!opt.ruleName__c}</option>
+                                         </aura:if>
+                                </aura:iteration>
+                          <!--  <lightning:select name="select1" aura:id = "Sales Program Name" label="Sales Program Name" required="false" value ="{!v.SalesProgramName}"
+                                <option value="">None</option> -->
+                            </lightning:select>
+                        </p>
+                    </div>
+                    
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-none">
+                    <div class="header-column">
+                        <p class="field-title" title="Sales Program Status">
+                            <lightning:select name="Sales Program Status"  label="Sales Program Status" aura:id="Sales Program Status" required="false" value ="{!v.SalesProgramStatus}">
+                                <option value="">None</option>
+                                <option value="Red">Call To Action</option>
+                                <option value="Green">SFDC Opportunity</option>
+                                <option value="Dark Green">Advanced Opportunity</option>
+                                <option value="Grey">No Action Needed</option>
+                                
+                            </lightning:select>
+                        </p>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-none">
+                    <div class="header-column">
+                        <p class="field-title" title="Account Insights"> 
+                            <lightning:select name="Account Insights" label="Account Insights" aura:id="Account Insights" required="false" value ="{!v.AccountInsights}">
+                               <option value="">None</option>
+                                <option value="Tier 1">Tier 1 GL Recommendation</option>
+                                <option value="Tier 2">Tier 2 GL Recommendation</option>
+                                <option value="Tier 3">Tier 3 GL Recommendation</option>
+                                <option value="Gold">Gold PTB</option>
+                                <option value="Silver">Silver PTB</option>
+                                <option value="Bronze">Bronze PTB</option>                        
+                            </lightning:select> </p>
+                        
+                    </div>
+                </lightning:layoutItem>
+                
+                
+                <lightning:layoutItem padding="around-none">
+                    <div class="header-column">
+                        
+                              <lightning:buttonGroup class ="buttons">
+                            <lightning:button  onclick="{!c.Reset}">Reset</lightning:button>
+                            <lightning:button  onclick="{!c.handleSelected}">Submit</lightning:button>
+                                  </lightning:buttonGroup>
+                            
+                                <lightning:buttonGroup class="download">
+                            <lightning:button  onclick="{!c.downloadAll}">Download All</lightning:button>
+                            <lightning:button  label="Customize table" onclick="{! c.opencustomizetable }"/>
+                                    </lightning:buttonGroup>
+                            
+                     
+                    </div>
+                </lightning:layoutItem>    
+            </lightning:layout>
+            
+        </div>
+        
+        
+    </div>
+          <aura:if isTrue="{!v.spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+               <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+              </aura:if>
+       
+         
+    
+   
+    <lightning:datatable class="myCss" aura:id="customerTable"
+                         keyField="ExternalId"
+                         hideCheckboxColumn="false"
+                         data="{!v.data}"
+                         columns="{!v.columns}"
+                         onrowselection = "{!c.updateselectedtext}" 
+                         sortedBy="{! v.sortedBy }"
+                         sortedDirection="{! v.sortedDirection }"
+                         defaultSortDirection="{! v.defaultSortDirection }"
+                         onsort="{! c.updateColumnSorting }"   
+                         selectedRows="{!v.selection}"
+                          
+                         />
+    
+    
+    <lightning:layout horizontalAlign="center" >
+        <lightning:layoutItem padding="around-small" flexibility="auto">
+            <lightning:button label="First" iconName="utility:left" iconPosition="left" variant="bare"
+                              onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/>
+            <!--  <lightning:button iconName="utility:chevronleft" iconPosition="left"
+                                  onclick="{!c.onPrev}" disabled="{! v.currentPageNumber == 1}"/> 
+            <span class="slds-p-horizontal_x-small">
+                <a onclick="{!c.processMe}" name="1" 
+                   class="{! (v.currentPageNumber == 1) ? 'selected' : ''}">1</a>
+            </span>
+            <span class="slds-p-horizontal_xxx-small">
+                <a>&nbsp;</a>
+            </span>-->
+            
+            <aura:iteration items="{!v.pageList}" var="item">
+                <span class="slds-p-horizontal_x-small">
+                    <a onclick="{!c.processMe}" name="{!item}"
+                       class="{! (v.currentPageNumber == item) ? 'selected' : ''}">{!item}</a>
+                </span>
+            </aura:iteration>
+            
+            <span class="slds-p-horizontal_xxx-small">
+                <a>&nbsp;</a>
+            </span>
+            <span class="slds-p-horizontal_x-small">
+                <a onclick="{!c.processMe}" name="{!v.totalPages}"
+                   class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}">{!v.totalPages}</a>
+            </span>
+            <!-- <lightning:button iconName="utility:chevronright" iconPosition="right" 
+                                  disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onNext}"/> -->
+            <lightning:button label="Last" iconName="utility:right" iconPosition="right" variant="bare"
+                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/>
+        </lightning:layoutItem>
+    </lightning:layout>
+        
+   <!-- <aura:if isTrue="{! v.isLoading }"> 
+     <lightning:datatable  aura:id="salesTable"
+                             keyField="id"
+                             data="{!v.salesdata}"
+                             columns="{!v.salescolumns}"
+                            onchange = "{!c.handleValueChange}"
+                            onrowaction="{! c.handleRowAction}"
+                            hideCheckboxColumn = "true"/>
+         </aura:if>-->
+    
+    <aura:if isTrue="{! v.isLoading }">
+        <c:dropdown_table searchedObject="{!v.tableSearch}" selectedObject="{!v.selectedRecord}" programSalesNamefilter="{!v.ProgramName}" statusfilter = "{!v.SalesProgramStatus}" />
+        
+        <!--<lightning:spinner alternativeText="Loading"/>-->
+    </aura:if>
+       
+    <aura:if isTrue="{!v.iscustomizetableopen}">        
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="height:500px;">    
+            <div class="slds-modal__container" style="width:50%;">
+                
+                <!-- ###### MODAL BOX HEADER Start ######-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closecustomizetable }"
+                                          alternativeText="closecustomizetable"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>            
+                    
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:dualListbox name="multipleOptions"  
+                                           label= "Customize Table
+                                                   (* fields cannot be Deselected)" 
+                                           sourceLabel="Deselected" 
+                                           selectedLabel="Selected" 
+                                           options="{!v.options}" 
+                                           value="{!v.values}" 
+                                           onchange="{! c.handleChange }"
+                                           fieldLevelHelp="Re-order and Hide/Show Columns"
+                                           
+                                           requiredOptions="{!v.requiredOptions}"/>
+                    
+                </div>
+                <footer class="slds-modal__footer">                                           
+                    <button class="slds-button slds-button_neutral slds-float_center" onclick="{! c.closecustomizetable }">Cancel</button>
+                    <button class="slds-button slds-button_brand slds-float_center" onclick="{! c.applySelectedColumns }">Apply</button> 
+                    
+                    <!-- button class="slds-button slds-button_brand">Save</button -->
+                </footer>
+            </div>
+        </section>
+    </aura:if> 
+        </div>
+        
+</aura:component>

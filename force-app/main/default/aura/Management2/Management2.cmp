@@ -1,0 +1,383 @@
+<aura:component controller="Management2" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"  access="global">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:attribute name="contactList" type="IBNextUserAuthorization__x[]" />  
+    <aura:attribute name="filteredData" type="IBNextUserAuthorization__x[]" />  
+    <aura:attribute name="isSelectAll" type="boolean"/>
+    <aura:attribute name="RTM" type="String"/>
+      <aura:attribute name="pageList" type="List"/>
+  <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+  <aura:attribute name="pageNumber" type="integer" default="1"/>
+    <aura:attribute name="pageSize" type="integer" default="20"/>
+    <aura:attribute name="totalPages" type="integer" default="0"/>
+    <aura:attribute name="tableSearch" type="string"/>
+  
+    
+    
+    <aura:attribute name="iscustomizetableopen" type="boolean" default="false"/>
+   <aura:attribute name="recSelectId" type="String" default=""/>
+    
+    <div>
+        <div class="c-container-1">
+         
+            <div class="c-container">
+            
+                <lightning:layout >
+                    <lightning:layoutItem class="box"  padding="around-none" >
+                        <div class="header-column">
+                            <lightning:select  label=""  aura:id = "app"  value="{!v.RTM}">
+                                
+                                <option value="all">Select an Apps</option>
+                                <option value="DS">Digital Seller</option>
+                                <option value="DSA">Digital Seller Assistant</option>
+                                <option value="FLM">FLM</option>
+                                <option value="HIT">HIT</option>
+                                <option value="SmartIB">SmartIB</option>
+                                <option value="SmartIB-Management">Program Mgmt</option>
+                                <option value="User-Management">User-Management</option>
+                                <option value="Bussiness-Planner">Business-Planner</option>
+                                <option value="SalesLobby-Management">Sales Lobby Management</option>
+                                
+                            </lightning:select>   
+                        </div>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem  padding="around-none">
+                        <div class="header-column">
+                            
+                            <lightning:input class = "Search_Button" type="Search" placeholder="Name or Employee Id" aura:id="SearchBox" name="RenewalSearch"
+                                             onchange="{!c.searchTable}" />
+                            
+                        </div>
+                    </lightning:layoutItem>
+                    <br></br>
+                    <lightning:layoutItem  padding="around-none">
+                        <div class="header-column">
+                            <p class="button">
+                                &nbsp;
+                                <lightning:button class="space" onclick="{!c.handleSelected}">Submit</lightning:button> &nbsp;
+                                <lightning:button  onclick="{!c.handleSelected}">Cancel</lightning:button>
+                                
+                                
+                            </p>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem  padding="around-none">
+                        <div class="header-column">
+                            <p class="button">
+                                &nbsp;
+                                <lightning:button  label="Customize table" onclick="{! c.opencustomizetable }"/>
+                             
+                            </p>  
+                        </div>
+                    </lightning:layoutItem>
+                    
+                </lightning:layout>
+                
+            </div>
+            <div class="slds-scrollable_x">
+                <div class="slds-m-around_xx-small">
+                    
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer" role="grid">      
+                        <thead>  
+                            <tr class="slds-text-title">
+                                
+                                <th scope="col">
+                                    <span class="slds-form-element__label" title=""> </span>
+                                </th>
+                                <th class = "toggle">           
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox  value="{!v.isSelectAll}" aura:id="Active"/>
+                                        <span class="slds-form-element__label" title="">Active</span>
+                                    </label>
+                                </th>
+                                <th scope="col" aura:id = "User Name">
+                                    <div class="slds-form-element__label" title="Name">User Name</div>
+                                </th>
+                                <th scope="col" aura:id = "Legacy Employee Id">
+                                    <div class="slds-form-element__label" title="Name">Legacy Employee Id</div>
+                                </th>
+                                <th scope="col"  aura:id ="Email">
+                                    <div class="slds-form-element__label" title="Name">Email</div>
+                                </th>
+                                <th>           
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox  value="{!v.isSelectAll}" change="{!c.handleSelectAllContact}" aura:id="selectAll"/>
+                                        <span class="slds-form-element__label" title="">IBAS/IBS</span>
+                                    </label>
+                                </th>
+                                <th>           
+                                    <label class="slds-checkbox">
+                                        
+                                        <span class="slds-form-element__label" title="">SmartIB</span>
+                                    </label>
+                                </th>
+                                <th>           
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox  value="{!v.isSelectAll}" change="{!c.handleSelectAllContact}" aura:id="selectAll"/>
+                                        <span class="slds-form-element__label" title="">Digital Seller Assistant</span>
+                                    </label>
+                                </th>
+                                <th>           
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox  value="{!v.isSelectAll}" change="{!c.handleSelectAllContact}" aura:id="selectAll"/>
+                                        <span class="slds-form-element__label" title="">HIT</span>
+                                    </label>
+                                </th>
+                                <th>           
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox  value="{!v.isSelectAll}" change="{!c.handleSelectAllContact}" aura:id="selectAll"/>
+                                        <span class="slds-form-element__label" title="">FLM</span>
+                                    </label>
+                                </th>
+                                <th>           
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox  value="{!v.isSelectAll}" change="{!c.handleSelectAllContact}" aura:id="selectAll"/>
+                                        <span class="slds-form-element__label" title="">Business-Planner</span>
+                                    </label>
+                                </th>
+                                <th>           
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox  value="{!v.isSelectAll}" change="{!c.handleSelectAllContact}" aura:id="selectAll"/>
+                                        <span class="slds-form-element__label" title="">Program Mgmt</span>
+                                    </label>
+                                </th>
+                                <th>           
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox  value="{!v.isSelectAll}" change="{!c.handleSelectAllContact}" aura:id="selectAll"/>
+                                        <span class="slds-form-element__label" title="">Program Index</span>
+                                    </label>
+                                </th>
+                                 <th>           
+                                        
+                                        <span class="slds-form-element__label" title="">Feedback Validation</span>
+                                   
+                                </th>
+                                <th>           
+                                        
+                                        <span class="slds-form-element__label" title="">Sales Lobby Management</span>
+                                   
+                                </th>
+                                <th>           
+                                        
+                                        <span class="slds-form-element__label" title="">User Management</span>
+                                   
+                                </th>
+                                <th>           
+                                        
+                                        <span class="slds-form-element__label" title="">Create Date</span>
+                                   
+                                </th>
+                                <th>           
+                                        
+                                        <span class="slds-form-element__label" title="">Last Modified Date</span>
+                                   
+                                </th>
+                              
+                                
+                            </tr>
+                        </thead>
+                        <tbody>        
+                            <aura:iteration items="{!v.contactList}" var="con" indexVar="index">
+                                <tr id = "{!con.Id}">
+                                    
+ <aura:if isTrue="{!con.EditMode}">  
+                            <td>                                
+                                <a href="javascript:void(0);"><span class="saveSpan slds-m-left--small" title="Save" onclick="{!c.saveEditedTalent}" 
+                                                                    data-sfid="{!con.Id}"
+                                                                    id="{!con.Id}"
+                                                                    data-index="{!index}"></span></a>
+                                
+                                <a class="slds-text-color--error" href="javascript:void(0);"><span style="font-size:18px; font-weight:bold;" class="slds-m-left--small" title="Cancel" onclick="{!c.cancelEdit}" 
+                                                                    data-sfid=""
+                                                                    data-index="{!index}">X</span></a>
+                                
+                            </td>
+                            <aura:set attribute="else">
+                                <td> 
+                                    <a href="javascript:void(0);"><span class="editSpan slds-m-left--small" title="Edit" onclick="{!c.editTalent}" 
+                                                                        data-sfid="{!con.Id}"
+                                                                        id="{!con.Id}"
+                                                                        data-index="{!index}"></span></a>
+                                    
+                                    <a href="javascript:void(0);"><span class="delSpan slds-m-left--small" title="Delete" onclick="{!c.deleteRowId}" 
+                                                                        data-sfid="{!con.Id}"
+                                                                        data-index="{!index}"></span></a>
+                                    
+                                </td>  
+                            </aura:set>
+                        </aura:if>
+                        
+                                    
+                                   <aura:if isTrue="{!con.EditMode}"> 
+                           <td> <lightning:input type="checkbox" aura:id = "active" name="{!con.isActive__c}" checked="{!con.isActive__c}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.isActive__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                                                       
+
+                                <td><span class="slds-truncate" title="{!con.userName__c}">{!con.userName__c}</span></td>
+                          
+                                   
+                                <td><span class="slds-truncate" title="{!con.userName__c}">{!con.userId__c}</span></td>
+
+                                <td><span class="slds-truncate" title="{!con.userName__c}">{!con.Email__c}</span></td>
+                            
+                                      <aura:if isTrue="{!con.EditMode}"> 
+                            <td><lightning:input type = "checkbox" aura:id="IBAS"  name = "{!con.DS__c}" checked="{!con.DS__c}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.DS__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                  
+                                     <aura:if isTrue="{!con.EditMode}"> 
+                            <td><lightning:input type = "checkbox"  aura:id="smartib" name= "{!con.SmartIB__c}"  checked="{!con.SmartIB__c}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.SmartIB__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                
+                                     <aura:if isTrue="{!con.EditMode}"> 
+                          <td><lightning:input type = "checkbox"  aura:id="DSA" name = "{!con.DSA__c}" checked="{!con.DSA__c}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.DSA__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                   
+                                     <aura:if isTrue="{!con.EditMode}"> 
+                            <td>
+    <lightning:input type="checkbox" aura:id = "HIT"  name = "{!con.HIT__c}" checked="{!con.HIT__c}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.HIT__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                   
+                                     <aura:if isTrue="{!con.EditMode}"> 
+<td><lightning:input type="checkbox" aura:id = "FLM" name="{!con.FLM__c}" checked="{!con.FLM__c}"/></td>                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.FLM__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                    
+                                  
+                                     <aura:if isTrue="{!con.EditMode}"> 
+                           <td><lightning:input type="checkbox" aura:id = "bussines planner" name="{!con.Business_Planner__c}" checked="{!con.Business_Planner__c}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.Business_Planner__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                  
+                                    <aura:if isTrue="{!con.EditMode}"> 
+                              <td><lightning:input type="checkbox" aura:id = "programmanagementgeo" name="{!con.SmartIB-Management}" checked="{!con.SmartIB-Management}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.SmartIB-Management}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                    
+                                    
+                                   
+                                      <aura:if isTrue="{!con.EditMode}"> 
+                           <td><lightning:input type="checkbox" aura:id = "Program Index" name="{!con.Program_Index__c}" checked="{!con.Program_Index__c}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.Program_Index__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                     <aura:if isTrue="{!con.EditMode}"> 
+                           <td><lightning:input type="checkbox" aura:id = "feedbackvalidation" name="{!con.feedbackValidationGeo__}" checked="{!con.feedbackValidationGeo}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.feedbackValidationGeo__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                     <aura:if isTrue="{!con.EditMode}"> 
+                           <td><lightning:input type="checkbox" aura:id = "sales" name="{!con.programManagementGeo__c}" checked="{!con.programManagementGeo__c}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.Program_Index__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                     <aura:if isTrue="{!con.EditMode}"> 
+                           <td><lightning:input type="checkbox" aura:id = "bussines" name="input2" checked="{!con.programManagementGeo__c}"/></td>
+                            <aura:set attribute="else">
+                                <td><lightning:input type="checkbox" name="input2" checked="{!con.Program_Index__c}"/></td>
+                            </aura:set>
+                        </aura:if>
+                                 
+                                   <td><span class="slds-truncate" title="{!con.createdDate__c}">{!con.createdDate__c}</span></td>
+                          
+                                <td><span class="slds-truncate" title="{!con.lastModifiedDate__c}">{!con.lastModifiedDate__c}</span></td>
+                          
+                                    
+                                     
+                                    
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                        
+                    </table>
+                    <lightning:layout horizontalAlign="center" >
+                        <lightning:layoutItem padding="around-small" flexibility="auto">
+                            <lightning:button label="First" iconName="utility:left" iconPosition="left" variant="bare"
+                                              onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/>
+                            
+                            
+                            <aura:iteration items="{!v.pageList}" var="item">
+                                <span class="slds-p-horizontal_x-small">
+                                    <a onclick="{!c.processMe}" name="{!item}"
+                                       class="{! (v.currentPageNumber == item) ? 'selected' : ''}">{!item}</a>
+                                </span>
+                            </aura:iteration>
+                            
+                            <span class="slds-p-horizontal_xxx-small">
+                                <a>&nbsp;</a>
+                            </span>
+                            <span class="slds-p-horizontal_x-small">
+                                <a onclick="{!c.processMe}" name="{!v.totalPages}"
+                                   class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}">{!v.totalPages}</a>
+                            </span>
+                            
+                            <lightning:button label="Last" iconName="utility:right" iconPosition="right" variant="bare"
+                                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                    
+                    <aura:if isTrue="{!v.iscustomizetableopen}">        
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="height:500px;">    
+                            <div class="slds-modal__container" style="width:50%;">
+                                
+                                
+                                <header class="slds-modal__header">
+                                    <lightning:buttonIcon iconName="utility:close"
+                                                          onclick="{! c.closecustomizetable }"
+                                                          alternativeText="closecustomizetable"
+                                                          variant="bare-inverse"
+                                                          class="slds-modal__close"/>            
+                                    
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <lightning:dualListbox name="multipleOptions"  
+                                                           label= "Customize Table
+                                                                   (* fields cannot be Deselected)" 
+                                                           sourceLabel="Deselected" 
+                                                           selectedLabel="Selected" 
+                                                           options="{!v.options}" 
+                                                           value="{!v.values}" 
+                                                           onchange="{! c.handleChange }"
+                                                           fieldLevelHelp="Re-order and Hide/Show Columns"
+                                                           
+                                                           requiredOptions="{!v.requiredOptions}"/>
+                                    
+                                </div>
+                                <footer class="slds-modal__footer">                                           
+                                    <button class="slds-button slds-button_neutral slds-float_center" onclick="{! c.closepopup }">Cancel</button>
+                                    <!--button class="slds-button slds-button_brand slds-float_center" onclick="{! c.applySelectedColumns }">Apply</button--> 
+                                    
+                                    
+                                </footer>
+                            </div>
+                        </section>
+                    </aura:if> 
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

@@ -1,0 +1,43 @@
+<aura:component controller="IB_SalesProgramDetailsPageRFI" implements="force:appHostable,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId,force:hasSObjectName" access="global">
+     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+     <aura:attribute name="programList" type="list" />
+     <aura:attribute name = "search" type= "string"/>
+     <aura:attribute name="recordId" type="String"/>
+
+    <div>
+ <div class="head">
+        <h1>Reason for Inclusion</h1></div>
+          <!--<aura:iteration items="{!v.programList}" var="program">-->
+        <!--<p>Migrate to Primera, 3Par High End arrays,which are 4 years old or older and have service expiration between May 2020 and May 2022.Migrate to Nimble,the 3Par Mid Ranger arrays,whch are 4 years old or older and have service expiration between May 2020 and May 2022.This account is an excisting DC customer.lease sell DC Add-on service </p-->
+        
+        <aura:iteration items="{!v.programList}" var="program">
+   <!-- <p style="color: #5e9ca0;"><strong><span style="color: #000000;">Account Goal:</span></strong> <span style="color: #000000;">Protect, Expand</span></p>
+
+<p><strong><span style="color: #000000;">Sales Play(s):</span></strong></p>
+
+<ul class = "slds-list_dotted">
+
+<li><span style="color: #000000;">Refresh aging Racks with expiring support. <strong><span style="color: #12af8a;">$75k potential.</span></strong></span></li>
+
+<li><span style="color: #000000;">Transition aging BladeSystem with expiring support to Synergy or Rack. <strong><span style="color: #12af8a;">$150k potential.</span></strong></span></li>
+
+<li style="text-align: left;"><span style="color: #000000;">Workloads: high likelihood of purchasing VDI in the next 12 months; <a href="https://hpe.seismic.com/Link/Content/DCHh5OakcmFUaw-IQJW9SrzA">position workloads solution</a>. <strong><span style="color: #12af8a;">$25k potential.</span></strong></span></li>
+
+</ul>
+
+<p><span style="color: #000000;"><strong>Account Info:</strong></span></p>
+
+<ul class = "slds-list_dotted">
+
+<li><span style="color: #000000;">Average annual spend: <strong><span style="color: #d9775c;">Rack $100k; Synergy $300k.</span></strong></span></li>
+
+<li><span style="color: #000000;">Complete Care customer; attach Complete Care services to new hardware. <strong><span style="color: #12af8a;">$30k potential.</span></strong></span></li>
+
+<li style="text-align: left;"><span style="color: #000000;">Renew PN support on servers that do not refresh to retain customer.</span></li>
+
+</ul>-->   
+            <!--<p>{!program.rfi__c}</p>-->
+           {!program.recommendationKey__c}
+        </aura:iteration>
+    </div>        	
+</aura:component>

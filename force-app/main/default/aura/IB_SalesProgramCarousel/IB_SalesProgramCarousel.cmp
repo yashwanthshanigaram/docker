@@ -1,0 +1,108 @@
+<aura:component controller="IB_SalesProgramCarousel" implements="force:appHostable,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId,force:hasSObjectName,lightning:isUrlAddressable" access="global" >
+     <aura:attribute name="tabId" type="String" default="two"/> 
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+     <aura:attribute name="programList" type="list" />
+    <aura:attribute name="programListCount" type="Integer" />
+    <aura:attribute name="symbol" type="string" />
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="limit" type="Integer" default="5"/>
+    <aura:attribute name="offset" type="Integer" default="0"/>
+    <aura:attribute name ="isLoading" type ="boolean" default="false"/> 
+    <aura:attribute name = "search" type = "String"/>
+    <aura:attribute name="url" type="String"/>
+    <aura:attribute name="pageReference" type="Object"/>
+    <lightning:navigation aura:id="navService"/>
+    <aura:attribute name= "ruleName" type = "string"/>
+    <aura:attribute name= "stdetails" type = "list"/>
+   
+    
+   <div class="tile_body" >
+       <div class="c-container">
+        <lightning:layout horizontalAlign="space">
+            
+              <lightning:layoutItem class="nav_button">
+           		 <aura:if isTrue="{!lessthanorequal(v.offset,0)}">
+                          <lightning:button  iconName="utility:chevronleft" iconPosition="left" 
+                               name ="prev" disabled="true" onclick="{!c.loadMorePrograms}"/>
+                        <aura:set attribute="else">
+                            <lightning:button iconName="utility:chevronleft" iconPosition="left" 
+                               name ="prev" disabled="false" onclick="{!c.loadMorePrograms}"/>
+                          </aura:set>
+                      </aura:if>     
+             </lightning:layoutItem>
+            
+            <aura:iteration items="{!v.programList}" var="program" indexVar="index">
+            <lightning:layoutItem>
+                <div class="custom-box"  onclick = "{!c.navigate1}" data-sfid="{!program.ruleName__c}"  data-index="{!index}"  id ="{!program.Id}">
+                    <table>
+                      <tr id = "{!program.Id}"><td class="row2"  onclick = "{!c.navigate1}" data-sfid="{!program.ruleName__c}"  data-index="{!index}"  id ="{!program.Id}"><span><p class = "{! program.recommendationFlag__c == 'Red' ? ' redColor ' : program.recommendationFlag__c == 'Green' ? ' purplebg ' : program.recommendationFlag__c ==  'Dark Green' ? ' greenbg ' : program.recommendationFlag__c == 'Grey' ? ' grey ':''}"  onclick = "{!c.navigate1}" data-sfid="{!program.ruleName__c}"  data-index="{!index}"  id ="{!program.Id}"></p><b class='programName' onclick = "{!c.navigate1}" data-sfid="{!program.ruleName__c}"  data-index="{!index}"  id ="{!program.Id}">{!program.ruleName__c}</b></span></td><td class= "column2" onclick = "{!c.navigate1}" data-sfid="{!program.ruleName__c}"  data-index="{!index}"  id ="{!program.Id}" >$<lightning:formattedNumber value="{!program.recommendationValue__c}" maximumFractionDigits="0"/></td>
+                        </tr>
+                    </table>
+                      <span class = "desc"  onclick = "{!c.navigate1}" data-sfid="{!program.ruleName__c}"  data-index="{!index}"  id ="{!program.Id}">{!program.ruleDescription__c}</span>
+                     
+                </div>
+                   
+            </lightning:layoutItem>
+            </aura:iteration>
+            <lightning:layoutItem class="nav_button">   
+     			<lightning:button iconName="utility:chevronright" iconPosition="right" 
+                           name ="next" disabled="{! v.offset >= v.programListCount}" onclick="{!c.loadMorePrograms}"/>   
+        	</lightning:layoutItem>
+        </lightning:layout>
+    </div>
+        
+    
+        
+        <aura:if isTrue="{!v.isModalOpen}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    
+                    <header class="slds-modal__header">
+                        
+                        
+                        <!--<h2 class="headingheading">Sales Program Details</h2>-->
+                               <!--div class="salesplayrow2">
+  <div class="salesplayc1">
+        <h1><b class="heading">Account ST Name</b></h1>
+                 </div>
+  <div class="salesplayc2">
+      <p class="header2">Account ST ID</p></div>
+</div>
+          
+   <div class="salesplayrow1">
+  <div class="salesplayc1">
+        <h2><b class="heading">VERIZON COMMUNICATIONS INC - US</b></h2>
+                 </div>
+  <div class="salesplayc2">
+      <p class="header2"> 100063 </p></div>
+</div-->        <table>
+               <th>Account ST Name </th><th class = "headers">Account ST ID</th>
+                                    <aura:iteration items="{!v.stdetails}" var="st">
+
+                        
+                        <tr><td>{!st.MyComp_Sales_Territory_Name__c}</td><td class = "headers">{!st.MyComp_Id__c}</td></tr>
+                        </aura:iteration></table>
+                  
+
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              size="large"
+                                              alternativeText="Close"
+                                              variant="bare"
+                                              class="slds-modal__close"/>
+                    </header>
+                    
+                    
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <c:IB_SalesProgramDetails searchedObject = "{!v.search}" recordId = "{!v.recordId}"/>
+                    </div>
+                    
+                    
+                </div>
+            </section>
+        </aura:if>
+       </div>  
+    
+</aura:component>

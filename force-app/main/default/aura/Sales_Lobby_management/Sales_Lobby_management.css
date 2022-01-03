@@ -1,0 +1,49 @@
+.THIS .styles{
+    font-weight: bold;
+    font-size:15px;
+    padding-left:1rem;
+    padding-top:1rem;
+    
+}
+
+.THIS .h1 {
+  color: green;
+}
+
+.THIS .font{
+     font-weight: bold;
+    font-size:14px;
+    
+}
+.THIS .slds-file-selector__dropzone {
+    
+    border: none;
+    border-radius: none;
+    box-shadow:none;
+    
+}    
+.THIS .slds-file-selector__dropzone .slds-file-selector__text{
+    display: none;
+    
+}
+
+/* remove the "Upload Files" text from the button of the lightning:input type file */
+.THIS .slds-file-selector__dropzone .slds-file-selector__button{
+    font-size: 0;
+}
+.THIS .slds-file-selector__dropzone .slds-file-selector__button .slds-button__icon{ /*For the icon*/
+    display: none;
+}
+/* insert the text "Choose File" into the button of the lightning:input type file */
+.THIS .slds-file-selector__dropzone .slds-file-selector__button:before{
+    content: 'Choose File';
+    font-size: .8125rem;
+    color:black;
+}
+.THIS .slds-m-right{
+    padding-left:6rem;
+}
+.THIS .slds-m-right:after{
+    padding-left:0.5rem;
+    content:'Upload';
+}

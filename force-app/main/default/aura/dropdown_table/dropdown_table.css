@@ -1,0 +1,15 @@
+.THIS .selected{
+    color:rgb(1, 118, 211);
+    font-size:14px;
+    font-weight:bold;
+}
+.THIS {
+    background-color:white;
+}
+.THIS .slds-truncate:hover{
+    overflow: visible;
+}
+.THIS .slds-popover slds-popover_pane slds-nubbin_top-left{
+    width:5rem;
+    height:10rem;
+}
