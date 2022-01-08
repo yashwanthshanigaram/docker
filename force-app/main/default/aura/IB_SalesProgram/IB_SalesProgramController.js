@@ -4,8 +4,9 @@
         console.log("ruleName" + rule);
          var sfdcId_ST = component.get('v.recordId');
          console.log("sfdcId"+sfdcId_ST);
+        var stid = component.get("v.stid");
           var action1 = component.get("c.programdetails");
-        action1.setParams({'rule':rule,'sfdcId':sfdcId_ST
+        action1.setParams({'rule':rule,'sfdcId':sfdcId_ST,"accountstid1":stid
         });
         
         action1.setCallback(this, function(result){
@@ -25,7 +26,7 @@
             
         });
         var action = component.get("c.programstatus");
-         action.setParams({'rule':rule,'sfdcId':sfdcId_ST
+         action.setParams({'rule':rule,'sfdcId':sfdcId_ST,"accountstid1":stid
         });
           action.setCallback(this, function(result){
             var state = result.getState();
@@ -65,31 +66,36 @@
         console.log(categoryValue);
         var comments = component.get("v.comments");
         console.log(comments);
+        var stid = component.get("v.stid");
+        if(dispositionValue!= 'Cancel Opt Out'){
+        if(dispositionValue == "" || categoryValue == "" || comments == ""){
+             /*var toastEvent = $A.get("e.force:showToast");
+            toastEvent.setParams({
+            "title": "Error!",
+            "type":"error",
+            "message": "All the  required fields must be completed",
+            
+        });
+        toastEvent.fire();*/
+            component.set('v.error',true);
+            }
+            
+        else{
         var action = component.get("c.postfeedback");
         action.setParams({
             "dispositionValue":dispositionValue,
-                "categoryValue":categoryValue,
-                    "comments":comments,
-            "rule":rule,
-            "sfdcId":sfdcId_ST
-            
+             "categoryValue":categoryValue,
+             "comments":comments,
+             "rule":rule,
+            "sfdcId":sfdcId_ST,
+            "accountstid1":stid
         });
             action.setCallback(this, function(result){
             var state = result.getState();
                 console.log(state);
           if (component.isValid() && state === "SUCCESS"){
                 var responseValue = result.getReturnValue();
-                
-              
-            }
-            
-        });
-        
-                $A.enqueueAction(action);
-
-        component.set('v.providefeedback',false);
-        
-        var toastEvent = $A.get("e.force:showToast");
+               var toastEvent = $A.get("e.force:showToast");
         
         toastEvent.setParams({
             "title": "Success!",
@@ -98,6 +104,59 @@
             
         });
         toastEvent.fire();
+            }
+        });
+        
+        $A.enqueueAction(action);
+        component.set('v.dispositionValue','');
+        component.set('v.categoryValue','');
+        component.set('v.comments','');
+      
+        component.set('v.providefeedback',false);
+             component.set('v.error',false);
+        }}else{
+            if(comments == null){
+               component.set('v.error',true);
+}
+            else{
+               var action = component.get("c.postfeedback");
+        action.setParams({
+            "dispositionValue":dispositionValue,
+             "categoryValue":categoryValue,
+             "comments":comments,
+             "rule":rule,
+            "sfdcId":sfdcId_ST,
+            "accountstid1":stid
+        });
+            action.setCallback(this, function(result){
+            var state = result.getState();
+                console.log(state);
+          if (component.isValid() && state === "SUCCESS"){
+                var responseValue = result.getReturnValue();
+               var toastEvent = $A.get("e.force:showToast");
+        
+        toastEvent.setParams({
+            "title": "Success!",
+            "type":"success",
+            "message": "Your feedback has been submitted",
+            
+        });
+        toastEvent.fire();
+            }
+        });
+        
+        $A.enqueueAction(action);
+        component.set('v.dispositionValue','');
+        component.set('v.categoryValue','');
+        component.set('v.comments','');
+      
+        component.set('v.providefeedback',false);
+        component.set('v.error',false);
+        }}
+                
+            
+        
+       
     },  
     openFeedbackHistory: function(component, event, helper) {
       // Set isModalOpen attribute to true
@@ -113,8 +172,11 @@
         console.log("ruleName" + rule);
          var sfdcId_ST = component.get('v.recordId');
          console.log("sfdcId"+sfdcId_ST);
+         var stid = component.get("v.stid");
+        console.log("stid"+ stid);
+       
         var action = component.get('c.download');
-        action.setParams({'rule':rule,'sfdcId':sfdcId_ST
+        action.setParams({'rule':rule,'sfdcId':sfdcId_ST,'accountstid1':stid
         });
         action.setCallback(this, function(response){
             var state = response.getState();            
@@ -122,7 +184,6 @@
             if(state === 'SUCCESS' || state === 'DRAFT' ){
                 var responseValue = response.getReturnValue();
                 console.log('responseValue', responseValue);
-                //component.set("v.partnerList",responseValue);
                 var toastEvent = $A.get("e.force:showToast");
                 var baseurl ='https://'+window.location.hostname+'/lightning/o/IBNext_Download_Tracker__c/list?filterName=00B7X000001Y5ArUAK';
                 toastEvent.setParams({
@@ -151,30 +212,35 @@
         component.set('v.disabledPick',false);
         else
         component.set('v.disabledPick',true);
-           var dispositionValues = component.get('v.dispositionValue');
+       var dispositionValues = component.get('v.dispositionValue');
        console.log(dispositionValues);
+                                
         if(dispositionValues=='Opt out already Covered'){
            var options =[{ value:"Frame Agreement",label:"Frame Agreement"},
                          { value:"Renewal",label:"Renewal"},
                          { value:"Alternative Technology Preferred",label:"Alternative Technology Preferred"},
                          { value:"Other",label:"Other"}];
+                          component.set("v.categoryValue",'');
                           component.set("v.categories", options);
-           // helper.loadCategory(component, event, helper);
                           }else{
                                var options = [
            { value: "Lost to Competitor", label: "Lost to Competitor" },
            { value: "Lost to self Maintainance", label: "Lost to self Maintainance" },
-		   { value: "Refresh or renewal deferred", label: "Refresh or renewal deferred" },
-		   { value: "Cancel Opt out", label: "Cancel Opt out" },
+		   { value: "Refresh/Renewal Deferred", label: "Refresh/Renewal Deferred" },
 		   { value: "Decision Elsewhere", label: "Decision Elsewhere" },	
 			{ value: "Not an End Customer ", label: "Not an End Customer " },	
 			{ value: "IB data incorrect", label: "IB data incorrect" },	
 			{ value: "Technology Consolidation", label: "Technology Consolidation" },	
 			{ value: "Vendor  Consolidation", label: "Vendor  Consolidation" },
 			{ value: "Move to Cloud", label: "Move to Cloud" },
+            { value: "Merger/Acquisition/Bankruptcy", label: "Merger/Acquisition/Bankruptcy"},
+            { value: "Remove All Sales Plays", label: "Remove All Sales Plays"},
 			{ value: "Other", label: "Other" }
          ];
+            component.set("v.categoryValue",'');
            component.set("v.categories", options);
+                         var categoryValue = component.get('v.categoryValue');   
+                              console.log(categoryValue);
                           }
     },
     comments: function (cmp, event, helper) {

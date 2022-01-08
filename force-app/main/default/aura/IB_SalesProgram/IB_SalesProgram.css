@@ -39,10 +39,9 @@
 .THIS .row {
     
     height:60px;
-    
-    
-    width:100%;
+     width:100%;
     padding:5px;
+    margin:auto;
 }
 .THIS .c1 {
     
@@ -50,19 +49,19 @@
     width:55%;
     padding-bottom:5px;
     
+    
 }
 .THIS .c2 {
     
     display:inline-block;
     padding-bottom:10px;
     align-content:right;
+    
 }
 .THIS .c3{
    display:inline-block;
     padding-bottom:5px;
     }
-
-
 
 .THIS .green{
       width: 15px;
@@ -71,7 +70,6 @@
       border-radius: 50%;
       margin-bottom: -1.53rem;
     
-   
 }
 .THIS .darkgreen{
       width: 15px;
@@ -80,7 +78,6 @@
       border-radius: 50%;
       margin-bottom: -1.53rem;
     
-   
 }
 .THIS .grey{
       width: 15px;
@@ -88,22 +85,15 @@
       background:#d3d3d3 ;
       border-radius: 50%;
       margin-bottom: -1.53rem;
-    
-   
+      
 }
 .THIS .x{
-    
-
     font-family:MetricHPE-semibold;
-
-    
 }
 .THIS .child{
     vertical-align:middle;
     width:100%;
     align-content:right;
-   
-    
     padding:8px;
 }
 
@@ -145,14 +135,10 @@
     
 }
 .THIS .salesplayrow2 {
-    
     width:100%;
-    
 }
 .THIS .salesplayrow1{
-    
     width:100%;
-    
 }
 .THIS a{
  color:green;
@@ -173,7 +159,7 @@
 }
 .THIS .links{
     
-    padding-top: 1rem;
+     padding-top: 1rem;
 }
 .THIS .heading{
     padding-right:2rem;
@@ -191,26 +177,44 @@
     padding: 0rem;
     display:inline-block;
     margin-left: 1px;
-  
-    
 }
 .THIS.c-container {
     border: 1px solid #d8dde6;
     padding-left:1rem;
     padding-bottom:1rem; 
     display:inline-block;
-    
-}
+    }
 .THIS .header3{
     padding-left:4rem;
     display:inline-block;
     font-size:16px;
 }
-.THIS .table{
-    width:90%;
+/*.THIS .table{
+    width:45%;
+    margin-left:1rem;
+}*/
+.THIS .column12{
+      /*padding-right:0.5rem;*/
+     padding-bottom:1rem;
+    font-size: 16px;
+}
+.THIS .slds-modal__close2{
+  /* position: absolute;*/
+    /* top: -2.5rem; */
+   /* right: -0.5rem;*/
+    float:right;
+}
+.THIS .error{
+    color:red;
+}
+.THIS #providefeedback{
+    width:50%;
+   /*max-width:950px;
+    min-width:480px;*/
+}
+.THIS .Program_offering{
     margin-left:1rem;
 }
-.THIS .column12{
-    padding:1rem;
-    
+.THIS #feedbackhistory{
+    width:90%;
 }

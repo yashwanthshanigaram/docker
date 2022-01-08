@@ -1,0 +1,85 @@
+.THIS .styles{
+    font-weight: bold;
+    font-size:23px;
+    background-color: #00567a;
+    color: white;
+    padding-left:1rem;
+}
+.THIS .size{
+    font-size:23px;
+    font-size:13px;
+}
+.THIS .para{
+    background-color: #00567a;
+    color: white;
+    padding-left:1rem;
+}
+.THIS .fullpage{
+    background-color: white;
+}
+.THIS .box{
+    padding-left:1rem;
+    font-size:17pt;
+    
+}
+.THIS .cusbox{
+    display:flex;
+    flex-direction:row;
+    background-color:white;
+}
+.THIS .text{
+   background-color: #00567a; 
+}
+
+.THIS .leftsec{
+    padding-left:1rem;
+    padding-top:1rem;
+    
+}
+.THIS .slds-button.slds-button_neutral{
+    margin-bottom: 0.5rem;
+    width:250px;
+   font-size:15px;
+    text-align:left;
+}
+.THIS .Header{
+     font-weight: bold;
+    font-size:16px;
+}
+.THIS .inline{
+     display:inline-block;
+    margin-left:1rem;
+}
+.THIS .buttons{
+    margin-bottom: 0.5rem;
+    width:150px;
+   font-size:13px;
+    text-align:left;
+}
+.THIS .stateClass {
+    font-weight: bold;
+    font-size:18px;
+}
+.THIS .buttn{
+     width:150px !important;
+}
+.THIS .buttn1{
+     width:250px !important;
+}
+.THIS .slds-form-element__label{
+    padding-right:15rem;
+    color:black;
+    
+}
+.THIS .slds-form-element__label02{
+    padding-right:13rem;
+    font-size:11px;
+    color:black;
+}
+.THIS .stateClass {
+    font-weight: bold;
+    font-size:18px;
+}
+.THIS .error{
+    color:red;
+}

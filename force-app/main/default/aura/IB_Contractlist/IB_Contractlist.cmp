@@ -1,0 +1,1500 @@
+<aura:component controller="Managment" implements="force:appHostable,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+    <aura:attribute name="form1" type="Boolean" default="true"/>
+    <aura:attribute name="form2" type="Boolean" default="false"/>
+    <aura:attribute name="form3" type="Boolean" default="false" />
+    <aura:attribute name="form3a" type="Boolean" default="false" />
+    <aura:attribute name="form3b" type="Boolean" default="false" />
+    <aura:attribute name="form3c" type="Boolean" default="false" />
+    <aura:attribute name="form4" type="Boolean" default="false" />
+    <aura:attribute name="form5" type="Boolean" default="false" />
+    <aura:attribute name="form6" type="Boolean" default="false" />
+    <aura:attribute name="withIB" type="Boolean" />
+     <aura:attribute name="error" type = "boolean" default = "false"/>
+    <aura:attribute name="highlight" type="Boolean" default="false" />
+    
+    
+    <!--- SalesProgram - Form1 Attributes -->  
+    <aura:attribute name="studentInfoAc" type="object" default=""/>
+    <aura:attribute name="Defineprgm" type="boolean" default="true"/>  
+    
+    <aura:attribute name="charsRemaining" type="Integer" default="0"/>
+    <aura:attribute name="charsRemaining2" type="Integer" default="0"/>
+    <aura:attribute name="searchText" type="string"/>
+    <aura:attribute name="textAreaValue" type="String" default=""/>
+    
+    <aura:attribute name="Get_Result" type="Boolean" />
+    <!-- <aura:handler event="c:ProgramEvent" action="{!c.NxtSection}"/>-->
+    <!--<aura:handler name="init" value="{!this}" action="{!c.init}" />-->
+     <aura:attribute name="campName" type="List" />
+    <aura:attribute name="campaigncode" type="string" />
+    
+    <aura:attribute name = "campselected" type = "String"/>
+    <aura:attribute name="multiplecampaigncode" type="list" default ="" />
+    <aura:attribute name = "campaigncodelist" type ="boolean" default = "true"/>
+    <aura:attribute name="prgmname" type="String" default=""/>
+    <aura:attribute name="prgmtype" type="String"/>
+    <aura:attribute name="prgmdesc" type="String"/>
+    <aura:attribute name="startDate" type="date"/>
+    <aura:attribute name="endDate" type="date"/>
+    <aura:attribute name="geo" type="String"/>
+    <aura:attribute name="accValue" type="String"/>
+    <aura:attribute name="prgmGover" type="String"/>
+    <aura:attribute name="seismicLink1" type="String"/>
+    <aura:attribute name="seismicLink2" type="URL"/>
+    <aura:attribute name="seismicLink3" type="String"/>
+    <aura:attribute name="resourceLink1" type="String"/>
+    <aura:attribute name="resourceLink2" type="String"/>
+    <aura:attribute name="resourceLink3" type="String"/>
+    <aura:attribute name="descriptionLink1" type="String"/>
+    <aura:attribute name="descriptionLink2" type="String"/>
+    <aura:attribute name="descriptionLink3" type="String"/>
+    <aura:attribute name="descriptionLink4" type="String"/>
+    <aura:attribute name="descriptionLink5" type="String"/>
+    <aura:attribute name="descriptionLink6" type="String"/>
+    <aura:attribute name="isIconVisibleCamp" type="Boolean" default="true" />
+     <aura:attribute name="isfieldVisibleCamp" type="Boolean" default="false" />
+     <aura:attribute name="Camplistdisp" type="Boolean" default="false" />
+    
+    <!--- Offering - Form2 Attributes -->  
+    <aura:attribute name="isfieldVisible" type="Boolean" default="false" />
+    <aura:attribute name="isIconVisible" type="Boolean" default="true" />
+    <aura:attribute name="dataSetFilter" type="Boolean" default="false" />
+    <aura:attribute name="Listvalues" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.values}"/>
+    <aura:attribute name="objectOffering" type="String"/>
+    <aura:attribute name="fieldOffering" type="String"/>
+    <aura:attribute name="operatorOffering" type="String"/>
+    <aura:attribute name="valueOffering" type="String"/>
+    <aura:attribute name="descOffering" type="String"/>
+    
+    <!--- DataSetIB - Form3a Attributes --> 
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="contractServiceOptions" type="list"/>
+    <aura:attribute name="dataSetIBFilter" type="Boolean" default="false" />
+    <aura:attribute name="objectOptions" type="List"/>
+    <aura:attribute name="fieldPicklist" type="Object"/>
+    <aura:attribute name="fieldOptions" type="List"/>
+     <aura:attribute name="operatorPicklist" type="Object"/>
+     <aura:attribute name="valuePicklist" type="Object"/>
+    <aura:attribute name="valOptions" type="List"/>
+     <aura:attribute name="operatorOptions" type="List"/>
+    <aura:attribute name="valueProduct" type="Object"/>
+    <aura:attribute name="disabledPick" type="Boolean" default="true"/>
+  <aura:attribute name="str" type="List"/>
+     <aura:attribute name="isIconVisiblef3" type="Boolean" default="true" />
+    <aura:attribute name="isfieldVisiblef3" type="Boolean" default="false" />
+       
+     <aura:attribute name="selectedField" type="object"/>
+     <aura:attribute name="selectedItems" type="Object[]" />
+    
+    <aura:attribute name="infoText" type="String" default="None" />
+    
+    <aura:attribute name="width" type="String" default="120px;" />
+    <aura:attribute name="dropdownwidth" type="String" default="20px;" />
+    
+    <aura:attribute name="dropdownLength" type="Integer" default="4" />
+    
+    <aura:registerEvent name="selectChange" type="c:IB_Central_Event" />
+    
+    <aura:attribute name="dropdownOver" type="Boolean" default="false" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--<aura:handler name="init" value="{!this}" action="{!c.values}"/>-->
+     
+    <aura:method name="reInit" action="{!c.multiselectVal}" description="Allows the lookup to be reinitalized">
+        
+    </aura:method>
+    <aura:attribute name="objectDataSetIb" type="String"/>
+    <aura:attribute name="fieldDataSetIb" type="String"/>
+    <aura:attribute name="operatorDataSetIb" type="String"/>
+    <aura:attribute name="valueDataSetIb" type="String"/>
+    <aura:attribute name="descDataSetIb" type="String"/>
+    
+      <aura:attribute name="form3a_valoptions" type="String"/>
+    
+    <!--   DataSet IB Condition Form3b -->
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="dataSetCond" type="boolean" default="false"/>
+    
+    
+     <!--  Evaluation Condition Form4 -->
+     <aura:attribute name="objectEvalCond" type="List"/>
+    <aura:attribute name="fieldEvalCond" type="List"/>
+    <aura:attribute name="operatorEvalCond" type="List"/>
+    <aura:attribute name="valueEvalCond" type="List"/>
+    <aura:attribute name="descEvalCond" type="String"/>
+     <aura:attribute name="evalCondDataSet" type="Boolean" default="false" />
+     <aura:attribute name="evalCondition" type="boolean" default="false"/>
+     <aura:attribute name="isIconVisiblef4" type="Boolean" default="true" />
+    <aura:attribute name="isfieldVisiblef4" type="Boolean" default="false" />
+    
+    <aura:attribute name="evalobjectOptions" type="List"/>
+    <aura:attribute name="evalfieldPicklist" type="Object"/>
+    <aura:attribute name="evalfieldOptions" type="List"/>
+     <aura:attribute name="evaloperatorPicklist" type="Object"/>
+     <aura:attribute name="evalvaluePicklist" type="Object"/>
+    <aura:attribute name="evalvalOptions" type="List"/>
+     <aura:attribute name="evaloperatorOptions" type="List"/>
+     <aura:attribute name="salesplay" type="String"/>
+    <aura:attribute name="recomranking" type="String"/>
+    <aura:attribute name="evalCond" type="Object"/>
+    <aura:attribute name="ruleId" type="String"/>
+    <div class="bgcolor">
+        <div class="slds">
+            
+            <div class="slds-box cusbox slds-box_x-small">
+                <lightning:icon iconName="custom:custom64"></lightning:icon>
+                <h1 class="box">Program Management</h1>
+                
+            </div>
+            <br></br>
+            <div class="slds-box text slds-box_x-small"> 
+                <h1 class="styles">Create a New Program</h1>
+                <p class="para">Create a program to provide insights to sellers on how to take action on their Opportunities and Accounts. Programs will be applied to Installed Base and Salesforce data, and made visible to sellers via Sales Program tiles. Start a new program by following the steps below!</p>
+            </div>   
+            
+            <div class="fullpage">
+                <div class="slds-grid slds-wrap">
+                    
+                    <div class="slds-col leftsec slds-size_3-of-12">
+                        
+                        <!--<lightning:button  variant="base" onclick="{!c.definePrgm}">Define the Program</lightning:button>-->
+                        
+                        <lightning:button aura:id="form1" variant="base" onclick="{!c.definePrgm}" class="{! (v.form1 == true) ? 'stateClass' : ''}">Define the Program</lightning:button>
+                        <br></br>
+                        <lightning:button aura:id="form2" variant="base" onclick="{!c.offering}" class="{! (v.form2 == true) ? 'stateClass' : ''}">Define the Offering</lightning:button>
+                        
+                        <br></br>
+                        <ul>
+                            <!-- <lightning:button  variant="base" onclick="{!c.assignAccnts}">Assign Accounts</lightning:button>-->
+                            <li>
+                                <lightning:button	 variant="base" onclick="{!c.assignAccnts}" class="{! (v.form3 == true) ? 'stateClass' : ''}" >Assign Accounts</lightning:button>
+                            </li>
+                            
+                            <li>
+                                <ul class="slds-is-nested">
+                                    <aura:if isTrue="{!v.withIB}">
+                                        <div class="slds-hide" aura:id="Checkbox1">         
+                                            <li><lightning:button  variant="base" onclick="{!c.SetIB}" class="{! (v.form3a == true) ? 'stateClass' : ''}">Define Data Set with IB</lightning:button></li>       
+                                            <li><lightning:button  variant="base" onclick="{!c.setCond}" class="{! (v.form3b == true) ? 'stateClass' : ''}">Define Data Set Condition</lightning:button></li>  
+                                        </div>
+                                        <aura:set attribute="else">
+                                            <div class="slds-hide" aura:id="checkbox_2">
+                                                <li>   <lightning:button  variant="base" onclick="{!c.Listacc}" class="{! (v.form3c == true) ? 'stateClass' : ''}">Upload List of Account</lightning:button></li>
+                                            </div>
+                                        </aura:set>
+                                    </aura:if>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <!--<lightning:button  variant="base" onclick="{!c.assignAccnts}">Assign Accounts</lightning:button>-->
+                        
+                        <lightning:button  variant="base" onclick="{!c.qib}" class="{! (v.form4 == true) ? 'stateClass' : ''}">Define the Qualifying IB</lightning:button>
+                        <br></br>
+                        <lightning:button  variant="base" onclick="{!c.evalCond}" class="{! (v.form5 == true) ? 'stateClass' : ''}">Determine Evaluation Conditions</lightning:button>
+                        <br></br>
+                        <lightning:button  variant="base" onclick="{!c.finalRecom}" class="{! (v.form6 == true) ? 'stateClass' : ''}">Finalize Your Recommendation</lightning:button>
+                    </div>
+                    <div class="slds-col slds-size_9-of-12">
+                        
+                        <aura:if isTrue="{!v.form1}">
+                            
+                            
+                            
+                            <div>
+                                <div class="bgcolor">
+                                    <div class="slds">
+                                        
+                                        <div class="fullpage">
+                                            
+                                            <div class="slds-grid slds-wrap">
+                                                
+                                                <div class="slds-col slds-size_9-of-12">
+                                                    
+                                                    <br></br>
+                                                    <h2 class="Header">Define Sales Program</h2><br></br>
+                                                    <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address">
+                                                        
+                                                        <div class="slds-form-element__control">
+                                                            <div class="slds-form-element__row">
+                                                                <!--                <div class="slds-list_inline">-->
+                                                                <div class="slds-size_4-of-7">
+                                                                    <div class="slds-form-element">
+                                                                        <label class="slds-form-element__label" for="form-element-id-02" required="true" >
+                                                                            <abbr class="slds-required" title="required">*</abbr>PROGRAM NAME</label>
+                                                                        <div class="slds-form-element__control">
+                                                                            
+                                                                            <!-- <input type="text" id="form-element-id-02" class="slds-input" updateOn="keyup" aura:id="textarea"
+                       keyup="{!c.handleKeyup}"  maxlength="100"> </input>-->
+                                                                            <!--<lightning:input type="text" name="input1" value="{!v.prgmname}" />-->
+                                                                            <!--ui:inputText updateOn="keyup" aura:id="textarea" value="{!v.prgmname}" label="" maxlength="100" keyup="{!c.handleKeyup}"/-->
+                                                                            <ui:inputText updateOn="keyup" aura:id="textarea" value="{!v.prgmname}" label="" maxlength="100" keyup="{!c.handleKeyup}"/>
+                                                                            <span class="floatToRight">{!v.charsRemaining}/100</span>
+                                                                        </div> 
+                                                                        
+                                                                        <!--                	<label class="slds-form-element__label" for="form-element-id-02" required="true" >
+                    <abbr class="slds-required" title="required">*</abbr>PROGRAM NAME</label>
+      <span class="slds-form-element__control" >
+                            <ui:inputText updateOn="keyup" aura:id="textarea" value="" label="" maxlength="100" 
+             keyup="{!c.handleKeyup}"/>
+                            <span class="floatToRight">{!v.charsRemaining}/100</span>
+                            
+      </span>
+-->
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="slds-size_3-of-7" style="padding-left:1rem;margin-bottom: 1.4rem;">
+                                                                    <!--<div class="slds-form-element" >-->
+                                                                    <lightning:select name="PROGRAMTYPE" label="PROGRAM TYPE" value="{!v.prgmtype}" aura:id = "PROGRAM TYPE" required="true" >
+                                                                        <option value="None">None</option>
+                                                                        <option value="Protect">Protect</option>
+                                                                        <option value="Expand">Expand</option>
+                                                                        <option value="Hunt">Hunt</option>
+                                                                    </lightning:select>
+                                                                    
+                                                                    <!-- <label class="slds-form-element__label" for="form-element-id-03">PROGRAM TYPE</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="form-element-id-03" required="" class="slds-input" value="" />
+                            </div>-->
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-size_7-of-7">
+                                                                    <div class="slds-form-element">
+                                                                        <!--            	<label class="slds-form-element__label" for="form-element-id-01">
+             <abbr class="slds-required" title="required">*</abbr>PROGRAM DESCRIPTION</label>
+            <div class="slds-form-element__control">
+                                <textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>
+                <input type="text" id="form-element-id-02" required="true" class="slds-input" value="" />
+-->
+                                                                        <label class="slds-form-element__label" for="form-element-id-01" required="true">
+                                                                            <abbr class="slds-required" title="required">*</abbr>PROGRAM DESCRIPTION</label>
+                                                                        <span class="slds-form-element__control" >
+                                                                            <ui:inputText updateOn="keyup" aura:id="textarea" value="{!v.prgmdesc}" label="" maxlength="200" 
+                                                                                          keyup="{!c.handleKeyup1}"/>
+                                                                            <span class="floatToRight">{!v.charsRemaining2}/200</span>
+                                                                        </span>                
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="slds-form-element__row" >
+                                                                <div class="slds-size_4-of-7">
+                                                                    <div class="slds-form-element__label">
+                                                                        
+                                                                        
+                                                                        <!--<label class="slds-form-element__label" for="form-element-id-04">START DATE</label>-->
+                                                                        <lightning:input type="date" label="START DATE" required="true" value="{!v.startDate}" ></lightning:input>
+                                                                        <!-- <div class="slds-form-element__control">
+                                <input type="text" id="form-element-id-04" required="true" class="slds-input" value="" />
+                            </div>-->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-size_4-of-7" style="margin-left:4rem">
+                                                                    <div class="slds-form-element__label">
+                                                                        <lightning:input type="date" label="END DATE" required="true" value="{!v.endDate}"></lightning:input>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <br></br>
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-size_7-of-7">
+                                                                    <div class="slds-form-element">
+                                                                        <p>ASSOCIATED SALESFORCE CAMPAIGN CODE</p>  
+                                                                        <br></br>
+                                                                        <aura:if isTrue="{! v.isIconVisibleCamp }">
+                                                                            <h1><lightning:buttonIcon iconName="utility:new" size="medium" onclick="{!c.dispCampFields}"/><p class="inline">Add Campaign Code </p> </h1>
+                                                                        </aura:if>
+                                                                        
+                                                                        <aura:if isTrue="{!v.Camplistdisp}">
+                                                                            <aura:iteration items = "{!v.multiplecampaigncode}" var = 'count' indexVar="index">
+                                                                                <tr data-index ="{!index}"><lightning:icon iconName="utility:delete" name="{!index}" data-index ="{!index}" data-sfid = "{!count}" onclick="{!c.handleDeleteRecord }"/> {!count}</tr><br></br>
+                                                                            </aura:iteration>
+                                                                            
+                                                                        </aura:if>
+                                                                        <lightning:accordion aura:id="accordion" activeSectionName="B">
+                                                                            <aura:if isTrue="{! v.isfieldVisibleCamp }">
+                                         
+                                                                                <div class="slds-form-element__row">
+                                                                                    <div class="slds-size_1-of-1">
+                                                                                        <div class="slds-form-element">
+                                                                                            <lightning:input type="text" name="searchKey" label="Campaign Name" aura:id="searchKey" onchange="{!c.searchKeyChange}" placeholder="Search" value = "{!v.campselected}"/>          
+                                                                                            <aura:if isTrue = "{!v.campaigncodelist}">
+                                                                                                <aura:iteration items="{!v.campName}" var="camplist" indexVar="index" >
+                                                                                                    <div class="custom-box"  onclick = "{!c.handleCampselect}" data-sfid="{!camplist.campaignName__c}"  data-index="{!index}"  id ="{!camplist.Id}">
+                                                                                                        <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+                                                                                                            <tr id = "{!camplist.Id}">  
+                                                                                                                <td id = "{!camplist.Id}" data-sfid="{!camplist.campaignName__c}"  data-index="{!index}"><div class="slds-truncate" data-sfid="{!camplist.campaignName__c}" data-index="{!index}" onClick = "{c.handleClick}" title="{!camplist.Name}" >{!camplist.campaignName__c} </div></td>
+                                                                                                            </tr> </table>
+                                                                                                    </div>
+                                                                                                    
+                                                                                                </aura:iteration>
+                                                                                            </aura:if>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="slds-text-align--left slds-m-top--medium">
+                                                                                    <button class="slds-button slds-button--neutral"  onclick="{!c.savecamp}">Save</button>
+                                                                                    <button class="slds-button slds-button--neutral"  onclick="{!c.cancelcamp}">Cancel</button><br></br>
+                                                                                </div>
+                                                                                <!--  <button class="slds-button slds-button_icon slds-button_icon-brand" title="Search">
+                    <span class="slds-assistive-text">Search</span>
+                     </button> -->
+                                                                            </aura:if>
+                                                                        </lightning:accordion>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br></br>
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-size_7-of-7">
+                                                                    <div class="slds-form-element">
+                                                                        <lightning:select name="GEO" label="GEO" aura:id = "PROGRAM TYPE" required="true" value="{!v.geo}">
+                                                                            <option value="">None</option>
+                                                                            <option value="Global">Global</option>
+                                                                            <option value="Japan">Japan</option>
+                                                                            <option value="India">India</option>
+                                                                            <option value="CERTA">CERTA</option>
+                                                                            <option value="UKIMESA">UKIMESA</option>
+                                                                            <option value="DACH">DACH</option>
+                                                                            <option value="Europe South">Europe South</option>
+                                                                            <option value="APAC">APAC</option>
+                                                                            <option value="NWE">NWE</option>
+                                                                            <option value="North America">North America</option>
+                                                                            <option value="Latin America">Latin America</option>
+                                                                            
+                                                                        </lightning:select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-size_7-of-7">
+                                                                    <div class="slds-form-element">
+                                                                        <label class="slds-form-element__label" for="form-element-id-01">
+                                                                            <abbr class="slds-required" title="required">*</abbr>ESTIMATED PROGRAM VALUE BY ACCOUNT</label>
+                                                                        <div class="slds-form-element__control">
+                                                                            <!-- <textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                                                            <!--<input type="text" id="form-element-id-02" required="true" class="slds-input" value="{!v.accValue}" />-->
+                                                                            <lightning:input type="text" value="{!v.accValue}"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-size_7-of-7">
+                                                                    <div class="slds-form-element">
+                                                                        <lightning:select name="PROGRAM GOVERNANCE" label="PROGRAM GOVERNANCE" aura:id = "PROGRAM TYPE" required="true" value="{!v.prgmGover}">
+                                                                            <option value="None">None</option>
+                                                                            <option value="GreenLake">GreenLake</option>
+                                                                            <option value="Non GreenLake">Non GreenLake</option>
+                                                                        </lightning:select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-size_3-of-6">
+                                                                    <div class="slds-form-element">
+                                                                        <label class="slds-form-element__label" for="form-element-id-04">ADD LINK TO SEISMIC</label>
+                                                                        <div class="slds-form-element__control">
+                                                                            <!--<input type="formatted:url" id="form-element-id-04" required="" placeholder="e.g.,https://www.google.com/" class="slds-input" value="{!v.seismicLink1}" />-->
+                                                                            <lightning:input type="url" value="{!v.seismicLink1}" placeholder="e.g.,https://www.google.com/"/>
+                                                                            <lightning:input type="url" value="{!v.seismicLink2}" placeholder="e.g.,https://www.google.com/"/>
+                                                                            <lightning:input type="url" value="{!v.seismicLink3}" placeholder="e.g.,https://www.google.com/"/>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-size_3-of-6" style="margin-left:2rem">
+                                                                    <div class="slds-form-element">
+                                                                        <label class="slds-form-element__label" for="form-element-id-05">ADD LINK DESCRIPTION</label>
+                                                                        <div class="slds-form-element__control">
+                                                                            <!--<input type="text" id="form-element-id-05" required="" placeholder="e.g., google" class="slds-input" value="{!v.descriptionLink1}" />-->
+                                                                            <lightning:input type="text" value="{!v.descriptionLink1}" placeholder="e.g., google"/>
+                                                                            <lightning:input type="text" value="{!v.descriptionLink2}" placeholder="e.g., google"/>
+                                                                            <lightning:input type="text" value="{!v.descriptionLink3}" placeholder="e.g., google"/>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-size_3-of-6">
+                                                                    <div class="slds-form-element">
+                                                                        <label class="slds-form-element__label" for="form-element-id-04">ADD LINK TO RESOURCE</label>
+                                                                        <div class="slds-form-element__control">
+                                                                            <!-- <input type="text" id="form-element-id-04" required="" placeholder="e.g.,https://www.google.com/" class="slds-input" value="{!v.resourceLink1}" />-->
+                                                                            <lightning:input type="url" value="{!v.resourceLink1}" placeholder="e.g.,https://www.google.com/"/>
+                                                                            <lightning:input type="url" value="{!v.resourceLink2}" placeholder="e.g.,https://www.google.com/"/>
+                                                                            <lightning:input type="url" value="{!v.resourceLink3}" placeholder="e.g.,https://www.google.com/"/>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-size_3-of-6" style="margin-left:2rem">
+                                                                    <div class="slds-form-element">
+                                                                        <label class="slds-form-element__label" for="form-element-id-05">ADD LINK DESCRIPTION</label>
+                                                                        <div class="slds-form-element__control">
+                                                                            <!--<input type="text" id="form-element-id-05" required="" placeholder="e.g., google" class="slds-input" value="{!v.descriptionLink4}" />-->
+                                                                            <lightning:input type="text" value="{!v.descriptionLink4}" placeholder="e.g., google"/>
+                                                                            <lightning:input type="text" value="{!v.descriptionLink5}" placeholder="e.g., google"/>
+                                                                            <lightning:input type="text" value="{!v.descriptionLink6}" placeholder="e.g., google"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <div class="slds-text-align--left slds-m-top--medium">
+                                                        <lightning:button  onclick="{!c.NxtSectionF1}">Next Section</lightning:button>
+                                                          <aura:if isTrue="{!v.error}"> <span class = "error">*All the required fields are Mandatory.</span></aura:if>
+                                                    </div>       
+                                                </div> 
+                                            </div>
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <!-- Define Offering - Form2 -->
+                        
+                        <aura:if isTrue="{!v.form2}">
+                            <!--<c:OfferingF2/>-->
+                            <div>
+                                
+                                <div class="fullpage">
+                                    <div class="slds-grid slds-wrap">
+                                        
+                                        <div class="slds-col slds-size_9-of-12">
+                                            <br></br>
+                                            <h2 class="Header">Define your Sales Program's Offering</h2><br></br>
+                                            <p>In the section, select what Product your Sales Program is selling.</p><br></br>
+                                            
+                                            <p>Define the Offering</p><br></br>
+                                            
+                                            <aura:if isTrue="{! v.isIconVisible }">
+                                                <h1> <lightning:icon iconName="utility:new" onclick="{!c.dispFields}"> </lightning:icon> <p class="inline">Add Data Set Filter Criteria </p></h1>
+                                                
+                                            </aura:if>
+                                            <lightning:accordion aura:id="accordion" activeSectionName="B">
+                                                
+                                                
+                                                <aura:if isTrue="{! v.isfieldVisible }">
+                                                    
+                                                    <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address">
+                                                        
+                                                        <div class="slds-form-element__control">
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-size_2-of-6">
+                                                                    <div class="slds-form-element">
+                                                                        <lightning:select name="OBJECT" label="OBJECT" aura:id = "PROGRAM TYPE" required="true" value="{!v.objectOffering}">
+                                                                            <option value="">None</option>
+                                                                            <option value="Product">Product</option>
+                                                                        </lightning:select>
+                                                                    </div>     
+                                                                </div>
+                                                                <div class="slds-size_1-of-6">
+                                                                    <div class="slds-form-element">
+                                                                        <lightning:select name="FIELD" label="FIELD" aura:id = "PROGRAM TYPE" required="true" value="{!v.fieldOffering}">
+                                                                            <option value="">None</option>
+                                                                            <option value="Product Line">Product Line</option>
+                                                                        </lightning:select>
+                                                                    </div>     
+                                                                </div>  
+                                                            </div>
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-size_1-of-6">
+                                                                    <div class="slds-form-element">
+                                                                        <lightning:select name="OPERATOR" label="OPERATOR" aura:id = "PROGRAM TYPE" required="true" value="{!v.operatorOffering}">
+                                                                            <option value="">None</option>
+                                                                            <option value="Includes(IN)">Includes(IN)</option>
+                                                                            <option value="Not Includes(Not IN)">Not Includes(Not IN)</option>
+                                                                        </lightning:select>
+                                                                    </div>     
+                                                                </div>  
+                                                                <div class="slds-size_1-of-6">
+                                                                    <div class="slds-form-element">
+                                                                        <p class="field-title" title="Value">
+                                                                            <c:IB_DefineOfferingVal options_="{!v.Listvalues}" aura:id = "Listvalues" value="{!v.valueOffering}"/> 
+                                                                        </p>
+                                                                        <!-- <lightning:select name="VALUE" label="VALUE" aura:id = "PROGRAM TYPE" required="true" value="{!v.RTM}">
+                                                                     <option value="all">None</option>
+                                                                     
+                                                                 </lightning:select>-->
+                                                                    </div>    
+                                                                    
+                                                                </div>  
+                                                                <br></br>
+                                                                <div class="slds-size_1-of-6">
+                                                                    <div class="slds-form-element">
+                                                                        <label class="slds-form-element__label" for="form-element-id-01">SELECTION DESCRIPTION</label>
+                                                                        <div class="slds-form-element__control">
+                                                                            <!-- <textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                                                            <input type="text" id="form-element-id-02" required="true" class="slds-input" value="{!v.descOffering}" />
+                                                                        </div>
+                                                                    </div>     
+                                                                </div>  
+                                                            </div>   
+                                                            
+                                                            <div class="slds-text-align--left slds-m-top--medium">
+                                                                
+                                                                <lightning:button class="buttn" onclick="{!c.saveOffering}">Save</lightning:button>
+                                                                
+                                                                <lightning:button class="buttn" onclick="{!c.cancel}">Cancel</lightning:button><br></br>
+                                                            </div>
+                                                            <br></br>
+                                                            <P>ReadOut</P><br></br>
+                                                            <p>Filter my Program Offering set down to all values where :with </p><br></br>
+                                                        </div>
+                                                    </fieldset>       
+                                                </aura:if>
+                                                
+                                                <aura:if isTrue="{!v.dataSetFilter}">
+                                                    <lightning:accordion aura:id="accordion" activeSectionName="c" allowMultipleSectionsOpen="true">
+                                                        
+                                                        <lightning:accordionSection name="A" label="Data Set Filter ">
+                                                            
+                                                           {!v.objectOffering} where {!v.fieldOffering} {!v.operatorOffering} {!v.valueOffering}
+                                                            <br></br>
+                                                            <br></br>
+                                                            <tr class="column1">OBJECT  {!v.objectOffering}</tr>
+                                                            <tr class="column1-row1"></tr>
+                                                            <br></br>
+                                                            <table width="80%">
+                                                                <tr ><td width="20%"><p class="column1">FIELD</p><tr class="column1-row1">{!v.fieldOffering}</tr></td>
+                                                                    <td width="20%"><p class="column1">OPERATOR</p><tr class="column1-row1">{!v.operatorOffering}</tr></td>
+                                                                    <td width="20%"><p class="column1">VALUE</p><tr class="column1-row1">{!v.valueOffering}</tr></td>
+                                                                    <td width="20%"><p class="column1">NOTES</p><tr class="column1-row1">{!v.descOffering}</tr></td>
+                                                                </tr>    
+                                                            </table> 
+                                                        </lightning:accordionSection>
+                                                        
+                                                    </lightning:accordion>
+                                                </aura:if>
+                                            </lightning:accordion> 
+                                            <div class="slds-text-align--left slds-m-top--medium">
+                                                
+                                                <lightning:button  onclick="{!c.PrevsecF2}">Previous Section</lightning:button>
+                                                <lightning:button  onclick="{!c.NextSecF2}">Next Section</lightning:button>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.form3}">
+                            <!--<c:AssignAccF3/>-->
+                            <div>
+                                
+                                <div class="fullpage">
+                                    
+                                    <div class="slds-grid slds-wrap">
+                                        
+                                        
+                                        <div class="slds-col slds-size_9-of-12">
+                                            <br></br>
+                                            <h2 class="Header">Assign Accounts</h2>
+                                            <br></br>
+                                            <p>How do you want to assign accounts to this Sales Program? You can either choose to apply criteria based on IB data to generate the Account list, or you can upload your own list and provide data manually.</p>
+                                            <br></br>
+                                            <fieldset class="slds-form-element">
+                                                
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-checkbox">
+                                                        <input type="checkbox" name="options" id="checkbox-unique-id-88" value="checkbox-unique-id-88" checked="" onchange="{!c.checkbox}" />
+                                                        <!--<ui:inputCheckbox aura:id="checkbox" label="Select?" change="{!c.checkbox}"/>-->
+                                                        <label class="slds-checkbox__label" for="checkbox-unique-id-88">
+                                                            <span class="slds-checkbox_faux"></span>
+                                                            <span class="slds-form-element__label">Apply Sales Play Criteria</span>
+                                                            <br></br>
+                                                        </label>
+                                                        <br></br>
+                                                        <p>You will define the Sales Program Target and Sales Plays during the next steps.</p>
+                                                        <br></br>
+                                                    </div>
+                                                    
+                                                    <label class="slds-form-element__label" for="form-element-id-01">- OR -<br></br></label>
+                                                    
+                                                    <br></br>
+                                                    <br></br>
+                                                    <div class="slds-checkbox">
+                                                        <input type="checkbox" name="options" id="checkbox-unique-id-89" value="checkbox-unique-id-89" onchange="{!c.checkbox2}"/>
+                                                        <label class="slds-checkbox__label" for="checkbox-unique-id-89">
+                                                            <span class="slds-checkbox_faux"></span>
+                                                            <span class="slds-form-element__label">Upload a List of Accounts</span>
+                                                            <br></br>
+                                                        </label>
+                                                        <br></br>
+                                                        <p>If you choose to upload a list of accounts, you will still need to enter in the Sales Program Target and Sales Plays during the next steps</p>
+                                                        <br></br>
+                                                    </div>
+                                                </div>
+                                            </fieldset>   
+                                            
+                                            
+                                            <lightning:button  onclick="{!c.PrevsecAssgnAcc}">Previous Section</lightning:button>
+                                            <lightning:button  onclick="{!c.NextSecF3}">Next Section</lightning:button>
+                                            <br></br>
+                                            <br></br>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <!--          Data SET WITH IB - FORM3a   -->
+                        
+                        <aura:if isTrue="{!v.form3a}">
+                           
+                            <div class="slds-col slds-size_9-of-12">
+                                <br></br>
+                                <h2 class="Header">Define the Data Set using Installed Base Data</h2><br></br>
+                                <p>Because you want to use IB data to assign accounts to this Sales Program, you need to create the data set by which your Sales Play criteria will run. Please select the key Installed Base criteria that is common across all the Accounts in this Sales Program</p><br></br>
+                                
+                                <p>Define the Data Set</p>
+                                <p>Use the fields below to define the IB detail common across all the Accounts in this Program</p>
+                                <br></br>
+                                <aura:if isTrue="{! v.isIconVisiblef3 }">
+                                    <h1> <lightning:icon iconName="utility:new" onclick="{!c.dispFieldsf3}"> </lightning:icon> <p class="inline">Add Evaluation Criteria  </p></h1>
+                                    
+                                </aura:if>
+                                <lightning:accordion aura:id="accordion" activeSectionName="B">
+                                    
+                                    <aura:if isTrue="{! v.isfieldVisiblef3 }">
+                                        
+                                        <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address">
+                                            <div class="slds-form-element__control">
+                                                <!--<c:IB_Contractlist/>--> 
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_2-of-6">
+                                                        <div class="slds-form-element">    
+                                                            <lightning:select name="objectPicklist" label="Object" aura:id="objectPicklist" onchange="{!c.PickChange}" value="{!v.objectDataSetIb}">
+                                                                <option value="">None</option>
+                                                                <aura:iteration items="{!v.objectOptions}" var="p">
+                                                                    <option value="{!p.value}">{!p.text}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_2-of-6">
+                                                        <div class="slds-form-element">
+                                                            <lightning:select name="fieldlist" label="Field" aura:id="fieldlist" disabled="{!v.disabledPick}" onchange="{!c.onChangeField}" value="{!v.fieldDataSetIb}">
+                                                                <option value="">None</option>
+                                                                <aura:iteration items="{!v.fieldOptions}" var="fields">
+                                                                    <option value="{!fields.value}">{!fields.text}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_1-of-6">
+                                                        <div class="slds-form-element">
+                                                            <lightning:select name="operatorlist" label="Operator" aura:id="operatorlist" disabled="{!v.disabledPick}" onchange="{!c.onChangeOperator}" value="{!v.operatorDataSetIb}">
+                                                                <option value="">None</option>
+                                                                <aura:iteration items="{!v.operatorOptions}" var="opr">
+                                                                    
+                                                                    <option str = "{!opr.str}" value="{!opr.value}">{!opr.text}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_1-of-6">
+                                                        <div class="slds-form-element">
+                
+                                                            <div aura:id="main-div" class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click ">
+                                                                
+                                                                <!-- For calender condition-->
+                                                                
+                                                                <aura:if isTrue="{!or(v.selectedField=='Contract Expiration Date' , v.selectedField=='Contract Start Date', v.selectedField=='Lease Maturity Date', v.selectedField=='Lease Start Date',v.selectedField=='Opportunity Close Date')}">
+                                                                    <div class="slds-size_3-of-7">
+                                                                        <lightning:input type="date"  label="Value" required="true" value="{!v.valueDataSetIb}"></lightning:input>
+                                                                    </div> 
+                                                                    <aura:set attribute="else">  
+                                                                        
+                                                                        <aura:if isTrue="{!or(v.selectedField=='On Time Renewal Percentage' , v.selectedField=='Model Description',v.selectedField=='Support Value')}">
+                                                                            <div class="slds-size_3-of-7">
+                                                                                <lightning:input type="text" label="Value" required="true" value="{!v.valueDataSetIb}"></lightning:input>  
+                                                                            </div>
+                                                                            <aura:set attribute="else">
+                                                                                
+                                                                                
+                                                                                <div class="slds-form-element__label" >Value</div><br/>
+                                                                                
+                                                                                <button  class="slds-button slds-button--neutral slds-picklist__label" aria-haspopup="true" style="{!'width:' + v.width }" onclick="{!c.handleClick}" onmouseleave="{!c.handleMouseOutButton}">
+                                                                                    
+                                                                                    <span class="slds-truncate" title="{!v.infoText}">{!v.infoText}</span>
+                                                                                    
+                                                                                    <lightning:icon iconName="utility:down" size="small" class="slds-icon" />
+                                                                                    
+                                                                                </button>
+                                                                                <div class="slds-dropdown slds-dropdown--left slds-dropdown_length-5" onmouseenter="{!c.handleMouseEnter}" onmouseleave="{!c.handleMouseLeave}">
+                                                                                    
+                                                                                    <ul class="{!'slds-dropdown__list slds-dropdown--length-' + v.dropdownLength}" role="menu" style="{!'dropdownwidth:' + v.dropdownwidth }" value="{!v.valueDataSetIb}">
+                                                                                        
+                                                                                        <aura:iteration items="{!v.valOptions}" var="option">
+                                                                                            
+                                                                                            <li  class="{!'slds-dropdown__item ' + (option.selected ? 'slds-is-selected' : '')}" style="{!'dropdownwidth:' + v.dropdownwidth }" role="presentation" onclick="{!c.handleSelection}" data-value="{!option.text}" data-selected="{!option.selected}" >
+                                                                                                
+                                                                                                <a href="javascript:void(0);" role="menuitemcheckbox" aria-checked="true" tabindex="0">
+                                                                                                    
+                                                                                                    <span class="slds-truncate">
+                                                                                                        
+                                                                                                        <lightning:icon iconName="utility:check" size="x-small" class="slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
+                                                                                                        
+                                                                                                        {!option.text}
+                                                                                                        
+                                                                                                    </span>
+                                                                                                    
+                                                                                                </a>
+                                                                                                
+                                                                                            </li>
+                                                                                            
+                                                                                        </aura:iteration>
+                                                                                        
+                                                                                    </ul>
+                                                                                </div>     
+                                                                            </aura:set>
+                                                                        </aura:if>          
+                                                                    </aura:set>
+                                                                </aura:if>
+                                                            </div> 
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_2-of-6">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="form-element-id-01">EVALUATION DESCRIPTION</label>
+                                                            <div class="slds-form-element__control">
+                                                                <!-- <textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                                                <input type="text" id="form-element-id-02" required="true" class="slds-input" value="" />
+                                                            </div>
+                                                        </div>     
+                                                    </div>  
+                                                </div>  
+                                                
+                                                <div class="slds-text-align--left slds-m-top--medium">
+                                                    <button class="slds-button slds-button--neutral" onclick="{!c.saveDataSet}">Save</button>
+                                                    <button class="slds-button slds-button--neutral" onclick="{!c.cancelDataSet}">Cancel</button>
+                                                    <button class="slds-button slds-button--neutral" onclick="{!c.submitStudentInfo}">Search (For Model Description only)</button><br></br>
+                                                </div>
+                                                <br></br>
+                                                <P>READOUT</P><br></br>
+                                                <p>Filter my data set down to all values where:</p><br></br>
+                                                <p></p><br></br>
+                                                
+                                                
+                                            </div>
+                                        </fieldset>
+                                    </aura:if>
+                                    
+                                    <aura:if isTrue="{!v.dataSetIBFilter}">
+                                        <lightning:accordion aura:id="accordion" activeSectionName="c" allowMultipleSectionsOpen="true">
+                                            
+                                            <lightning:accordionSection name="A" label="Data Set Filter ">
+                                                
+                                                {!v.objectDataSetIb} where {!v.fieldDataSetIb} &nbsp;{!v.operatorDataSetIb}&nbsp;{!v.valueDataSetIb} {!v.descDataSetIb}
+                                                <br></br>
+                                                <br></br>
+                                                <tr class="column1">OBJECT  {!v.objectDataSetIb}</tr>
+                                                <tr class="column1-row1"></tr>
+                                                <br></br>
+                                                <table width="80%">
+                                                    <tr ><td width="20%"><p class="column1">FIELD</p><tr class="column1-row1">{!v.fieldDataSetIb}</tr></td>
+                                                        <td width="20%"><p class="column1">OPERATOR</p><tr class="column1-row1">{!v.operatorDataSetIb}</tr></td>
+                                                        <td width="20%"><p class="column1">VALUE</p><tr class="column1-row1">{!v.valueDataSetIb}</tr></td>
+                                                        <td width="20%"><p class="column1">NOTES</p><tr class="column1-row1">{!v.descDataSetIb}</tr></td>
+                                                    </tr>    
+                                                </table>  
+                                            </lightning:accordionSection>
+                                            
+                                        </lightning:accordion>
+                                    </aura:if> 
+                                    
+                                </lightning:accordion>
+                                <br></br>
+                                <div class="slds-text-align--left slds-m-top--medium">
+                                    
+                                    <lightning:button  onclick="{!c.PrevsecF3a}">Previous Section</lightning:button>
+                                    <lightning:button  onclick="{!c.NextSecF3a}">Next Section</lightning:button>
+                                    
+                                </div>
+                            </div>                    
+                        </aura:if>
+                        <aura:if isTrue="{!v.form3b}">
+                            <!-- <c:SetCondF3b/>-->
+                            <div class="slds-col slds-size_9-of-12">
+                                <br></br>
+                                <h2 class="Header">Additional Data Set Logic</h2><br></br>
+                                <p>Do you want to apply additional filtering or conditional logic to your data set? In the last section, you decided on which data set to use. This section helps you with building additional logic to layer onto your data set.</p><br></br>
+                                <p>Select from the Data Set Filter Criteria you have selected below to add additional logic to create a more defined and curated data set.</p><br></br>
+                                <div class="slds-text-align--left slds-m-top--medium">
+                                    <lightning:button  onclick="{!c.openModelFilter}">ADD TO FILTER LOGIC</lightning:button>
+                                                                       <aura:if isTrue="{!v.isModalOpen}">           
+                                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closeModelFilter}"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">ADD FILTER LOGIC</h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1">
+                        <p> {!v.fieldDataSetIb} &nbsp; {!v.operatorDataSetIb} {!v.valueDataSetIb} </p>
+    
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModelFilter}"/>
+                        <lightning:button variant="neutral"
+                                          label="Add"
+                                          title="Add"
+                                          onclick="{!c.addFilter}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+                                    </aura:if>
+                                                <!-- <aura:if isTrue="{!v.dataSetIBFilter}">-->
+                                        <lightning:accordion aura:id="accordion" activeSectionName="c" allowMultipleSectionsOpen="true">
+                                            
+                                            <lightning:accordionSection name="A" label="Data Set Filter ">
+                                                
+                                                {!v.objectDataSetIb} where {!v.fieldDataSetIb} &nbsp; {!v.operatorDataSetIb} {!v.valueDataSetIb} {!v.descDataSetIb}
+                                                <br></br>
+                                                <br></br>
+                                                <tr class="column1">OBJECT  {!v.objectDataSetIb}</tr>
+                                                <tr class="column1-row1"></tr>
+                                                <br></br>
+                                                <table width="80%">
+                                                    <tr ><td width="20%"><p class="column1">FIELD</p><tr class="column1-row1">{!v.fieldDataSetIb}</tr></td>
+                                                        <td width="20%"><p class="column1">OPERATOR</p><tr class="column1-row1">{!v.operatorDataSetIb}</tr></td>
+                                                        <td width="20%"><p class="column1">VALUE</p><tr class="column1-row1">{!v.valueDataSetIb}</tr></td>
+                                                        <td width="20%"><p class="column1">NOTES</p><tr class="column1-row1">{!v.descDataSetIb}</tr></td>
+                                                    </tr>    
+                                                </table>  
+                                            </lightning:accordionSection>
+                                            
+                                        </lightning:accordion>
+                                  <!--  </aura:if> -->
+                                </div><br></br>
+                                
+                                <h2 class="Header">Build Your Filter Logic</h2><br></br>
+                                <p>How do you want to combine your selections above to create the main filter for your insights? This filter will be applied first across all of your rules.</p><br></br>
+                               <aura:if isTrue="{!v.dataSetCond}">
+                                 {!v.fieldDataSetIb} &nbsp;{!v.operatorDataSetIb} {!v.valueDataSetIb}
+                                </aura:if>
+                                <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address">
+                                    <div class="slds-form-element__control">
+                                        
+                                        <lightning:button  onclick="{!c.Prevsec}">Apply Logic</lightning:button>
+                                        <br></br> 
+                                        <br></br>
+                                        <P>Shorthand Expression: </P><br></br>
+                                        <p>Filter down my data set to: </p><br></br>
+                                        <p></p><br></br>
+                                        
+                                        <div class="slds-text-align--left slds-m-top--medium">
+                                            <lightning:button  onclick="{!c.Prevsecf3b}">Previous Section</lightning:button>
+                                            <lightning:button  onclick="{!c.NextSecF3b}">Next Section</lightning:button><br></br>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>                     
+                        </aura:if>
+                        <aura:if isTrue="{!v.form3c}">
+                            <c:IB_SalesUploadListOfAccnts/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.form4}">
+                            <div class="slds-col slds-size_9-of-12">
+                                <br></br>
+                                <h2 class="Header">Define the Qualifying IB</h2><br></br>
+                                <p>This section is where you define the different criteria for your Sales Play(s). What are the installed base characteristics you are targeting in terms of contracts, opportunities, or accounts? This can be broad in scope, and can be narrowed down further in the next steps</p><br></br>
+                                <p>IMPORTANT: If your qualifying Installed Base criteria does not include any product line filters, Sales reps will not see the qualifying installed base on a Program tile</p><br></br>
+                                
+                                <p>Define the Qualifying Installed Base</p><br></br>
+                                
+                                <aura:if isTrue="{! v.isIconVisiblef4 }">
+                                    <h1> <lightning:icon iconName="utility:new" onclick="{!c.dispFieldsf4}"> </lightning:icon> <p class="inline">Add Evaluation Criteria  </p></h1>
+                                    
+                                </aura:if>
+                                <lightning:accordion aura:id="accordion" activeSectionName="B">
+                                    
+                                    <aura:if isTrue="{! v.isfieldVisiblef4 }">
+                                        
+                                        <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address">
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_2-of-6">
+                                                        <div class="slds-form-element">    
+                                                            <lightning:select name="evalobjectPicklist" label="Object" aura:id="evalobjectPicklist" onchange="{!c.evalobjectlst}" value="{!v.objectEvalCond}">
+                                                                <option value="">None</option>
+                                                                <aura:iteration items="{!v.evalobjectOptions}" var="p">
+                                                                    <option value="{!p.value}">{!p.text}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_2-of-6">
+                                                        <div class="slds-form-element">
+                                                            <lightning:select name="evalfieldlist" label="Field" aura:id="evalfieldlist" disabled="{!v.disabledPick}" onchange="{!c.evalChangeField}" value="{!v.fieldEvalCond}">
+                                                                <option value="">None</option>
+                                                                <aura:iteration items="{!v.evalfieldOptions}" var="fields">
+                                                                    <option value="{!fields.value}">{!fields.text}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_1-of-6">
+                                                        <div class="slds-form-element">
+                                                            <lightning:select name="evaloperatorlist" label="Operator" aura:id="evaloperatorlist" disabled="{!v.disabledPick}" onchange="{!c.evalChangeOperator}" value="{!v.operatorEvalCond}">
+                                                                <option value="">None</option>
+                                                                <aura:iteration items="{!v.evaloperatorOptions}" var="opr">
+                                                                    
+                                                                    <option str = "{!opr.str}" value="{!opr.value}">{!opr.text}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_1-of-6">
+                                                        <div class="slds-form-element">
+                
+                                                            <div aura:id="main-div" class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click ">
+                                                                
+                                                                <!-- For calender condition-->
+                                                                
+                                                                <aura:if isTrue="{!or(v.selectedField=='Contract Expiration Date' , v.selectedField=='Contract Start Date', v.selectedField=='Lease Maturity Date', v.selectedField=='Lease Start Date',v.selectedField=='Opportunity Close Date')}">
+                                                                    <div class="slds-size_3-of-7">
+                                                                        <lightning:input type="date"  label="Value" required="true" value="{!v.valueEvalCond}"></lightning:input>
+                                                                    </div> 
+                                                                    <aura:set attribute="else">  
+                                                                        
+                                                                        <aura:if isTrue="{!or(v.selectedField=='On Time Renewal Percentage' , v.selectedField=='Model Description',v.selectedField=='Support Value')}">
+                                                                            <div class="slds-size_3-of-7">
+                                                                                <lightning:input type="text" label="Value" required="true" value="{!v.valueEvalCond}"></lightning:input>  
+                                                                            </div>
+                                                                            <aura:set attribute="else">
+                                                                                
+                                                                                
+                                                                                <div class="slds-form-element__label" >Value</div><br/>
+                                                                                
+                                                                                <button  class="slds-button slds-button--neutral slds-picklist__label" aria-haspopup="true" style="{!'width:' + v.width }" onclick="{!c.handleClick}" onmouseleave="{!c.handleMouseOutButton}">
+                                                                                    
+                                                                                    <span class="slds-truncate" title="{!v.infoText}">{!v.infoText}</span>
+                                                                                    
+                                                                                    <lightning:icon iconName="utility:down" size="small" class="slds-icon" />
+                                                                                    
+                                                                                </button>
+                                                                                <div class="slds-dropdown slds-dropdown--left slds-dropdown_length-5" onmouseenter="{!c.handleMouseEnter}" onmouseleave="{!c.handleMouseLeave}">
+                                                                                    
+                                                                                    <ul class="{!'slds-dropdown__list slds-dropdown--length-' + v.dropdownLength}" role="menu" style="{!'dropdownwidth:' + v.dropdownwidth }" value="{!v.valueEvalCond}">
+                                                                                        
+                                                                                        <aura:iteration items="{!v.valOptions}" var="option">
+                                                                                            
+                                                                                            <li  class="{!'slds-dropdown__item ' + (option.selected ? 'slds-is-selected' : '')}" style="{!'dropdownwidth:' + v.dropdownwidth }" role="presentation" onclick="{!c.handleSelection}" data-value="{!option.text}" data-selected="{!option.selected}" >
+                                                                                                
+                                                                                                <a href="javascript:void(0);" role="menuitemcheckbox" aria-checked="true" tabindex="0">
+                                                                                                    
+                                                                                                    <span class="slds-truncate">
+                                                                                                        
+                                                                                                        <lightning:icon iconName="utility:check" size="x-small" class="slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
+                                                                                                        
+                                                                                                        {!option.text}
+                                                                                                        
+                                                                                                    </span>
+                                                                                                    
+                                                                                                </a>
+                                                                                                
+                                                                                            </li>
+                                                                                            
+                                                                                        </aura:iteration>
+                                                                                        
+                                                                                    </ul>
+                                                                                </div>     
+                                                                            </aura:set>
+                                                                        </aura:if>          
+                                                                    </aura:set>
+                                                                </aura:if>
+                                                            </div> 
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_2-of-6">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="form-element-id-01">EVALUATION DESCRIPTION</label>
+                                                            <div class="slds-form-element__control">
+                                                                <!-- <textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                                                <input type="text" id="form-element-id-02" required="true" class="slds-input" value="" />
+                                                            </div>
+                                                        </div>     
+                                                    </div>  
+                                                </div>  
+                                                
+                                                <div class="slds-text-align--left slds-m-top--medium">
+                                                    <button class="slds-button slds-button--neutral" onclick="{!c.saveEvalCond}">Save</button>
+                                                    <button class="slds-button slds-button--neutral" onclick="{!c.cancelEvalCond}">Cancel</button>
+                                                    <button class="slds-button slds-button--neutral" onclick="{!c.submitStudentInfo}">Search (For Model Description only)</button><br></br>
+                                                </div>
+                                                <br></br>
+                                                <P>READOUT</P><br></br>
+                                                <p>Evaluation Building Block:</p><br></br>
+                                                <p></p><br></br>
+                                                
+                                                
+                                            </div>
+                                        </fieldset>
+                                    </aura:if>
+                                                                        <aura:if isTrue="{!v.evalCondDataSet}">
+                                        <lightning:accordion aura:id="accordion" activeSectionName="c" allowMultipleSectionsOpen="true">
+                                            
+                                            <lightning:accordionSection name="A" label="Data Set Filter ">
+                                                
+                                                {!v.objectEvalCond} where {!v.fieldEvalCond} &nbsp;{!v.operatorEvalCond}&nbsp;{!v.valueEvalCond}
+                                                <br></br>
+                                               <!-- <br></br>
+                                                <tr class="column1">OBJECT  {!v.objectEvalCond}</tr>
+                                                <tr class="column1-row1"></tr>
+                                                <br></br>
+                                                <table width="80%">
+                                                    <tr ><td width="20%"><p class="column1">FIELD</p><tr class="column1-row1">{!v.fieldEvalCond}</tr></td>
+                                                        <td width="20%"><p class="column1">OPERATOR</p><tr class="column1-row1">{!v.operatorEvalCond}</tr></td>
+                                                        <td width="20%"><p class="column1">VALUE</p><tr class="column1-row1">{!v.valueEvalCond}</tr></td>
+                                                        <td width="20%"><p class="column1">NOTES</p><tr class="column1-row1">{!v.descEvalCond}</tr></td>
+                                                    </tr>    
+                                                </table>  -->
+                                                                                        <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address">
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_2-of-6">
+                                                        <div class="slds-form-element">    
+                                                            <lightning:select name="evalobjectPicklist" label="Object" aura:id="evalobjectPicklist" onchange="{!c.evalobjectlst}" value="{!v.objectEvalCond}">
+                                                                <option value="">None</option>
+                                                                <aura:iteration items="{!v.evalobjectOptions}" var="p">
+                                                                    <option value="{!p.value}">{!p.text}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_2-of-6">
+                                                        <div class="slds-form-element">
+                                                            <lightning:select name="evalfieldlist" label="Field" aura:id="evalfieldlist" disabled="{!v.disabledPick}" onchange="{!c.evalChangeField}" value="{!v.fieldEvalCond}">
+                                                                <option value="">None</option>
+                                                                <aura:iteration items="{!v.evalfieldOptions}" var="fields">
+                                                                    <option value="{!fields.value}">{!fields.text}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_1-of-6">
+                                                        <div class="slds-form-element">
+                                                            <lightning:select name="evaloperatorlist" label="Operator" aura:id="evaloperatorlist" disabled="{!v.disabledPick}" onchange="{!c.evalChangeOperator}" value="{!v.operatorEvalCond}">
+                                                                <option value="">None</option>
+                                                                <aura:iteration items="{!v.evaloperatorOptions}" var="opr">
+                                                                    
+                                                                    <option str = "{!opr.str}" value="{!opr.value}">{!opr.text}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_1-of-6">
+                                                        <div class="slds-form-element">
+                
+                                                            <div aura:id="main-div" class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click ">
+                                                                
+                                                                <!-- For calender condition-->
+                                                                
+                                                                <aura:if isTrue="{!or(v.selectedField=='Contract Expiration Date' , v.selectedField=='Contract Start Date', v.selectedField=='Lease Maturity Date', v.selectedField=='Lease Start Date',v.selectedField=='Opportunity Close Date')}">
+                                                                    <div class="slds-size_3-of-7">
+                                                                        <lightning:input type="date"  label="Value" required="true" value="{!v.valueEvalCond}"></lightning:input>
+                                                                    </div> 
+                                                                    <aura:set attribute="else">  
+                                                                        
+                                                                        <aura:if isTrue="{!or(v.selectedField=='On Time Renewal Percentage' , v.selectedField=='Model Description',v.selectedField=='Support Value')}">
+                                                                            <div class="slds-size_3-of-7">
+                                                                                <lightning:input type="text" label="Value" required="true" value="{!v.valueEvalCond}"></lightning:input>  
+                                                                            </div>
+                                                                            <aura:set attribute="else">
+                                                                                
+                                                                                
+                                                                                <div class="slds-form-element__label" >Value</div><br/>
+                                                                                
+                                                                                <button  class="slds-button slds-button--neutral slds-picklist__label" aria-haspopup="true" style="{!'width:' + v.width }" onclick="{!c.handleClick}" onmouseleave="{!c.handleMouseOutButton}">
+                                                                                    
+                                                                                    <span class="slds-truncate" title="{!v.infoText}">{!v.infoText}</span>
+                                                                                    
+                                                                                    <lightning:icon iconName="utility:down" size="small" class="slds-icon" />
+                                                                                    
+                                                                                </button>
+                                                                                <div class="slds-dropdown slds-dropdown--left slds-dropdown_length-5" onmouseenter="{!c.handleMouseEnter}" onmouseleave="{!c.handleMouseLeave}">
+                                                                                    
+                                                                                    <ul class="{!'slds-dropdown__list slds-dropdown--length-' + v.dropdownLength}" role="menu" style="{!'dropdownwidth:' + v.dropdownwidth }" value="{!v.valueEvalCond}">
+                                                                                        
+                                                                                        <aura:iteration items="{!v.valOptions}" var="option">
+                                                                                            
+                                                                                            <li  class="{!'slds-dropdown__item ' + (option.selected ? 'slds-is-selected' : '')}" style="{!'dropdownwidth:' + v.dropdownwidth }" role="presentation" onclick="{!c.handleSelection}" data-value="{!option.text}" data-selected="{!option.selected}" >
+                                                                                                
+                                                                                                <a href="javascript:void(0);" role="menuitemcheckbox" aria-checked="true" tabindex="0">
+                                                                                                    
+                                                                                                    <span class="slds-truncate">
+                                                                                                        
+                                                                                                        <lightning:icon iconName="utility:check" size="x-small" class="slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
+                                                                                                        
+                                                                                                        {!option.text}
+                                                                                                        
+                                                                                                    </span>
+                                                                                                    
+                                                                                                </a>
+                                                                                                
+                                                                                            </li>
+                                                                                            
+                                                                                        </aura:iteration>
+                                                                                        
+                                                                                    </ul>
+                                                                                </div>     
+                                                                            </aura:set>
+                                                                        </aura:if>          
+                                                                    </aura:set>
+                                                                </aura:if>
+                                                            </div> 
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_2-of-6">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="form-element-id-01">EVALUATION DESCRIPTION</label>
+                                                            <div class="slds-form-element__control">
+                                                                <!-- <textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                                                <input type="text" id="form-element-id-02" required="true" class="slds-input" value="" />
+                                                            </div>
+                                                        </div>     
+                                                    </div>  
+                                                </div>  
+
+                                            </div>
+                                        </fieldset>
+                                            </lightning:accordionSection>
+                                            
+                                        </lightning:accordion>
+                                    </aura:if> 
+                                </lightning:accordion>
+                                <div class="slds-text-align--left slds-m-top--medium">
+                                    <lightning:button  onclick="{!c.PrevsecF4}">Previous Section</lightning:button>
+                                    <lightning:button  onclick="{!c.NextSecF4}">Next Section</lightning:button><br></br>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.form5}">
+                            
+                            <div class="slds-col slds-size_9-of-12">
+                                <br></br>
+                                <h2 class="Header">Determine Evaluation Conditions</h2><br></br>
+                                <p>This section is where you combine the Evaluation Criteria you selected in the last step to create the Sales Play (s) for the Sales Program. You can add a name for the Sales Play that the seller will see. If you create multiple Sales Plays, you can assign a priority to each Sales Play to determine which Sales Play gets shown to the seller for that account.</p><br></br>
+                                <p>Select from the Evaluation Criteria to create logic for Sales Plays</p><br></br>
+                                <div class="slds-text-align--left slds-m-top--medium">
+                                    <!--<lightning:button class="buttn1" onclick="{!c.submitStudentInfo}">ADD LOGIC TO CREATE SALES PLAY</lightning:button>-->
+                                <button class="slds-button slds-button--neutral" onclick="{!c.openModelFilter}">ADD LOGIC TO CREATE SALES PLAY</button>
+                                </div><br></br>
+                               <aura:if isTrue="{!v.isModalOpen}">           
+                                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closeModelFilter}"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">ADD FILTER LOGIC</h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1">
+                        <p> {!v.fieldEvalCond} &nbsp;{!v.operatorEvalCond}&nbsp;{!v.valueEvalCond} </p>
+    
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModelFilter}"/>
+                        <lightning:button variant="neutral"
+                                          label="Add"
+                                          title="Add"
+                                          onclick="{!c.addEvalFilter}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+                                    </aura:if>
+                                         <lightning:accordion aura:id="accordion" activeSectionName="c" allowMultipleSectionsOpen="true">
+                                            
+                                            <lightning:accordionSection name="A" label="Data Set Filter ">
+                                                
+                                                {!v.objectEvalCond} where {!v.fieldEvalCond} &nbsp;{!v.operatorEvalCond}&nbsp;{!v.valueEvalCond}
+                                                <br></br>
+                                                <br></br>
+                                                <tr class="column1">OBJECT  {!v.objectEvalCond}</tr>
+                                                <tr class="column1-row1"></tr>
+                                                <br></br>
+                                                <table width="80%">
+                                                    <tr ><td width="20%"><p class="column1">FIELD</p><tr class="column1-row1">{!v.fieldEvalCond}</tr></td>
+                                                        <td width="20%"><p class="column1">OPERATOR</p><tr class="column1-row1">{!v.operatorEvalCond}</tr></td>
+                                                        <td width="20%"><p class="column1">VALUE</p><tr class="column1-row1">{!v.valueEvalCond}</tr></td>
+                                                        <td width="20%"><p class="column1">NOTES</p><tr class="column1-row1">{!v.descEvalCond}</tr></td>
+                                                    </tr>    
+                                                </table>  
+                                            </lightning:accordionSection>
+                                            
+                                        </lightning:accordion>
+                                <p>Add Sales Play name to help the Seller understand why the Account is being targeted by the Sales Program. Assign Priority to determine which Sales Play should prevail if an Account were to qualify for multiple Sales Plays.</p><br></br>
+                                <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address">
+                                   
+                                    <div class="slds-form-element__control">
+                                         <aura:if isTrue="{!v.evalCondition}">
+                                        <div class="slds-form-element__row">
+                                            
+                                            <div class="slds-size_2-of-6">
+                                                <label class="slds-form-element__label" for="form-element-id-01">
+                                                    <abbr class="slds-required" title="required">*</abbr>RECOMMENDATION LOGIC</label>
+                                                {!v.evalCond}
+                                                <!-- {!v.fieldEvalCond}{!v.operatorEvalCond}{!v.valueEvalCond}
+                                               <div class="slds-form-element__control">
+                                                    <input type="text" id="form-element-id-02" required="true" class="slds-input" value="" />
+                                                </div> -->    
+                                            </div>  
+                                               <div class="slds-size_2-of-6">
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label" for="form-element-id-01">
+                                                    <abbr class="slds-required" title="required">*</abbr>SALES PLAY NAME</label>
+                                                <div class="slds-form-element__control">
+                                                    <!-- <textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                                    <!--  <lightning:inputRichText value="{!v.myVal}" placeholder="Type something interesting"/>-->
+                                                    <!-- <lightning:formattedRichText value="{!v.myVal}" />
+                                                    <input type="richtext" id="form-element-id-02" required="true" class="slds-input" value="{!v.salesplay}" />-->
+                                                      <lightning:input type="text" value="{!v.salesplay}"/>
+                                                </div>
+                                            </div>     
+                                        </div> 
+                                            <div class="slds-size_1-of-6">
+                                                <div class="slds-form-element">
+                                                    <lightning:select name="OBJECT" label="RECOMMENDATION RANKING" aura:id = "PROGRAM TYPE" required="true" value="{!v.recomranking}">
+                                                        <option value="">None</option>
+                                                        <option value="1">SP1</option>
+                                                        <option value="2">SP2</option>
+                                                        <option value="3">SP3</option>
+                                                        <option value="4">SP4</option>
+                                                    </lightning:select>
+                                                </div>     
+                                            </div>
+                                                                                    
+ 
+                                        </div> 
+                                        <br></br>
+
+                                          </aura:if>
+                                        <br></br>
+                                        
+                                        
+                                        
+                                        <div class="slds-text-align--left slds-m-top--medium">
+                                            <lightning:button class="buttn"  onclick="{!c.submitStudentInfo}">APPLY LOGIC</lightning:button>
+                                        </div>
+                                        <br></br>
+                                        <P>Shorthand Expression: </P><br></br>
+                                        <p>Filter down my data set to: </p><br></br>
+                                        <p></p><br></br>
+                                        
+                                        <div class="slds-text-align--left slds-m-top--medium">
+                                            <lightning:button  onclick="{!c.PrevsecF5}">Previous Section</lightning:button>
+                                            <lightning:button  onclick="{!c.Preview}">Preview</lightning:button><br></br><br></br>
+                                        </div>
+                                    </div>
+                                  
+                                </fieldset>
+                            </div>                    
+                        </aura:if>
+                        <aura:if isTrue="{!v.form6}">
+                            <div class="slds-col slds-size_9-of-12">
+                                <br></br>
+                                <h2 class="Header">Finalize Sales Program</h2>
+                                <p>Summary of Sales Program to be displayed below</p><br></br>
+                              <div class="slds-form-element__column">
+                                    <label class="slds-form-element__label" for="form-element-id-01">PROGRAM NAME &nbsp;&nbsp; {!v.prgmname} </label>
+                                    <!--<textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                    <label class="slds-form-element__label" for="form-element-id-02">PROGRAM TYPE &nbsp;&nbsp; {!v.prgmtype}</label>  
+                                    <!--<textarea id="form-element-id-02" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                    <label class="slds-form-element__label" for="form-element-id-03">PROGRAM DESCRIPTION &nbsp;&nbsp; {!v.prgmdesc}</label>
+                                    <!--<textarea id="form-element-id-03" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                    
+                                </div> 
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <div class="slds-form-element__column">
+                                    <label class="slds-form-element__label" for="form-element-id-01">START DATE &nbsp;&nbsp; {!v.startDate}</label>
+                                    <!--<textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                    <label class="slds-form-element__label" for="form-element-id-02">END DATE &nbsp;&nbsp; {!v.endDate}</label>  
+                                    <!--<textarea id="form-element-id-02" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                    <label class="slds-form-element__label" for="form-element-id-03">GEO &nbsp;&nbsp; {!v.geo}</label>
+                                    <!--<textarea id="form-element-id-03" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                    
+                                </div> 
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <div class="slds-form-element__column">
+                                    <label class="slds-form-element__label" for="form-element-id-01">ESTIMATED ACCOUNT VALUE BY ACCOUNT &nbsp;&nbsp; {!v.accValue}</label>
+                                    <!--<textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                    <label class="slds-form-element__label" for="form-element-id-02">PROGRAM GOVERNANCE &nbsp;&nbsp; {!v.prgmGover}</label> 
+                                    
+                                </div>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <div class="slds-form-element__column">
+                                    <label class="slds-form-element__label" for="form-element-id-01">LINK TO RESOURCE &nbsp;&nbsp; {!v.resourceLink1}</label>
+                                    <!--<textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
+                                    <label class="slds-form-element__label" for="form-element-id-02">LINK TO SEISMIC &nbsp;&nbsp; {!v.seismicLink1}</label> 
+                                    
+                                </div>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <div class="slds-form-element__column">
+                                    <label class="slds-form-element__label" for="form-element-id-01">ASSOCIATED SALESFORCE CAMPAIGN CODES &nbsp;&nbsp; </label>
+                                    <aura:iteration items = "{!v.multiplecampaigncode}" var = 'count' indexVar="index">
+                                                                                <tr id = "{!count.Id}" data-index ="{!index}" > {!count}  </tr><br></br>
+                                                                            </aura:iteration>
+                                </div>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <div class="slds-form-element__column">
+                                    
+                                    <label class="slds-form-element__label01" for="form-element-id-01">PROGRAM OFFERING &nbsp;&nbsp; <aura:if isTrue="{!v.objectOffering}"> {!v.objectOffering} where {!v.fieldOffering} {!v.operatorOffering} {!v.valueOffering}</aura:if></label>
+                                  <lightning:accordion aura:id="accordion" activeSectionName="c" allowMultipleSectionsOpen="true">
+                                                        
+                                                        <lightning:accordionSection name="A" label="Data Set Filter ">
+                                                            <br></br>
+                                                            <tr class="column1">OBJECT  {!v.objectOffering}</tr>
+                                                            <tr class="column1-row1"></tr>
+                                                            <br></br>
+                                                            <table width="80%">
+                                                                <tr ><td width="20%"><p class="column1">FIELD</p><tr class="column1-row1">{!v.fieldOffering}</tr></td>
+                                                                    <td width="20%"><p class="column1">OPERATOR</p><tr class="column1-row1">{!v.operatorOffering}</tr></td>
+                                                                    <td width="20%"><p class="column1">VALUE</p><tr class="column1-row1">{!v.valueOffering}</tr></td>
+                                                                    <td width="20%"><p class="column1">NOTES</p><tr class="column1-row1">{!v.descOffering}</tr></td>
+                                                                </tr>    
+                                                            </table>  
+                                                        </lightning:accordionSection>
+                                                        
+                                                    </lightning:accordion>
+                                </div>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <div class="slds-form-element__column">
+                                    <label class="slds-form-element__label01" for="form-element-id-01">QUALIFYING INSTALLED BASE </label> 
+                                                    <lightning:accordionSection name="A" label="Data Set Filter ">
+                                                <br></br>
+                                                <tr class="column1">OBJECT  {!v.objectEvalCond}</tr>
+                                                <tr class="column1-row1"></tr>
+                                                <br></br>
+                                                <table width="80%">
+                                                    <tr ><td width="20%"><p class="column1">FIELD</p><tr class="column1-row1">{!v.fieldEvalCond}</tr></td>
+                                                        <td width="20%"><p class="column1">OPERATOR</p><tr class="column1-row1">{!v.operatorEvalCond}</tr></td>
+                                                        <td width="20%"><p class="column1">VALUE</p><tr class="column1-row1">{!v.valueEvalCond}</tr></td>
+                                                        <td width="20%"><p class="column1">NOTES</p><tr class="column1-row1">{!v.descEvalCond}</tr></td>
+                                                    </tr>    
+                                                </table>  
+                                            </lightning:accordionSection>
+                                </div>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <div class="slds-form-element__column">
+                                    <label class="slds-form-element__label01" for="form-element-id-01">EVALUATION CONDITION &nbsp;&nbsp;<aura:if isTrue="{!v.objectEvalCond}">{!v.objectEvalCond} where {!v.fieldEvalCond}{!v.operatorEvalCond}{!v.valueEvalCond} </aura:if></label>
+ 
+                                </div>
+                                <br></br>
+                                
+                                <div class="slds-form-element__column">
+                                    <label class="slds-form-element__label02" for="form-element-id-01">RECOMMENDATION LOGIC   {!v.evalCond}</label>
+                                    <label class="slds-form-element__label02" for="form-element-id-01">SALES PLAY NAME {!v.salesplay}</label>
+                                    <label class="slds-form-element__label02" for="form-element-id-01">RECOMMENDATION RANKING {!v.recomranking}</label>
+                                </div>
+                                <br></br>
+                                <br></br>
+                                <div class="slds-text-align--left slds-m-top--medium">
+                                    <lightning:button onclick="{!c.Prevsecf6}">Previous Section</lightning:button>
+                                    <lightning:button onclick="{!c.openModelDraft}">SAVE DRAFT</lightning:button><br></br>
+                                    <aura:if isTrue="{!v.isModalOpen}">           
+                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                            <div class="slds-modal__container">
+                                                <!-- Modal/Popup Box Header Starts here-->
+                                                <header class="slds-modal__header">
+                                                    <lightning:buttonIcon iconName="utility:close"
+                                                                          onclick="{!c.closeModelDraft}"
+                                                                          alternativeText="close"
+                                                                          variant="bare-inverse"
+                                                                          class="slds-modal__close"/>
+                                                   <!-- <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Delete Program</h2>-->
+                                                </header>
+                                                <!--Modal/Popup Box Body Starts here-->
+                                                <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1">
+                                                    <p>{!v.ruleId} is Succesfully Created </p>
+                                                    
+                                                </div>
+                                                <!--Modal/Popup Box Footer Starts here-->
+                                                <footer class="slds-modal__footer">
+                                                    <lightning:button variant="neutral"
+                                                                      label="Continue to Create New Program"
+                                                                      title="Cancel"
+                                                                      onclick="{! c.createNewProgram}"/>
+                                                    <lightning:button variant="neutral"
+                                                                      label="View Program"
+                                                                      title="Ok"
+                                                                      onclick="{!c.viewProgram}"/>
+                                                    <lightning:button variant="neutral"
+                                                                      label="View All Program"
+                                                                      title="Ok"
+                                                                      onclick="{!c.viewAllProgram}"/>
+                                                </footer>
+                                            </div>
+                                        </section>
+                                        <div class="slds-backdrop slds-backdrop_open"></div>
+                                    </aura:if>
+                                </div>
+                                <br></br>
+                            </div>
+                        </aura:if>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</aura:component>

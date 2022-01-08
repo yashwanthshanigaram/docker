@@ -11,6 +11,10 @@
     <aura:attribute name = "Programstatus" type = "string"/>
     <aura:attribute name = "disabledPick" type = "boolean" default = "false"/>
     <aura:attribute name = "comments" type = "string"/>
+    <aura:attribute name="stid" type="String"/>
+    <aura:attribute name="isButtonActive" type = "boolean" default = 'true'/>
+    <aura:attribute name="error" type = "boolean" default = "false"/>
+    <!--updated1-->
 
     <aura:attribute name="recordId" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
@@ -18,15 +22,13 @@
     <div>
          <h2 class="headingheading">Sales Program Details</h2>
              <aura:iteration items="{!v.ProgramName}" var="program">
-     <div>
-        <div class="popup">
+     <div class="popup">
           <div class="row">
                <div class="c1">
                      <p class="{!v.Programstatus == 'Red' ? ' redColor ' : v.Programstatus == 'Green' ? ' green ' : v.Programstatus ==  'Dark Green' ? ' darkgreen ' : v.Programstatus == 'Grey' ? ' grey ':''}"></p><span class="rulename">{!program.ruleName__c}</span>
                     
                     <p class="salesplayname">{!program.description__c}</p>
-					
-                </div>
+					 </div>
                 <div class='c2'>
                 <p class="child"><lightning:button class ="x" onclick="{!c.provideFeedback}">Provide Feedback</lightning:button>
                 <lightning:button class ="x" onclick="{!c.openFeedbackHistory}">Feedback History</lightning:button>
@@ -35,77 +37,44 @@
              </div>
             
               </div>
-                 </div> 
-       <div class="slds-grid slds-wrap">
+                 <div class = 'Program_offering'>
+             <div class="slds-grid slds-wrap">
             <div class="slds-col slds-size_5-of-12">
-        <!--div class="salesplayrow2">
-  <div class="salesplayc1">
-        <h1><b class="heading">Program Offering</b></h1>
-                 </div>
-  <div class="salesplayc2">
-      <p class="header2">{!program.productLine__c}</p></div>
-</div>
-          
-   <div class="salesplayrow1">
-  <div class="salesplayc1">
-        <h2><b class="heading">Estimated Value</b></h2>
-                 </div>
-  <div class="salesplayc2">
-      <p class="header2"> <lightning:formattedNumber value="{!program.recommendationValue__c}" style="currency" currencyCode="USD" minimumFractionDigits="0" maximumFractionDigits="0"/></p></div>
-</div>
-
-      <div class="salesplayrow2">
-  <div class="salesplayc1">
-        <h1><b class="heading">Motion</b><p class="header3">{!program.ruleType__c}</p></h1>
-                 </div>
-  <div class="salesplayc2">
-      </div>
-            </div-->
-                <table class = "table"><tr><td class = "column12">Program Offering</td><td>{!program.productLine__c}</td></tr>
-                    <tr><td class = "column12">Estimated Value</td><td><lightning:formattedNumber value="{!program.recommendationValue__c}" style="currency" currencyCode="USD" minimumFractionDigits="0" maximumFractionDigits="0"/></td></tr>
-                    <tr><td class = "column12">Motion</td><td>{!program.ruleType__c}</td></tr></table>
-                  
-           </div>
-        
-            <div class ="slds-col slds-size_7-of-12">
+       <table class = "table"><tr><td class = "column12">Program Offering</td><td class = "column12">{!program.productLine__c}</td></tr>
+                    <tr><td class = "column12">Estimated Value</td><td class = "column12"><lightning:formattedNumber value="{!program.recommendationValue__c}" style="currency" currencyCode="USD" minimumFractionDigits="0" maximumFractionDigits="0"/></td></tr>
+                    <tr><td class = "column12">Motion</td><td class = "column12">{!program.ruleType__c}</td></tr></table>
+        </div>
+        <div class ="slds-col slds-size_7-of-12">
              <div class = "head"> <span class="left">Associated Seismic Library</span><span class="right">Associated Resources</span></div>
                <div class="links">
-        
-        <span class = "left"><div><a href="{!program.SeismicLink_First__c}">{!program.SeismicLink_First_desc__c}</a></div>
+       <span class = "left"><div><a href="{!program.SeismicLink_First__c}">{!program.SeismicLink_First_desc__c}</a></div>
             <div><a href="{!program.SeismicLink_Second__c}">{!program.SeismicLink_Second_desc__c}</a></div>
             <div><a href="{!program.SeismicLink_Third__c}">{!program.SeismicLink_Third_desc__c}</a></div>
         </span><span class = "right"><div><a href="{!program.ResourceLink_First__c}">{!program.ResourceLink_First_desc__c}</a></div>
-                   <div><a href="{!program.ResourceLink_Second__c}">{!program.ResourceLink_Second_desc__c}</a></div>
+            <div><a href="{!program.ResourceLink_Second__c}">{!program.ResourceLink_Second_desc__c}</a></div>
             <div><a href="{!program.ResourceLink_Third__c}">{!program.ResourceLink_Third_desc__c}</a></div></span>
-       
-       </div>
-            </div>
-            
-        
-                 </div>
+ </div>
+ </div>
+                     </div></div>
+</aura:iteration>
 
-
-        </aura:iteration>
-        </div>
-           
+         
     <aura:if isTrue="{!v.providefeedback}">        
         
-        <div role="dialog" class="slds-modal slds-fade-in-open ">
-            <div class="slds-modal__container">
-                <!--Modal Box Header Start-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small">
+            <div class="slds-modal__container" id="providefeedback">
                 <header class="slds-modal__header">
-                   
                         <lightning:buttonIcon iconName="utility:close"
+                                              size = "large"
                                                 onclick="{! c.closePopup }"
                                                 alternativeText="close"
-                                                variant="bare-inverse"
-                                                class="slds-modal__close"/>            
-                        
-              
-                    <h1 class="slds-text-heading--medium" style="font-size: x-large;color: black;font-weight: bold">Provide Feedback</h1>
+                                                variant="bare-reverse"
+                                                class="slds-modal__close2"/>            
+                     <h1 class="slds-text-heading--medium" style="font-size: x-large;color: black;font-weight: bold">Provide Feedback</h1>
                     <h1 class="slds-text-heading--medium" style="font-size: revert;color: black;font-style: normal;font-family: auto;">Please indicate the reason why this Sales Program is not applicable for this customer.<lightning:icon iconName="utility:info" alternativeText="Test Message" title="Test Messsage"/>
 
 </h1>
+                    <aura:if isTrue="{!v.error}"> <span class = "error">*All the required fields are Mandatory.</span></aura:if>
                     
                 </header>
                 <!--Modal Box Header End-->
@@ -115,7 +84,7 @@
                     <center><b></b></center>
                     <lightning:layout horizontalAlign="center" >
                         <lightning:layoutItem padding="around-small" size="3" >
-                            <lightning:select aura:id="disposition" name="Disposition" label="Disposition*" value="{!v.dispositionValue}" class="boxfont" onchange = "{!c.PickChange}">
+                            <lightning:select aura:id="disposition" name="Disposition" label="Disposition" required = "true" value="{!v.dispositionValue}" class="boxfont" onchange = "{!c.PickChange}">
                                 <option value="">-- None --</option>   
                                 <aura:iteration items="{!v.dispositions}" var="disposition">
                                     <option value="{!disposition.value}" text="{!disposition.label}"></option>
@@ -124,7 +93,7 @@
                             </lightning:select>
                         </lightning:layoutItem>
                         <lightning:layoutItem padding="around-small"  size="3">
-                            <lightning:select aura:id="reasonCategory" name="reasonCategory" label="Reason Category*" value="{!v.categoryValue}" disabled = "{!v.disabledPick}" class="boxfont" >
+                            <lightning:select aura:id="reasonCategory" name="reasonCategory" label="Reason Category"  required = "true" value="{!v.categoryValue}" disabled = "{!v.disabledPick}" class="boxfont" >
                                 
                                 <option value="">-- None --</option>   
                                 <aura:iteration items="{!v.categories}" var="Category">
@@ -142,9 +111,7 @@
                         <div class="slds-form-element slds-form-element_horizontal" >
                            <lightning:layoutItem flexibility="auto" >                            
                             <div class="slds-form-element__control"  Style="float:left;">
-                                <!--label class="slds-form-element__label" for="horizontal-input-id-02">Comment<abbr class="slds-required" title="required">* </abbr></label-->
-                                <!--textarea id="horizontal-input-id-02" value = "{!v.comments}"  class="slds-textarea" onchange = "{!c.comments}"></textarea-->
-                                 <ui:inputTextArea aura:id="comments" label="Comments*" class = "slds-textarea" value="{!v.comments}" rows="5"/>
+                    <ui:inputTextArea aura:id="comments" label="Comments"  required = "true" class = "slds-textarea" value="{!v.comments}" rows="5"/>
                             </div>
                                 </lightning:layoutItem>
                         </div>
@@ -157,41 +124,41 @@
                 <!--Modal Box Button Start-->
                 <footer class="slds-modal__footer">
                     <lightning:button name='Cancel' label='Cancel' onclick='{!c.closePopup}'/>
-                    <lightning:button name='Submit' label='Submit' onclick='{!c.onSubmit}' />
+                    
+                    <lightning:button name='Submit'  label='Submit' onclick='{!c.onSubmit}' />
                 </footer>
                 <!--Modal Box Button End-->
             </div>
-        </div>
+        </section>
         <div class="slds-backdrop slds-backdrop--open"></div>            
         
     </aura:if>
     
     <aura:if isTrue="{!v.isopenFeedbackHistory}">
             <section role="dialog" tabindex="-1" aria-labelledby="modalheading" aria-modal="true" aria-describedby="modal-content2" class="slds-modal slds-fade-in-open slds-modal_large">
-                <div class="slds-modal__container">
+                <div class="slds-modal__container" id="feedbackhistory">
                     <!-- Modal/Popup Box Header Starts here-->
                     
-                    <header class="slds-modal__header" >
+                   
                         
-                        <div style="margin-top:20px;">
+                        <div style="margin-top;">
                         
                         <lightning:buttonIcon iconName="utility:close"
                                               onclick="{! c.closeFeedbackHistory }"
                                               size="large"
                                               alternativeText="Close"
                                               variant="bare"
-                                              class="slds-modal__close"/>
+                                              class="slds-modal__close2"/>
                             </div>
-                    </header>
-                    
-                    
+                  
                     <!--Modal/Popup Box Body Starts here-->
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content2">
-                        <c:IB_FeedbackHistory  search = "{!v.search}" recordId = "{!v.recordId}"/>
+                        <c:IB_FeedbackHistory  search = "{!v.search}" recordId = "{!v.recordId}" stid = "{!v.stid}"/>
                     </div>
                     
                     
                 </div>
             </section>
         </aura:if>   
+    </div>
 </aura:component>
