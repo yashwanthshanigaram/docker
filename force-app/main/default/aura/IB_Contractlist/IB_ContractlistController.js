@@ -258,14 +258,14 @@
          console.log("pn"+programName);
          var programtype=component.get('v.prgmtype');
           console.log("ptype"+programtype);
-           /* programDesc:component.get('v.prgmdesc'),
-            programStartDate:component.get('v.startDate'),
-            programEndDate:component.get('v.endDate'),
-            campaignName:component.get('v.campselected'),
-            programGeo:component.get('v.geo'),
-            programAccValue:component.get('v.accValue'),
-            programGovernance:component.get('v.prgmGover'),*/
-         if(programName=="" || programtype =="None"){
+          var programDesc=component.get('v.prgmdesc');
+           var programStartDate=component.get('v.startDate');
+           var programEndDate=component.get('v.endDate');
+           
+            var programGeo=component.get('v.geo');
+           var programAccValue=component.get('v.accValue');
+            var programGovernance=component.get('v.prgmGover');
+         if(programName=="" || programtype =="None"||programDesc==""||programStartDate==""||programEndDate==""||programGeo=="None"||programAccValue==""||programGovernance=="None"){
               component.set('v.error',true);
          }
          else{
@@ -357,17 +357,7 @@
     });      
       evt.fire();  */
     },
-          savecamp : function(component, event, helper) {
-        component.set('v.Camplistdisp', true);
-         component.set('v.isfieldVisibleCamp',false);	
-          component.set('v.isIconVisibleCamp', true);  
-              
-	},  
-      
-      cancelcamp : function(component, event, helper) {
-        component.set('v.isIconVisibleCamp', true);
-         component.set('v.isfieldVisibleCamp',false);		
-	},  
+   
 	dispCampFields : function(component, event, helper) {
 		 component.set('v.isfieldVisibleCamp', !component.get('v.isfieldVisibleCamp'));
          component.set('v.isIconVisibleCamp', false);
@@ -491,7 +481,17 @@
         
      NextSecF2: function(component, event, helper) {
          
-         component.set("v.form2",false);
+         var objectf2=component.get('v.objectOffering');
+         console.log("object"+objectf2);
+        var fieldf2=component.get('v.fieldOffering');
+        var optr2=component.get('v.operatorOffering');
+        var valf2=component.get('v.valueOffering');
+         console.log("valf2"+valf2);
+         if(objectf2==""||fieldf2==""||optr2==""||valf2==""){
+             component.set('v.error',true);
+         }
+         else{
+            component.set("v.form2",false);
         component.set("v.form1",false);
         component.set("v.form3",true);
         component.set("v.form3a",false);
@@ -499,7 +499,9 @@
         component.set("v.form3c",false);
         component.set("v.form4",false);
         component.set("v.form5",false);
-        component.set("v.form6",false); 
+        component.set("v.form6",false);   
+         }
+        
          
         /* var action1 = component.get("c.removeSessionf2");
          action1.setCallback(this, function(response){
@@ -724,7 +726,17 @@
         component.set("v.form6",false); 
     },
      NextSecF4: function(component, event, helper) {
-          component.set("v.form3b",false);
+          var objectf4=component.get('v.objectEvalCond');
+         console.log("object"+objectf4);
+        var fieldf4=component.get('v.fieldEvalCond');
+        var optr4=component.get('v.operatorEvalCond');
+        var valf4=component.get('v.valueEvalCond');
+         console.log("valf2"+valf4);
+         if(objectf4==""||fieldf4==""||optr4==""||valf4==""){
+             component.set('v.error',true);
+         }
+         else{
+           component.set("v.form3b",false);
           component.set("v.form2",false);
         component.set("v.form1",false);  
          component.set("v.form3",false);
@@ -732,7 +744,9 @@
         component.set("v.form3c",false);
         component.set("v.form4",false);
         component.set("v.form5",true);
-        component.set("v.form6",false); 
+        component.set("v.form6",false);   
+         }
+          
        /*var action = component.get("c.storeSessionf2");
          console.log('inside form 2 next');
          
@@ -782,6 +796,9 @@
         component.set("v.form6",false); 
      },
      Preview: function(component, event, helper) {
+         var links= (component.get('v.seismicLink1')+component.get('v.seismicLink2')+component.get('v.seismicLink3'));
+        console.log("links"+links);
+         component.set('v.finalsesimiclink',links);
           component.set("v.form3b",false);
           component.set("v.form2",false);
         component.set("v.form1",false);  
@@ -832,20 +849,32 @@
      },						
         checkbox: function(component, event, helper) {
        
+        var checkCmp1 =component.find("checkboxf3a").get("v.checked");
+            console.log("checkCmp1"+checkCmp1);
+         var checkCmp2 =component.find("checkboxf3c").get("v.checked");
+         if(checkCmp1){
+           var temp =component.find("checkboxf3c").set("v.checked", false);
+        }
+            
         component.set('v.withIB', true);
         
          var newButton = component.find("Checkbox1");
-        $A.util.toggleClass(newButton, "slds-hide");
+        $A.util.toggleClass(newButton, "slds-hide"); 
         
        
         
     },
     checkbox2: function(component, event, helper) {
+          var checkCmp1 =component.find("checkboxf3a").get("v.checked");
+         var checkCmp2 =component.find("checkboxf3c").get("v.checked");
+         if(checkCmp1){
+           var temp =component.find("checkboxf3a").set("v.checked", false);
+        }
        
         component.set('v.withIB', false);
         
          var newButton = component.find("checkbox_2");
-        $A.util.toggleClass(newButton, "slds-hide");
+        $A.util.toggleClass(newButton, "slds-hide"); 
     },
     
         searchKeyChange: function(component, event) {
@@ -896,27 +925,73 @@
        cmp.set("v.campaigncode",thisObjId);
         var thisId = event.target.id;
        console.log(thisId);
-            /* var thisObjId=[];
-             thisObjId = event.target.dataset.sfid;
-           console.log(thisObjId);
-             console.log("length of obj"+thisObjId.length);
-            for(var i=0;i<thisObjId.length;i++){
-                console.log("length of obj"+thisObjId.length);
-                 cmp.set("v.campaigncode",thisObjId[i]);
-                console.log("campaign code is"+cmp.get('v.campaigncode'))
-            } */
-          //  console.log("before camp select"+cmp.get('v.campselected'))
+      
        cmp.set('v.campselected', thisObjId);
        //     var camp=[1,2,3];
-            var multiplecampaigncode= cmp.get('v.multiplecampaigncode');
-           multiplecampaigncode.push(thisObjId);
-           console.log("multiplecampaigncode final = "+multiplecampaigncode)
-           cmp.set('v.multiplecampaigncode',multiplecampaigncode);
+      var campval= cmp.get('v.campcodeval');
+           // console.log("camp val"+campval);
+           /* if(campval=='abc'){
+               var selectedcode= cmp.get('v.multiplecampaigncode');
+           selectedcode.push(thisObjId);
+           console.log("multiplecampaigncode final = "+selectedcode)
+           //cmp.set('v.multiplecampaigncode',selectedcode);  
+                 cmp.set('v.campaigncodelist',false);
+            }*/
+           cmp.set('v.campaigncodelist',false);
         //     console.log("After camp select"+cmp.get('v.multiplecampaigncode'))
-        cmp.set('v.campaigncodelist',false);
+       
         
     },
-
+ handleDeleteRecord:function(cmp,event,helper){
+      /* var index = event.target.dataset.index;
+        console.log(index);
+       
+         var thisObjId = event.target.dataset.sfid;
+        console.log(thisObjId);*/
+         //var self = this;  // safe reference
+          var multiplecampaignCode = cmp.get('v.multiplecampaigncode');
+        console.log("multiplecampaignCode = "+ multiplecampaignCode);
+        //cmp.set('v.campselected', thisObjId);
+       var selectedval=cmp.get('v.campselected');
+        //console.log("camp code"+ cmp.get('v.campselected'));
+    /* var selectedItem = event.currentTarget;
+        console.log(selectedItem);
+     var index1 = selectedItem.dataset.index;
+        console.log(index1);
+       var thisObjId = event.target.dataset.sfid;
+        console.log(thisObjId); */
+      var index = multiplecampaignCode.indexOf(selectedval);
+        console.log("index"+index);
+             multiplecampaignCode.splice(index, 1);
+       //console.log('mulit camp code'+multiplecampaignCode);
+        
+       // cmp.set("v.multiplecampaigncode", multiplecampaignCode);
+        if(multiplecampaignCode==''){
+            cmp.set('v.campcodeval','camp');
+             cmp.set("v.multiplecampaigncode", multiplecampaignCode);
+        }else{
+             cmp.set("v.multiplecampaigncode", multiplecampaignCode);
+        }
+  // console.log("multiplecampaignCode after deletion = "+multiplecampaigncode);         
+        
+    },
+           savecamp : function(component, event, helper) {
+               var selectedcode = component.get("v.campaigncode");
+               console.log("selectedcode"+selectedcode);
+               var mutiplecode= component.get('v.multiplecampaigncode');
+               mutiplecode.push(selectedcode);
+               component.set('v.multiplecampaigncode',mutiplecode);
+              
+        component.set('v.Camplistdisp', true);
+         component.set('v.isfieldVisibleCamp',false);	
+          component.set('v.isIconVisibleCamp', true);  
+              
+	},  
+      
+      cancelcamp : function(component, event, helper) {
+        component.set('v.isIconVisibleCamp', true);
+         component.set('v.isfieldVisibleCamp',false);		
+	},  
  /* Define Offering values */
     values : function(component, event, helper) {
          var listOfValues=[];
@@ -937,10 +1012,18 @@
      },
     
     saveOffering : function(component, event, helper) {
+        var offering=component.find('Listvalues').get('v.selectedItems');
+        var offer1=offering.toString();
+         console.log("val off"+offer1);
+        
+        component.set('v.valueOffering',offer1);
+        console.log("@@@@"+component.get("v.valueOffering"));
         var object=component.get("v.objectOffering");
         console.log("object val is"+object);
        component.set('v.isfieldVisible',false);
          component.set('v.dataSetFilter',true);
+        
+        
     },
         /* Assign Accounts */
     
@@ -1072,11 +1155,11 @@
             ],
             "Previous Lost Opportunities":[
                 {text:"Equals (=)", value: "LostOptyEqual", str:"="},
-                {text:"Not Equals (!=)", value: "Not Equals", str:"!="}
+                {text:"Not Equals (!=)", value: "LostOptyEqual", str:"!="}
                 ],
              "Active Datacenter Care Customer":[
                 {text:"Equals (=)", value: "AccDatacenter"},
-                {text:"Not Equals (!=)", value: "Not Equals"}
+                {text:"Not Equals (!=)", value: "AccDatacenter"}
                 ],
             
               "Exposure" :[
@@ -1134,7 +1217,7 @@
             ],
             "Support Status":[
                 {text:"Equals (=)", value: "contractStatus"},
-                {text:"Not Equals (!=)", value: "Not Equals"}
+                {text:"Not Equals (!=)", value: "contractStatus"}
                 ],
             "Contract Expiration Date":[         
                 {text:"Not Equals (!=)", value: "Not Equals (!=)"},
@@ -1155,11 +1238,11 @@
             ],
             "Support Service Level":[
                 {text:"Equals (=)", value: "ServiceLevel Equals"},
-                {text:"Not Equals (!=)", value: "ServiceLevel Not Equals"}
+                {text:"Not Equals (!=)", value: "ServiceLevel Equals"}
                 ],
             "Route To Market":[
                 {text:"Equals (=)", value: "RTM Equals"},
-                {text:"Not Equals (!=)", value: "RTM Not Equals"}
+                {text:"Not Equals (!=)", value: "RTM Equals"}
             ],
             "Associated With Opportunity":[
                 {text:"Equals (=)", value: "contractOptyEquals"},
@@ -1167,7 +1250,7 @@
             ],
              "Document Type":[
                 {text:"Equals (=)", value: "DocTypeEquals"},
-                {text:"Not Equals (!=)", value: "Not Equals"}
+                {text:"Not Equals (!=)", value: "DocTypeEquals"}
                 ],
               "Support Value" :[
                  {text:"Equals (=)", value: "Equals (=)"},
@@ -1212,11 +1295,11 @@
             ],
             "Opportunity Type":[
                 {text:"Equals (=)", value: "OptyTypeEquals"},
-                {text:"Not Equals (!=)", value: "Not Equals"}
+                {text:"Not Equals (!=)", value: "OptyTypeEquals"}
                 ],
             "Opportunity Status":[
                 {text:"Equals (=)", value: "OptyStatusEquals"},
-                {text:"Not Equals (!=)", value: "Not Equals"}
+                {text:"Not Equals (!=)", value: "OptyStatusEquals"}
                 ],
             "At Risk Flag":[
                 {text:"Equals (=)", value: "RiskFlagEquals"},
@@ -1330,7 +1413,7 @@
     },
  
     PickChange : function(component, event, helper) {
-       // var parentValue = component.find('objectPicklist').get('v.value');
+        var parentValue = component.find('objectPicklist').get('v.value');
          var parentValue = component.get('v.objectEvalCond');
         component.set('v.fieldOptions', component.get('v.fieldPicklist')[parentValue]);
          console.log(component.get('v.fieldOptions'));
@@ -1343,7 +1426,8 @@
     },
     
      evalobjectlst : function(component, event, helper) {
-        var parentValue = component.find('evalobjectPicklist').get('v.value');
+       // var parentValue = component.find('evalobjectPicklist').get('v.value');
+         var parentValue = component.get('v.objectEvalCond');
         component.set('v.evalfieldOptions', component.get('v.evalfieldPicklist')[parentValue]);
          console.log(component.get('v.evalfieldOptions'));
          //  component.set('v.valOptions','');
@@ -1420,7 +1504,20 @@
             }
              });
             $A.enqueueAction(action); 
-         }   
+         }  
+          if(parentValue=="Country"){
+              var action = component.get('c.accCountry'); 
+        action.setCallback(this, function(response){
+            var state = response.getState();
+            console.log('state'+state);
+            if(state === 'SUCCESS' || state === 'DRAFT' ){
+                var responseValue = response.getReturnValue();
+                component.set('v.valOptions',responseValue);
+                    console.log('responseValue'+JSON.stringify(responseValue));        
+            }
+             });
+            $A.enqueueAction(action); 
+          }
          if(parentValue=="OptyProduct Type"){
               var action = component.get('c.accProdType'); 
         action.setCallback(this, function(response){
@@ -1510,6 +1607,19 @@
              });
             $A.enqueueAction(action); 
          }   
+          if(parentValue=="Country"){
+              var action = component.get('c.accCountry'); 
+        action.setCallback(this, function(response){
+            var state = response.getState();
+            console.log('state'+state);
+            if(state === 'SUCCESS' || state === 'DRAFT' ){
+                var responseValue = response.getReturnValue();
+                component.set('v.valOptions',responseValue);
+                    console.log('responseValue'+JSON.stringify(responseValue));        
+            }
+             });
+            $A.enqueueAction(action); 
+         }   
          if(parentValue=="Industry"){
               var action = component.get('c.accIndustry'); 
         action.setCallback(this, function(response){
@@ -1568,7 +1678,7 @@
         var parentValue = component.find('operatorlist').get('v.value');
          console.log("parent value of"+parentValue);
  
-           if((fieldValue === "Current Support Service Level") || (fieldValue === "Product Type")|| (fieldValue ==="Product Line")||(fieldValue ==="Industry")||(fieldValue ==="Sales Stage")){
+          if((fieldValue === "Current Support Service Level") || (fieldValue === "Product Type")|| (fieldValue ==="Product Line")||(fieldValue ==="Industry")||(fieldValue ==="Sales Stage")||(fieldValue ==="Country")||(fieldValue ==="OptyProduct Type")){
              console.log("inside field value");      
            }else{
          
@@ -1592,7 +1702,7 @@
         var parentValue = component.find('evaloperatorlist').get('v.value');
          console.log("parent value of"+parentValue);
  
-           if((fieldValue === "Current Support Service Level") || (fieldValue === "Product Type")|| (fieldValue ==="Product Line")||(fieldValue ==="Industry")||(fieldValue ==="Sales Stage")){
+           if((fieldValue === "Current Support Service Level") || (fieldValue === "Product Type")|| (fieldValue ==="Product Line")||(fieldValue ==="Industry")||(fieldValue ==="Sales Stage")||(fieldValue ==="Country")||(fieldValue ==="OptyProduct Type")){
              console.log("inside field value");      
            }else{
        
@@ -1735,10 +1845,14 @@
           console.log("operator value is"+component.get('v.operatorDataSetIb'));
           console.log("value is"+component.get('v.valueDataSetIb')); */
         
-
+     /* var sizecount=component.get('v.count');
+            sizecount = sizecount+1;
+             component.set('v.count',sizecount);
+            console.log("count is"+sizecount);*/
        component.set('v.isfieldVisiblef4',false);
          component.set('v.evalCondDataSet',true);
          component.set('v.isIconVisiblef4',true)
+         
     },
     
     /***** Final Form ********/
@@ -1817,27 +1931,7 @@
               });
          $A.enqueueAction(programFilter);
     },
-    handleDeleteRecord:function(cmp,event,helper){
-      /* var index = event.target.dataset.index;
-        console.log(index);
-       
-         var thisObjId = event.target.dataset.sfid;
-        console.log(thisObjId);*/
-         var self = this;  // safe reference
-          var multiplecampaignCode = cmp.get('v.multiplecampaigncode');
-        console.log("multiplecampaignCode = "+ multiplecampaignCode);
-         var selectedItem = event.currentTarget;
-        console.log(selectedItem);
-     var index = selectedItem.dataset.index;
-        console.log(index);
-       var thisObjId = event.target.dataset.sfid;
-        console.log(thisObjId);
-         multiplecampaignCode.splice(index, 1);
-        cmp.set("v.multiplecampaigncode", multiplecampaignCode);
-        
-   console.log("multiplecampaignCode after deletion = "+multiplecampaigncode);         
-        
-    },
+   
     openModelDraft: function(component, event, helper) {
       // Set isModalOpen attribute to true
       component.set("v.isModalOpen", true);

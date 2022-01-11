@@ -38,7 +38,7 @@
 }
 .THIS .slds-button.slds-button_neutral{
     margin-bottom: 0.5rem;
-    width:250px;
+    width:255px; 
    font-size:15px;
     text-align:left;
 }
@@ -82,4 +82,7 @@
 }
 .THIS .error{
     color:red;
+}
+.THIS .ruleid{
+    font-weight: bold;
 }

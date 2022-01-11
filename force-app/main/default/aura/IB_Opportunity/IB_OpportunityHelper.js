@@ -64,9 +64,13 @@
         var data = cmp.get("v.partnerList");//updated allData
         console.log(data.length);
         var reverse = sortDirection !== 'asc';
-        if (fieldName == 'link') {
-            data.sort(this.sortBy('accountSTName__c', reverse))
-        } else {
+        if (fieldName == 'Opportunity_Name') {
+            data.sort(this.sortBy('Opportunity_Name__c', reverse))
+        }  else if (fieldName ==="OwnerNames"){
+           fieldName = "OwnerName";
+          helper.sortData(cmp, fieldName, sortDirection); 
+        }
+            else {
             data.sort(this.sortBy(fieldName, reverse));            
         }
        
@@ -103,8 +107,9 @@
 		console.log("ruleName" + rule);
 		var sfdcId_ST = component.get('v.recordId');
 		console.log("sfdcId"+sfdcId_ST);
+         var stid = component.get("v.stid");
         var  action = component.get('c.ProgramCampaign');
-          action.setParams({'rule':rule,'sfdcId':sfdcId_ST
+        action.setParams({'rule':rule,'sfdcId':sfdcId_ST,"accountstid1":stid
 });
              action.setCallback(this, function(response){
               var state = response.getState();

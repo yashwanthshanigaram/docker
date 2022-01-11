@@ -31,18 +31,20 @@
     <aura:attribute name = "campselected" type = "String"/>
     <aura:attribute name="multiplecampaigncode" type="list" default ="" />
     <aura:attribute name = "campaigncodelist" type ="boolean" default = "true"/>
+     <aura:attribute name="campcodeval" type="String" default="abc"/>
     <aura:attribute name="prgmname" type="String" default=""/>
     <aura:attribute name="prgmtype" type="String"/>
-    <aura:attribute name="prgmdesc" type="String"/>
-    <aura:attribute name="startDate" type="date"/>
-    <aura:attribute name="endDate" type="date"/>
+    <aura:attribute name="prgmdesc" type="String" default=""/>
+    <aura:attribute name="startDate" type="date" default=""/>
+    <aura:attribute name="endDate" type="date" default=""/>
     <aura:attribute name="geo" type="String"/>
-    <aura:attribute name="accValue" type="String"/>
+    <aura:attribute name="accValue" type="String" default=""/>
     <aura:attribute name="prgmGover" type="String"/>
-    <aura:attribute name="seismicLink1" type="String"/>
-    <aura:attribute name="seismicLink2" type="URL"/>
+    <aura:attribute name="seismicLink1" type="url"/>
+    <aura:attribute name="seismicLink2" type="String"/>
     <aura:attribute name="seismicLink3" type="String"/>
-    <aura:attribute name="resourceLink1" type="String"/>
+    <aura:attribute name="finalsesimiclink" type="String"/>
+    <aura:attribute name="resourceLink1" type="url"/>
     <aura:attribute name="resourceLink2" type="String"/>
     <aura:attribute name="resourceLink3" type="String"/>
     <aura:attribute name="descriptionLink1" type="String"/>
@@ -61,10 +63,10 @@
     <aura:attribute name="dataSetFilter" type="Boolean" default="false" />
     <aura:attribute name="Listvalues" type="List"/>
     <aura:handler name="init" value="{!this}" action="{!c.values}"/>
-    <aura:attribute name="objectOffering" type="String"/>
-    <aura:attribute name="fieldOffering" type="String"/>
-    <aura:attribute name="operatorOffering" type="String"/>
-    <aura:attribute name="valueOffering" type="String"/>
+    <aura:attribute name="objectOffering" type="String" default=""/>
+    <aura:attribute name="fieldOffering" type="String" default=""/>
+    <aura:attribute name="operatorOffering" type="String" default=""/>
+    <aura:attribute name="valueOffering" type="String" default=""/>
     <aura:attribute name="descOffering" type="String"/>
     
     <!--- DataSetIB - Form3a Attributes --> 
@@ -111,6 +113,7 @@
     <aura:attribute name="descDataSetIb" type="String"/>
     
       <aura:attribute name="form3a_valoptions" type="String"/>
+     <aura:attribute name="f3checkbox1" type="boolean" />
     
     <!--   DataSet IB Condition Form3b -->
     <aura:attribute name="isModalOpen" type="boolean" default="false"/>
@@ -118,15 +121,17 @@
     
     
      <!--  Evaluation Condition Form4 -->
-     <aura:attribute name="objectEvalCond" type="List"/>
-    <aura:attribute name="fieldEvalCond" type="List"/>
-    <aura:attribute name="operatorEvalCond" type="List"/>
-    <aura:attribute name="valueEvalCond" type="List"/>
+     <aura:attribute name="objectEvalCond" type="String" default=""/>
+    <aura:attribute name="fieldEvalCond" type="String" default=""/>
+    <aura:attribute name="operatorEvalCond" type="String" default=""/>
+    <aura:attribute name="valueEvalCond" type="String" default=""/>
     <aura:attribute name="descEvalCond" type="String"/>
      <aura:attribute name="evalCondDataSet" type="Boolean" default="false" />
      <aura:attribute name="evalCondition" type="boolean" default="false"/>
      <aura:attribute name="isIconVisiblef4" type="Boolean" default="true" />
     <aura:attribute name="isfieldVisiblef4" type="Boolean" default="false" />
+    
+    <aura:attribute name="ColorMap" type="Map" default="{a: 'objectEvalCond', b: 'fieldEvalCond', c: 'operatorEvalCond',d:'valueEvalCond'}"/>
     
     <aura:attribute name="evalobjectOptions" type="List"/>
     <aura:attribute name="evalfieldPicklist" type="Object"/>
@@ -139,6 +144,7 @@
     <aura:attribute name="recomranking" type="String"/>
     <aura:attribute name="evalCond" type="Object"/>
     <aura:attribute name="ruleId" type="String"/>
+      <aura:attribute name="count" type="Integer" default="0"/>
     <div class="bgcolor">
         <div class="slds">
             
@@ -213,7 +219,7 @@
                                                 <div class="slds-col slds-size_9-of-12">
                                                     
                                                     <br></br>
-                                                    <h2 class="Header">Define Sales Program</h2><br></br>
+                                                    <h2 class="Header">Define Sales Program</h2><br></br>  <aura:if isTrue="{!v.error}"> <span class = "error">*All the required fields are Mandatory.</span></aura:if>
                                                     <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address">
                                                         
                                                         <div class="slds-form-element__control">
@@ -312,9 +318,8 @@
                                                                         
                                                                         <aura:if isTrue="{!v.Camplistdisp}">
                                                                             <aura:iteration items = "{!v.multiplecampaigncode}" var = 'count' indexVar="index">
-                                                                                <tr data-index ="{!index}"><lightning:icon iconName="utility:delete" name="{!index}" data-index ="{!index}" data-sfid = "{!count}" onclick="{!c.handleDeleteRecord }"/> {!count}</tr><br></br>
+                                                                                <tr id = "{!count.Id}" data-index ="{!index}" ><lightning:icon iconName="utility:delete" data-index="{!index}" onclick="{!c.handleDeleteRecord }"/> {!count}  </tr><br></br>
                                                                             </aura:iteration>
-                                                                            
                                                                         </aura:if>
                                                                         <lightning:accordion aura:id="accordion" activeSectionName="B">
                                                                             <aura:if isTrue="{! v.isfieldVisibleCamp }">
@@ -450,7 +455,7 @@
                                                     </fieldset>
                                                     <div class="slds-text-align--left slds-m-top--medium">
                                                         <lightning:button  onclick="{!c.NxtSectionF1}">Next Section</lightning:button>
-                                                          <aura:if isTrue="{!v.error}"> <span class = "error">*All the required fields are Mandatory.</span></aura:if>
+                                                         
                                                     </div>       
                                                 </div> 
                                             </div>
@@ -475,7 +480,7 @@
                                             <p>In the section, select what Product your Sales Program is selling.</p><br></br>
                                             
                                             <p>Define the Offering</p><br></br>
-                                            
+                                            <aura:if isTrue="{!v.error}"> <span class = "error">*All the required fields are Mandatory.</span></aura:if>
                                             <aura:if isTrue="{! v.isIconVisible }">
                                                 <h1> <lightning:icon iconName="utility:new" onclick="{!c.dispFields}"> </lightning:icon> <p class="inline">Add Data Set Filter Criteria </p></h1>
                                                 
@@ -519,7 +524,7 @@
                                                                 <div class="slds-size_1-of-6">
                                                                     <div class="slds-form-element">
                                                                         <p class="field-title" title="Value">
-                                                                            <c:IB_DefineOfferingVal options_="{!v.Listvalues}" aura:id = "Listvalues" value="{!v.valueOffering}"/> 
+                                                                            <c:IB_DefineOfferingVal options_="{!v.Listvalues}" aura:id = "Listvalues" /> 
                                                                         </p>
                                                                         <!-- <lightning:select name="VALUE" label="VALUE" aura:id = "PROGRAM TYPE" required="true" value="{!v.RTM}">
                                                                      <option value="all">None</option>
@@ -605,12 +610,13 @@
                                             <fieldset class="slds-form-element">
                                                 
                                                 <div class="slds-form-element__control">
-                                                    <div class="slds-checkbox">
-                                                        <input type="checkbox" name="options" id="checkbox-unique-id-88" value="checkbox-unique-id-88" checked="" onchange="{!c.checkbox}" />
+                                                    <div >
+        
+                                                        <lightning:input type="checkbox" aura:id="checkboxf3a" name="options" id="checkbox-unique-id-88" value="checkbox-unique-id-88" checked="" onchange="{!c.checkbox}" />
                                                         <!--<ui:inputCheckbox aura:id="checkbox" label="Select?" change="{!c.checkbox}"/>-->
                                                         <label class="slds-checkbox__label" for="checkbox-unique-id-88">
                                                             <span class="slds-checkbox_faux"></span>
-                                                            <span class="slds-form-element__label">Apply Sales Play Criteria</span>
+                                                            <span>Apply Sales Play Criteria</span>
                                                             <br></br>
                                                         </label>
                                                         <br></br>
@@ -622,8 +628,9 @@
                                                     
                                                     <br></br>
                                                     <br></br>
-                                                    <div class="slds-checkbox">
-                                                        <input type="checkbox" name="options" id="checkbox-unique-id-89" value="checkbox-unique-id-89" onchange="{!c.checkbox2}"/>
+                                                    <div>
+         
+                                                        <lightning:input type="checkbox" aura:id="checkboxf3c" name="options" id="checkbox-unique-id-89" value="checkbox-unique-id-89" checked="" onchange="{!c.checkbox2}"/>
                                                         <label class="slds-checkbox__label" for="checkbox-unique-id-89">
                                                             <span class="slds-checkbox_faux"></span>
                                                             <span class="slds-form-element__label">Upload a List of Accounts</span>
@@ -926,7 +933,7 @@
                                 <p>IMPORTANT: If your qualifying Installed Base criteria does not include any product line filters, Sales reps will not see the qualifying installed base on a Program tile</p><br></br>
                                 
                                 <p>Define the Qualifying Installed Base</p><br></br>
-                                
+                                  <aura:if isTrue="{!v.error}"> <span class = "error">*All the required fields are Mandatory.</span></aura:if>
                                 <aura:if isTrue="{! v.isIconVisiblef4 }">
                                     <h1> <lightning:icon iconName="utility:new" onclick="{!c.dispFieldsf4}"> </lightning:icon> <p class="inline">Add Evaluation Criteria  </p></h1>
                                     
@@ -979,13 +986,13 @@
                                                                 
                                                                 <!-- For calender condition-->
                                                                 
-                                                                <aura:if isTrue="{!or(v.selectedField=='Contract Expiration Date' , v.selectedField=='Contract Start Date', v.selectedField=='Lease Maturity Date', v.selectedField=='Lease Start Date',v.selectedField=='Opportunity Close Date')}">
+                                                                <aura:if isTrue="{!or(v.selectedField=='Contract Expiration Date' , v.selectedField=='Contract Start Date', v.selectedField=='Lease Maturity Date', v.selectedField=='Lease Start Date',v.selectedField=='Opportunity Close Date',v.selectedField=='Last Updated Date')}">
                                                                     <div class="slds-size_3-of-7">
                                                                         <lightning:input type="date"  label="Value" required="true" value="{!v.valueEvalCond}"></lightning:input>
                                                                     </div> 
                                                                     <aura:set attribute="else">  
                                                                         
-                                                                        <aura:if isTrue="{!or(v.selectedField=='On Time Renewal Percentage' , v.selectedField=='Model Description',v.selectedField=='Support Value')}">
+                                                                        <aura:if isTrue="{!or(v.selectedField=='On Time Renewal Percentage' ,v.selectedField=='Exposure', v.selectedField=='Model Description',v.selectedField=='Support Value',v.selectedField=='Opportunity Value',v.selectedField=='Close Plan')}">
                                                                             <div class="slds-size_3-of-7">
                                                                                 <lightning:input type="text" label="Value" required="true" value="{!v.valueEvalCond}"></lightning:input>  
                                                                             </div>
@@ -1060,7 +1067,9 @@
                                             </div>
                                         </fieldset>
                                     </aura:if>
-                                                                        <aura:if isTrue="{!v.evalCondDataSet}">
+                                    
+                                        
+                                                                       <aura:if isTrue="{!v.evalCondDataSet}">
                                         <lightning:accordion aura:id="accordion" activeSectionName="c" allowMultipleSectionsOpen="true">
                                             
                                             <lightning:accordionSection name="A" label="Data Set Filter ">
@@ -1078,6 +1087,7 @@
                                                         <td width="20%"><p class="column1">NOTES</p><tr class="column1-row1">{!v.descEvalCond}</tr></td>
                                                     </tr>    
                                                 </table>  -->
+                                                
                                                                                         <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address">
                                             <div class="slds-form-element__control">
                                                 <div class="slds-form-element__row">
@@ -1191,10 +1201,12 @@
 
                                             </div>
                                         </fieldset>
+                                                    
                                             </lightning:accordionSection>
                                             
                                         </lightning:accordion>
                                     </aura:if> 
+                                     
                                 </lightning:accordion>
                                 <div class="slds-text-align--left slds-m-top--medium">
                                     <lightning:button  onclick="{!c.PrevsecF4}">Previous Section</lightning:button>
@@ -1371,10 +1383,14 @@
                                 <br></br>
                                 <br></br>
                                 <div class="slds-form-element__column">
-                                    <label class="slds-form-element__label" for="form-element-id-01">LINK TO RESOURCE &nbsp;&nbsp; {!v.resourceLink1}</label>
-                                    <!--<textarea id="form-element-id-01" required="" placeholder="" class="slds-textarea"></textarea>-->
-                                    <label class="slds-form-element__label" for="form-element-id-02">LINK TO SEISMIC &nbsp;&nbsp; {!v.seismicLink1}</label> 
-                                    
+                                    <label class="slds-form-element__label" for="form-element-id-01">LINK TO RESOURCE </label>
+                                    <p>&nbsp; {!v.resourceLink1} </p>
+                                    <p>&nbsp; {!v.resourceLink2}  </p>
+                                    <p>&nbsp; {!v.resourceLink3}  </p>
+                                    <label class="slds-form-element__label" for="form-element-id-02">LINK TO SEISMIC </label> 
+                                    <p>&nbsp; {!v.seismicLink1}  </p>
+                                      <p>&nbsp; {!v.seismicLink2}  </p>
+                                    <p>&nbsp; {!v.seismicLink3}  </p>
                                 </div>
                                 <br></br>
                                 <br></br>
@@ -1450,7 +1466,7 @@
                                     <lightning:button onclick="{!c.Prevsecf6}">Previous Section</lightning:button>
                                     <lightning:button onclick="{!c.openModelDraft}">SAVE DRAFT</lightning:button><br></br>
                                     <aura:if isTrue="{!v.isModalOpen}">           
-                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small">
                                             <div class="slds-modal__container">
                                                 <!-- Modal/Popup Box Header Starts here-->
                                                 <header class="slds-modal__header">
@@ -1463,7 +1479,7 @@
                                                 </header>
                                                 <!--Modal/Popup Box Body Starts here-->
                                                 <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1">
-                                                    <p>{!v.ruleId} is Succesfully Created </p>
+                                                    <p><Span class="ruleid">{!v.ruleId}</Span> is Succesfully Created </p>
                                                     
                                                 </div>
                                                 <!--Modal/Popup Box Footer Starts here-->
@@ -1471,15 +1487,18 @@
                                                     <lightning:button variant="neutral"
                                                                       label="Continue to Create New Program"
                                                                       title="Cancel"
-                                                                      onclick="{! c.createNewProgram}"/>
+                                                                      onclick="{! c.createNewProgram}"
+                                                                     />
                                                     <lightning:button variant="neutral"
                                                                       label="View Program"
                                                                       title="Ok"
-                                                                      onclick="{!c.viewProgram}"/>
+                                                                      onclick="{!c.viewProgram}"
+                                                                      />
                                                     <lightning:button variant="neutral"
                                                                       label="View All Program"
                                                                       title="Ok"
-                                                                      onclick="{!c.viewAllProgram}"/>
+                                                                      onclick="{!c.viewAllProgram}"
+                                                                       />
                                                 </footer>
                                             </div>
                                         </section>

@@ -1,4 +1,4 @@
-<aura:component controller="IB_Opportunity" implements="force:appHostable,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId,force:hasSObjectName" access="global" >
+<aura:component controller="IB_SalesProgramDetails" implements="force:appHostable,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId,force:hasSObjectName" access="global" >
     <aura:attribute name="partnerList" type="object"/>
     <aura:attribute name= "campaign" type="list" default = "[]"/>
     <aura:attribute name="data" type="object"/>
@@ -13,15 +13,19 @@
     <aura:attribute name="options" type="List" default="[]"/>
     <aura:attribute name="values" type="List" default="[]"/>
     <aura:attribute name="globalvar" type="Integer[]" />
-      <aura:attribute name = "search" type = "string"/>
+    <aura:attribute name = "search" type = "string"/>
     <aura:attribute name="recordId" type="String"/>
+     <aura:attribute name="stid" type="String"/>
+      <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String"/>
+    <aura:attribute name="defaultSortDirection" type="String"/>
+
     <aura:handler name="init" value="{!this}" action = "{!c.doInit}"/>
-    
+    <!--updated1-->
         <div>
 
                 <h1>Associated Opportunities <lightning:icon iconName="utility:info" alternativeText="Approved" title="Approved" /><div class = "right"><lightning:button class = "customizebutton" label="Customize table" onclick="{! c.opencustomizetable }"/></div></h1>
             
-        <!--<div class = "head"> <span class="right"></span></div>-->
     </div>
    <div>
       
@@ -31,6 +35,10 @@
                              data="{!v.data}"
                              columns="{!v.columns}"
                              hideCheckboxColumn="true"
+                             sortedBy="{! v.sortedBy }"
+                             sortedDirection="{! v.sortedDirection }"
+                             defaultSortDirection="{! v.defaultSortDirection }"
+                             onsort="{! c.updateColumnSorting }"
                              />
            
        </div>

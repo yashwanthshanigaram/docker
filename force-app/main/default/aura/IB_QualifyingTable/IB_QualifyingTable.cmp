@@ -1,4 +1,4 @@
-<aura:component controller="IB_QualifyingTable" implements="force:appHostable,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId,force:hasSObjectName" access = "global">
+<aura:component controller="IB_SalesProgramDetails" implements="force:appHostable,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId,force:hasSObjectName" access = "global">
     <aura:attribute name="partnerList" type="Object"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name="columns" type="Object"/>
@@ -19,7 +19,11 @@
     <aura:attribute name="globalvar" type="Integer[]" />
     <aura:attribute name = "search" type= "string"/>
     <aura:attribute name="recordId" type="String"/>
-    
+    <aura:attribute name="stid" type="String"/>
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String"/>
+    <aura:attribute name="defaultSortDirection" type="String"/>
+    <!--updated1-->
     
     
     <aura:handler name="init" value="{!this }" action="{! c.init }"/>
@@ -41,18 +45,11 @@
                                  onrowaction="{! c.handleRowAction}"
                                  hideCheckboxColumn="true"
                                  
-                                 defaultSortDirection="{!v.defaultSortDirection}"
-                                 sortedDirection="{!v.sortDirection}"
-                                 sortedBy="{!v.sortedBy}"
-                                 onsort="{!c.handleSort}"/>
-            
-            
-            
-        
-        
-    
-    
-    
+                                 sortedBy="{! v.sortedBy }"
+                             sortedDirection="{! v.sortedDirection }"
+                             defaultSortDirection="{! v.defaultSortDirection }"
+                             onsort="{! c.updateColumnSorting }" />
+             
     <lightning:layout horizontalAlign="center" >
         <lightning:layoutItem padding="around-small" flexibility="auto">
             <lightning:button label="First" iconName="utility:left" iconPosition="left" variant="bare"
